@@ -53,6 +53,18 @@
 					<mainClass>org.cssa.iface.gui.CssaLauncher</mainClass>
 				</configuration>
 			</plugin>
-		</plugins>
+	
+		 <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-jar-plugin</artifactId>
+              <configuration>
+                  <archive>
+                      <manifest>
+                          <mainClass>org.cssa.iface.gui.CssaLauncher</mainClass>
+                      </manifest>
+                  </archive>
+              </configuration>
+          </plugin>
+          	</plugins>
 	</build>
 </project>

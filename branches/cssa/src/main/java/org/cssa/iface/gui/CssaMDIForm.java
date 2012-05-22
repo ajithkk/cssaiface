@@ -8,6 +8,7 @@ import java.beans.PropertyVetoException;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 
 import org.cssa.iface.gui.menu.CssaMenuController;
 import org.cssa.iface.util.ImageUtil;
@@ -55,5 +56,19 @@ public class CssaMDIForm extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	public void addChild(JPanel panel, String frameTitle) {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		JInternalFrame frame = new JInternalFrame(frameTitle, true, true, true, true);
+		frame.add(panel);
+		frame.setSize(screenSize);
+		desktopPane.add(frame);
+		try {
+			frame.setSelected(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 }

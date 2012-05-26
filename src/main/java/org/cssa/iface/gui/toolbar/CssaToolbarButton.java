@@ -25,7 +25,6 @@ public class CssaToolbarButton extends JButton {
 		setMargin(MARGIN);
 		setVerticalTextPosition(BOTTOM);
 		setHorizontalTextPosition(CENTER);
-		setText(txt);
 		setToolTipText(toolTip);
 		Dimension iconSize = new Dimension(25, 25);
 		setSize(iconSize);
@@ -44,6 +43,5 @@ public class CssaToolbarButton extends JButton {
 	
 	public CssaToolbarButton(String imageFile, String txt) {
 		this(new ImageIcon(imageFile));
-		setText(txt);
 	}
 }

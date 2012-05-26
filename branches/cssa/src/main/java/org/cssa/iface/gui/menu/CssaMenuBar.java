@@ -11,12 +11,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.events.EventsController;
 
 /**
  * @author ajith
  *
  */
-public class CssaMenuBar extends JMenuBar  {
+public class CssaMenuBar extends JMenuBar implements ActionListener {
 	
 	public static final String MNU_FILE = "File";
 	public static final String MNU_FILE_NEWCOLLEGE = "New College";
@@ -55,16 +56,16 @@ public class CssaMenuBar extends JMenuBar  {
 		CssaMenuItem mnuItemNewEvent = new CssaMenuItem(MNU_FILE_NEWEVENT);
 		CssaMenuItem mnuItemExit = new CssaMenuItem(MNU_FILE_EXIT);
 		CssaMenuItem mnuItemSeminar = new CssaMenuItem(MNU_FILE_SEMINAR);
-	JMenuItem mnuItemExit1 = new JMenuItem(MNU_FILE_EXIT);
+		JMenuItem mnuItemExit1 = new JMenuItem(MNU_FILE_EXIT);
 		
 		mnuItemNewCollege.addActionListener(controller);
 		mnuItemNewCollege.setActionCommand(MNU_FILE_NEWCOLLEGE);
-		mnuItemNewEvent.addActionListener(controller);
+		mnuItemNewEvent.addActionListener(this);
 		mnuItemNewEvent.setActionCommand(MNU_FILE_NEWEVENT);
 		mnuItemSeminar.addActionListener(controller);
 		mnuItemSeminar.setActionCommand(MNU_FILE_SEMINAR);
-		mnuItemExit1.addActionListener(controller);
-		mnuItemExit1.setActionCommand(MNU_FILE_EXIT);
+		mnuItemExit.addActionListener(this);
+		mnuItemExit.setActionCommand(MNU_FILE_EXIT);
 		
 		fileMenu.addElement(mnuItemNewCollege);
 		fileMenu.addElement(mnuItemNewEvent);
@@ -84,20 +85,20 @@ public class CssaMenuBar extends JMenuBar  {
 		
 		Vector<Object> maintainMenu = new Vector<Object>();
 			CssaMenuItem mnuItemCollege = new CssaMenuItem(MNU_MAINTAIN_COLLEGE);
-		mnuItemCollege.addActionListener(controller);
+		mnuItemCollege.addActionListener(this);
 		mnuItemCollege.setActionCommand(MNU_MAINTAIN_COLLEGE);
 		
 		
 		CssaMenuItem mnuItemStudents = new CssaMenuItem(MNU_MAINTAIN_STUDENT);
-		mnuItemStudents.addActionListener(controller);
+		mnuItemStudents.addActionListener(this);
 		mnuItemStudents.setActionCommand(MNU_MAINTAIN_STUDENT);
 		
 		CssaMenuItem mnuItemGroup = new CssaMenuItem(MNU_MAINTAIN_GROUP_EVENT);
-		mnuItemGroup.addActionListener(controller);
+		mnuItemGroup.addActionListener(this);
 		mnuItemGroup.setActionCommand(MNU_MAINTAIN_GROUP_EVENT);
 		
 		CssaMenuItem mnuItemResult = new CssaMenuItem(MNU_MAINTAIN_RESULT);
-		mnuItemResult.addActionListener(controller);
+		mnuItemResult.addActionListener(this);
 		mnuItemResult.setActionCommand(MNU_MAINTAIN_RESULT);
 		
 		maintainMenu.addElement(mnuItemCollege);
@@ -120,11 +121,11 @@ public class CssaMenuBar extends JMenuBar  {
 		CssaMenuItem mnuItemStudents = new CssaMenuItem(MNU_REPORT_STUDENT);
 		CssaMenuItem mnuItemResult = new CssaMenuItem(MNU_REPORT_RESULT);
 		
-		mnuItemCollege.addActionListener(controller);
+		mnuItemCollege.addActionListener(this);
 		mnuItemCollege.setActionCommand(MNU_REPORT_COLLEGE);
-		mnuItemStudents.addActionListener(controller);
+		mnuItemStudents.addActionListener(this);
 		mnuItemStudents.setActionCommand(MNU_REPORT_STUDENT);
-		mnuItemResult.addActionListener(controller);
+		mnuItemResult.addActionListener(this);
 		mnuItemResult.setActionCommand(MNU_REPORT_RESULT);
 		
 		reportMenu.addElement(mnuItemCollege);
@@ -147,8 +148,8 @@ public class CssaMenuBar extends JMenuBar  {
 		
 		mnuItemHelpContent.setActionCommand(MNU_HELP_CONTENT);
 		mnuItemAbout.setActionCommand(MNU_HELP_ABOUT);
-		mnuItemHelpContent.addActionListener(controller);
-		mnuItemAbout.addActionListener(controller);
+		mnuItemHelpContent.addActionListener(this);
+		mnuItemAbout.addActionListener(this);
 		
 		helpMenu.addElement(mnuItemHelpContent);
 		helpMenu.addElement(SEPRATOR);
@@ -199,19 +200,23 @@ public class CssaMenuBar extends JMenuBar  {
 		cssaMDIForm.setJMenuBar(this);
 	}
 	
-	//@Override
-	/*public void actionPerformed(ActionEvent e) {
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		String actionCommand = e.getActionCommand();
 		if(CssaMenuBar.MNU_FILE_EXIT.equals(actionCommand)) {
-			exitApp();
+			controller.exitApplication();
+		} else if (CssaMenuBar.MNU_FILE_NEWEVENT.equals(actionCommand)) {
+			new EventsController(cssaMDIForm).askEventView();
+		} else if (CssaMenuBar.MNU_HELP_CONTENT.equals(actionCommand)) {
+			controller.displayHelp();
 		}
 		
-	}*/
+	}
 
-	/*private void exitApp() {
+	private void exitApp() {
 		System.exit(ABORT);
 		
-	}*/
+	}
 	
 
 }

@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeDetilsView;
 
 /**
@@ -23,9 +24,14 @@ public class EventsController implements ActionListener  {
 	
 	EventsView eventsView = null;
 	EventTableModel eventTableModel = null;
+	private CssaMDIForm mdiForm;
 	
 	public EventsController() {
 		eventTableModel = new EventTableModel(); 
+	}
+	public EventsController(CssaMDIForm mdiForm) {
+		this.mdiForm = mdiForm;
+		eventTableModel = new EventTableModel();
 	}
 
 	@Override
@@ -64,9 +70,9 @@ public class EventsController implements ActionListener  {
 		
 	}
 
-	public  Component askEventView() {
-		eventsView = new EventsView(this,eventTableModel);
-		return eventsView.showEventscreen();
+	public  void askEventView() {
+		eventsView = new EventsView(this,eventTableModel,mdiForm);
+		eventsView.showEventscreen();
 		
 	}
 	
@@ -107,7 +113,7 @@ public class EventsController implements ActionListener  {
 				GridBagConstraints constraints = new GridBagConstraints();
 				constraints.gridx = 0;
 				constraints.gridy = 0;*/
-				frame.add(new EventsController().askEventView());
+				//frame.add(new EventsController().askEventView());
 				//constraints.anchor = GridBagConstraints.NORTHWEST;
 				// frame.add(new Event().init(),BorderLayout.NORTH);
 				//frame.add(new CollegeDetilsView(this).getCollegeDetailsPanel(),

@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.net.URL;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
@@ -57,4 +58,20 @@ public class ImageUtil {
 		return image;
 	}
 	
+	public  Icon getIcon(String name) {
+		Icon image = null;
+		try { 
+			ClassLoader loader = this.getClass().getClassLoader();
+			URL url = loader.getResource("image" + File.separator + name);  
+			if(url != null) {
+				java.awt.Image img = Toolkit.getDefaultToolkit().createImage(url);
+				if(img != null) {
+					image = new ImageIcon(img);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return image;
+	}
 }

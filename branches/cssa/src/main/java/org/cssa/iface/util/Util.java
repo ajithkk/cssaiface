@@ -20,5 +20,8 @@ public class Util {
 	public static Logger getLogger(Class<?> aClass) {
 		return Logger.getLogger(aClass.getPackage().getName());
 	}
-
+	
+	public static void exitApplicataion() {
+		System.exit(0);
+	}
 }

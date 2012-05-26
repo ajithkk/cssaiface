@@ -19,6 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 import org.cssa.iface.bo.EventDetails;
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
@@ -58,6 +59,8 @@ public class EventsView {
 	private EventDetails eventDetails;
 	private EventsController eventsController;
 	private EventTableModel tableModel;
+	
+	private CssaMDIForm mdiForm;
 
 	/**
 	 * @param eventsController
@@ -73,11 +76,16 @@ public class EventsView {
 		this.tableModel = new EventTableModel();
 	}
 
-	public Component showEventscreen() {
+	public EventsView(EventsController eventsController,
+			EventTableModel eventTableModel, CssaMDIForm mdiForm) {
+			this.mdiForm = mdiForm;
+	}
+
+	public void showEventscreen() {
 		JPanel tabbedPane = new JPanel();
 		tabbedPane.add(getEventDetailsBody(), BorderLayout.CENTER);
 		//tabbedPane.setTitleAt(0, "Event");
-		return tabbedPane;
+		mdiForm.addChild(tabbedPane, "Event Details");
 	}
 
 	public JPanel getEventDetailsPanel() {
@@ -85,7 +93,7 @@ public class EventsView {
 		body.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = null;
 
-		lblEventName = new CLabel("Name:");
+		lblEventName = new CLabel("Event Name:");
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.gridx = 0;
@@ -363,9 +371,9 @@ public class EventsView {
 		    }*/
 
 				frame.setLayout(new BorderLayout());
-				// frame.add(new Event().init(),BorderLayout.NORTH);
+			/*	// frame.add(new Event().init(),BorderLayout.NORTH);
 				frame.add(new EventsView().showEventscreen(),
-						BorderLayout.CENTER);
+						BorderLayout.CENTER);*/
 				// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
 				// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
 				frame.pack();

@@ -70,7 +70,8 @@ public class CSSAConstants {
 	
 	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS"};
 	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
-			
+	
+	public static final String HELP_FILE = "HelpSet.cs";
 	
 
 }

@@ -64,13 +64,14 @@
 					<mainClass>org.cssa.iface.gui.CssaLauncher</mainClass>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3</version>
 				<configuration>
 					<archive>
 						<manifest>
+							<addClasspath>true</addClasspath>
 							<mainClass>org.cssa.iface.gui.CssaLauncher</mainClass>
 						</manifest>
 					</archive>

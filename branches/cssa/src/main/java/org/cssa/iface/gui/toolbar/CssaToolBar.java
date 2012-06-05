@@ -37,7 +37,7 @@ public class CssaToolBar extends JToolBar implements ActionListener {
 	
 	public void createToolBar()	{
 		imageUtil = new ImageUtil();
-		addNewCollege = new CssaToolbarButton(imageUtil.getIcon("War16.gif"), "College", "Add New college");
+		addNewCollege = new CssaToolbarButton(imageUtil.getIcon("War16.gif"), "College", "New College");
 		addNewCollege.addActionListener(this);
 		
 		this.add(addNewCollege);

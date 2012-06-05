@@ -31,7 +31,7 @@ public class ImageUtil {
 		ImageIcon image = null;
 		try { 
 			ClassLoader loader = this.getClass().getClassLoader();
-			URL url = loader.getResource("image" + File.separator + name);  
+			URL url = loader.getResource("image" +"/" + name);  
 			if(url != null) {
 				java.awt.Image img = Toolkit.getDefaultToolkit().createImage(url);
 				if(img != null) {
@@ -48,7 +48,7 @@ public class ImageUtil {
 		Image image = null;
 		try {
 			ClassLoader loader = this.getClass().getClassLoader();
-			URL url = loader.getResource("image" + File.separator + name); 
+			URL url = loader.getResource("image" +"/"+ name); 
 			if(null != url) {
 				image = Toolkit.getDefaultToolkit().getImage(url);
 			}
@@ -58,11 +58,28 @@ public class ImageUtil {
 		return image;
 	}
 	
+	public String getImageUrl(String name) {
+		URL url = null;
+		Image image = null;
+		try {
+			ClassLoader loader = this.getClass().getClassLoader();
+		    url = loader.getResource("image" +"/"+ name.trim()); 
+			if(null != url) {
+				image = Toolkit.getDefaultToolkit().getImage(url);
+			}else {
+				return "Null";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return url.toString();
+	}
+	
 	public  Icon getIcon(String name) {
 		Icon image = null;
 		try { 
 			ClassLoader loader = this.getClass().getClassLoader();
-			URL url = loader.getResource("image" + File.separator + name);  
+			URL url = loader.getResource("image" +"/"+ name);  
 			if(url != null) {
 				java.awt.Image img = Toolkit.getDefaultToolkit().createImage(url);
 				if(img != null) {

@@ -73,5 +73,12 @@ public class CSSAConstants {
 	
 	public static final String HELP_FILE = "HelpSet.cs";
 	
+	public static final String SYSYEM = "system";
+	public static final String MOTIF = "motif";
+	public static final String GTK = "gtk";
+	public static final String NIMBUS = "nimbus";
+	public static final String JAVA = "java";
+	public static final String WINDOWS = "windows";
+	
 
 }

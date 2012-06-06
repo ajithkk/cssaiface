@@ -15,9 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.cssa.iface.gui.menu.CssaMenuController;
 import org.cssa.iface.gui.toolbar.CssaToolBar;
+import org.cssa.iface.gui.util.CssaLookAndFeel;
+import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.util.ImageUtil;
 
 public class CssaMDIForm extends JFrame {
@@ -26,6 +30,8 @@ public class CssaMDIForm extends JFrame {
 	private Icon cssaIcon;
 	private JPanel toolBarPanel;
 	ImageUtil imageUtil;
+	private String lookAndFeel = null;
+	
 	
 	/**
 	 * Launch the application.
@@ -53,7 +59,7 @@ public class CssaMDIForm extends JFrame {
 		desktopPane = new JDesktopPane();
 		imageUtil = new ImageUtil();
 		getContentPane().setLayout(new BorderLayout());
-		
+		setLookAndFeel(lookAndFeel);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(inset, inset, screenSize.width - inset*2, screenSize.height-50-inset*2);
 		setSize(screenSize);
@@ -112,6 +118,39 @@ public class CssaMDIForm extends JFrame {
 	public void setCssaIcon(Icon cssaIcon) {
 		this.cssaIcon = cssaIcon;
 	}
+	/**
+	 * @return the lookAndFeel
+	 */
+	public String getLookAndFeel() {
+		return lookAndFeel;
+	}
+
+	/**
+	 * @param lookAndFeel the lookAndFeel to set
+	 */
+	public void setLookAndFeel(String lookAndFeel) {
+		this.lookAndFeel = lookAndFeel;
+		if(null == lookAndFeel){
+			lookAndFeel = CSSAConstants.SYSYEM;
+		}
+		try {
+			UIManager.setLookAndFeel(new CssaLookAndFeel(lookAndFeel).getLookAndFeel());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 	
 
 }

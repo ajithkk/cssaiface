@@ -5,6 +5,7 @@ package org.cssa.iface.gui.events;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -78,13 +79,14 @@ public class EventsView {
 
 	public EventsView(EventsController eventsController,
 			EventTableModel eventTableModel, CssaMDIForm mdiForm) {
+			this.eventsController = eventsController;
+			this.tableModel = eventTableModel;
 			this.mdiForm = mdiForm;
 	}
 
 	public void showEventscreen() {
 		JPanel tabbedPane = new JPanel();
 		tabbedPane.add(getEventDetailsBody(), BorderLayout.CENTER);
-		//tabbedPane.setTitleAt(0, "Event");
 		mdiForm.addChild(tabbedPane, "Event Details");
 	}
 
@@ -248,6 +250,9 @@ public class EventsView {
 		
 		eventTable = new JTable(tableModel);
 		JScrollPane scrollPane = new JScrollPane(eventTable);
+		scrollPane.setMinimumSize(new Dimension(600, 400));
+		scrollPane.setMaximumSize(new Dimension(600, 400));
+		scrollPane.setPreferredSize(new Dimension(600, 400));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		return panel;
@@ -279,7 +284,6 @@ public class EventsView {
 
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.EAST;
-		// constraints.insets = new Insets(0, 90, 0, 0);
 		constraints.gridy = 0;
 		constraints.gridx = 1;
 		panel.add(getTablePannel(), constraints);
@@ -345,43 +349,4 @@ public class EventsView {
 	public void setPoints(String point) {
 		txtPoints.setText(point);
 	}
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				JFrame frame = new JFrame();
-				/*try {
-		            // Set System L&F
-		        UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-		    } 
-		    catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		    }
-		    catch (ClassNotFoundException e) {
-		       // handle exception
-		    }
-		    catch (InstantiationException e) {
-		       // handle exception
-		    }
-		    catch (IllegalAccessException e) {
-		       // handle exception
-		    }*/
-
-				frame.setLayout(new BorderLayout());
-			/*	// frame.add(new Event().init(),BorderLayout.NORTH);
-				frame.add(new EventsView().showEventscreen(),
-						BorderLayout.CENTER);*/
-				// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
-				// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
-				frame.pack();
-				frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				frame.setSize(400, 400);
-				frame.setVisible(true);
-			}
-		});
-	}
-
 }

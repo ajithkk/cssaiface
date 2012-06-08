@@ -11,6 +11,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.college.CollegeInitialViewController;
 import org.cssa.iface.gui.events.EventsController;
 
 /**
@@ -58,7 +59,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		CssaMenuItem mnuItemSeminar = new CssaMenuItem(MNU_FILE_SEMINAR);
 		JMenuItem mnuItemExit1 = new JMenuItem(MNU_FILE_EXIT);
 		
-		mnuItemNewCollege.addActionListener(controller);
+		mnuItemNewCollege.addActionListener(this);
 		mnuItemNewCollege.setActionCommand(MNU_FILE_NEWCOLLEGE);
 		mnuItemNewEvent.addActionListener(this);
 		mnuItemNewEvent.setActionCommand(MNU_FILE_NEWEVENT);
@@ -209,8 +210,10 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 			new EventsController(cssaMDIForm).askEventView();
 		} else if (CssaMenuBar.MNU_HELP_CONTENT.equals(actionCommand)) {
 			controller.displayHelp();
+		} else if(CssaMenuBar.MNU_FILE_NEWCOLLEGE.equals(actionCommand)) {
+			new CollegeInitialViewController(cssaMDIForm).askCollegeInitialView();
 		}
-		
+			
 	}
 
 	private void exitApp() {

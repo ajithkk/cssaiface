@@ -62,7 +62,6 @@ public class CssaMDIForm extends JFrame {
 		setLookAndFeel(lookAndFeel);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(inset, inset, screenSize.width - inset*2, screenSize.height-50-inset*2);
-		setSize(screenSize);
 		setIconImage(imageUtil.getImage("cssa.jpg"));;
 		
 		toolBarPanel.setLayout(new BoxLayout(toolBarPanel, BoxLayout.Y_AXIS));

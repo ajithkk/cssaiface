@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
@@ -51,16 +52,25 @@ public class CollegeInitialView {
 	
 	private CollegeInitialViewController controller;
 	private CollegeInitialTableModel tableModel;
+	private CssaMDIForm mdiForm;
 
 	/**
 	 * @param controller
 	 */
-	public CollegeInitialView(CollegeInitialViewController controller) {
+	public CollegeInitialView(CollegeInitialViewController controller, CollegeInitialTableModel tableModel) {
 		super();
 		this.controller = controller;
+		this.tableModel = tableModel;
 	}
 	public CollegeInitialView() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public CollegeInitialView(CollegeInitialViewController collegeInitialViewController, CollegeInitialTableModel tableModel, CssaMDIForm mdiForm) {
+		
+		this.controller =collegeInitialViewController;
+		this.tableModel = tableModel;
+		this.mdiForm = mdiForm;
 	}
 	
 	/**
@@ -83,6 +93,7 @@ public class CollegeInitialView {
 		constraints = new GridBagConstraints();
 		txtCollegeId = new CTextField();
 		txtCollegeId.setEditable(false);
+		constraints.insets = new Insets(3, 5, 3, 5);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
@@ -98,11 +109,13 @@ public class CollegeInitialView {
 		
 		constraints = new GridBagConstraints();
 		txtNoOfParticipants = new CTextField();
-		txtNoOfParticipants.setPreferredSize(new Dimension(75,20));
+		txtNoOfParticipants.setPreferredSize(new Dimension(75,21));
+		constraints.insets = new Insets(5, 5, 4, 5);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 3;
 		constraints.gridy = 0;
 		panel.add(txtNoOfParticipants, constraints);
+		
 		
 		constraints = new GridBagConstraints();
 		lblCollegeName = new CLabel("College Name:");
@@ -115,9 +128,10 @@ public class CollegeInitialView {
 		constraints = new GridBagConstraints();
 		txtCollegeName = new JTextArea();
 		txtCollegeName.setRows(1);
-		txtCollegeName.setColumns(40);
+		txtCollegeName.setColumns(54);
 		txtCollegeName.setLineWrap(true);
 		//txtCollegeName.setPreferredSize(new Dimension(430,20));
+		constraints.insets = new Insets(5, 5, 5, 5);
 		JScrollPane scrollPane = new JScrollPane(txtCollegeName);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
@@ -138,6 +152,7 @@ public class CollegeInitialView {
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
 		constraints.gridy = 4;
+		constraints.insets = new Insets(3, 5, 3, 5);
 		panel.add(txtCollegePhone, constraints);
 		
 		return panel;
@@ -286,6 +301,11 @@ public class CollegeInitialView {
 		return panel;
 	}
 	
+	public void showCollegeInitialView() {
+		JPanel tabbedPane = new JPanel();
+		tabbedPane.add(getDetailsBody(), BorderLayout.CENTER);
+		mdiForm.addChild(tabbedPane, "College Initial View");
+	}
 	/**
 	 * 
 	 * @return college Id

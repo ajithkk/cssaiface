@@ -1,8 +1,15 @@
 package org.cssa.iface.dao.commom;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
+
+import org.cssa.iface.infrastructure.CSSAConstants;
 
 
 /**
@@ -14,17 +21,33 @@ import java.util.Properties;
 
 public class LoadProperties {
 	
+	private static LoadProperties loadProperties = null;
 	
 	private String strServer = null;
 	private String strDriver = null;
 	private String strDatabase = null;
 	private String strUsername = null;
 	private String strPassword = null;
+	private String strUrl = null;
 	
-	private static LoadProperties loadProperties = null;
+	
+	/**
+	 * @return the strUrl
+	 */
+	public String getStrUrl() {
+		return strUrl;
+	}
+
+	/**
+	 * @param strUrl the strUrl to set
+	 */
+	public void setStrUrl(String strUrl) {
+		this.strUrl = strUrl;
+	}
+
 	
 	public String getStrServer() {
-		return new File("").getAbsolutePath()+ File.separator + strServer;
+		return  strServer;
 	}
 	
 	public String getStrDriver() {
@@ -60,26 +83,60 @@ public class LoadProperties {
 	
 	private void loadDBProperties() {
 		
-		Properties properties = new Properties();
-		
+		Properties properties = new Properties(System.getProperties());
 		try{
-			
-			ClassLoader loader = this.getClass().getClassLoader();
-			
-			URL  iconUrl = loader.getResource("datebase");
-			
-		    iconUrl = loader.getResource("properties" + File.separator +"CSSA_IFACE.properties");
-			
-			properties.load(iconUrl.openStream());
-			
-			strServer = properties.getProperty(DBConstants.DB_SERVER);
-			strDriver = properties.getProperty(DBConstants.DB_DRIVER);
-			strDatabase = properties.getProperty(DBConstants.DATA_BASE);
-			strUsername = properties.getProperty(DBConstants.DB_USERNAME);
-			strPassword = properties.getProperty(DBConstants.DB_PASSWORD);
-		}catch (Exception e) {
+			String configFilePath = System.getProperty("user.home") +"\\" +CSSAConstants.CONFIG_XML_FILE;
+			System.out.println(configFilePath);
+			FileInputStream is =  new FileInputStream(configFilePath);
+			if(null != is) {
+		    	properties.loadFromXML(is);
+		        for (Object s : properties.keySet()) {
+		            if (DBConstants.DB_SERVER.equalsIgnoreCase((String) s)) {
+		            	strServer = properties.getProperty((String)s);
+		            }
+		            else if (DBConstants.DB_DRIVER.equalsIgnoreCase((String) s)) {
+		            	strDriver = properties.getProperty((String)s);
+		            }
+		            else if(DBConstants.DB_URL.equalsIgnoreCase((String) s)) {
+		            	strUrl = properties.getProperty((String)s);
+		            }
+		            else if(DBConstants.DATA_BASE.equalsIgnoreCase((String)s)) {
+		            	strDatabase = properties.getProperty((String)s);
+		            } 
+		            else if(DBConstants.DB_USERNAME.equalsIgnoreCase((String)s)) {
+		            	strUsername = properties.getProperty((String)s);
+			        } 
+		            else if(DBConstants.DB_PASSWORD.equalsIgnoreCase((String)s)) {
+						strPassword = properties.getProperty((String)s);
+			        }
+		        }
+			}
+		}catch ( FileNotFoundException fileNotFoundException) {
+			try {
+				ClassLoader loader = this.getClass().getClassLoader();
+				URL  iconUrl = loader.getResource("datebase");
+				
+			    iconUrl = loader.getResource(CSSAConstants.CONFIG_PROPERTIES_FILE);
+				
+				properties.load(iconUrl.openStream());
+				
+				strServer = System.getProperty("user.home")+ "\\" +properties.getProperty(DBConstants.DB_SERVER);
+				strDriver = properties.getProperty(DBConstants.DB_DRIVER);
+				strUrl = properties.getProperty(DBConstants.DB_URL);
+				strDatabase = properties.getProperty(DBConstants.DATA_BASE);
+				strUsername = properties.getProperty(DBConstants.DB_USERNAME);
+				strPassword = properties.getProperty(DBConstants.DB_PASSWORD);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (InvalidPropertiesFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 	}
 	public static LoadProperties getInstance() {

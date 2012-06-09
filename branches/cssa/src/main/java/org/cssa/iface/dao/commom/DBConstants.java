@@ -7,6 +7,7 @@ public class DBConstants {
 	public static final String DATA_BASE = "DATA_BASE";
 	public static final String DB_PASSWORD = "PASSWORD";
 	public static final String DB_USERNAME = "USERNAME";
+	public static final String DB_URL = "DB_URL";
 	
 	public static final String TYPE_INTEGER = "int";
 	public static final String TYPE_FLOAT = "folat";

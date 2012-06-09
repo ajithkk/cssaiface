@@ -11,8 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.cssa.iface.bo.Events;
+import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeDetilsView;
+import org.cssa.iface.transaction.EventsTransaction;
 
 /**
  * 
@@ -26,12 +29,21 @@ public class EventsController implements ActionListener  {
 	EventTableModel eventTableModel = null;
 	private CssaMDIForm mdiForm;
 	
+	private EventsTransaction eventsTransaction = null;
+	
 	public EventsController() {
 		eventTableModel = new EventTableModel(); 
 	}
 	public EventsController(CssaMDIForm mdiForm) {
 		this.mdiForm = mdiForm;
-		eventTableModel = new EventTableModel();
+		eventsTransaction = new EventsTransaction();
+		try {
+			eventTableModel = new EventTableModel(eventsTransaction.loadAll());
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -44,7 +56,7 @@ public class EventsController implements ActionListener  {
 			clearEventView();
 		}
 		if(EventsView.SAVE.equals(command)) {
-			eventsView.setEventCode("Save Clicked");
+			performEventSaveAction();
 		}
 		if(EventsView.DELETE.equals(command)) {
 			eventsView.setEventCode("Delete Clicked");
@@ -59,6 +71,24 @@ public class EventsController implements ActionListener  {
 		
 	}
 	
+	private void performEventSaveAction() {
+		Events events = new Events();
+		events.setEventId(eventsView.getEventCode());
+		events.setEventName(eventsView.getEventName());
+		events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
+		events.setPoints(Integer.valueOf(eventsView.getPoints()));
+		try {
+			eventTableModel.addRow(events);
+			//eventsTransaction.save(events);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
 	/**
 	 * Clear EventView TextFiels Data
 	 */

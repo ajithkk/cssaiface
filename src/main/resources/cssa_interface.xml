@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Interface data base Configuration</comment>
+	<entry key="db_server">database</entry>
+	<entry key="db_driver">org.apache.derby.jdbc.ClientDriver</entry>
+	<entry key="db_url">jdbc:derby://localhost:1527/</entry>
+	<entry key="data_base">CSSA_IFACE</entry>
+	<entry key="db_username"></entry>
+	<entry key="db_password"></entry>
+ </properties>

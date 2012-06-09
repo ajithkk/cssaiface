@@ -9,6 +9,9 @@ package org.cssa.iface.infrastructure;
  */
 public class CSSAConstants {
 	
+	public static final String CONFIG_XML_FILE = "cssa_interface.xml";
+	public static final String CONFIG_PROPERTIES_FILE = "CSSA_IFACE.properties";
+	
 	public static final String APP_NAME = "Interface Registration software";
 	public static final String APP_VERSION = "2.0";
 	public static final String AUTHOR = "Ajith K K";

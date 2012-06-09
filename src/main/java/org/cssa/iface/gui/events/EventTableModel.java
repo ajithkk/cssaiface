@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import org.cssa.iface.bo.EventDetails;
+import org.cssa.iface.bo.Events;
 
 
 /**
@@ -19,15 +19,15 @@ import org.cssa.iface.bo.EventDetails;
  */
 public class EventTableModel extends AbstractTableModel {
 	
-	private List<EventDetails> eventList = new ArrayList<EventDetails>();
+	private List<Events> eventList = new ArrayList<Events>();
 	
 	public EventTableModel() {
 	}
-	public EventTableModel(List<EventDetails> eventList) {
+	public EventTableModel(List<Events> eventList) {
 		this.eventList = eventList;
 	}
 	
-	public void addRow(EventDetails details) {
+	public void addRow(Events details) {
 		eventList.add(details);
 		fireTableDataChanged();
 	}
@@ -61,8 +61,20 @@ public class EventTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		EventDetails event = eventList.get(rowIndex);
-		return event;
+		Events event = eventList.get(rowIndex);
+		if(columnIndex == 0) {
+			return event.getSno();
+		} else if (columnIndex == 1) { 
+			return event.getEventId();
+		} else if (columnIndex == 2) {
+			return event.getEventName();
+		} else if (3 == columnIndex) {
+			return event.getMaxNoOfParticipants();
+		} else if (4 == columnIndex) {
+			return event.getPoints();
+		}
+		
+		return "";
 	}
 
 	@Override

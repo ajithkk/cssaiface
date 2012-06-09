@@ -65,6 +65,8 @@ public class DBEngineImpl {
 		try {
 			smt = con.createStatement();
 			res = smt.executeQuery(query);
+			
+			con.setAutoCommit(true);
 		} catch (SQLException e) {
 			rollback(con);
 			e.printStackTrace();
@@ -73,8 +75,8 @@ public class DBEngineImpl {
 		} finally {
 			ConnectionManager connectionManager = ConnectionManager
 					.getInstance();
-			connectionManager.closeConnection(con);
-			connectionManager.closeStatement(smt);
+			//connectionManager.closeConnection(con);
+			//connectionManager.closeStatement(smt);
 		}
 		return res;
 
@@ -88,6 +90,7 @@ public class DBEngineImpl {
 			throw new IfaceException("Driver is not fount in connection"
 					+ e.getStackTrace());
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new IfaceException("Sql exception in connection"
 					+ e.getStackTrace());
 		}
@@ -277,15 +280,15 @@ public class DBEngineImpl {
 		try{
 		Set<Map.Entry<Integer, Object>> parameterSet = parameterMap.entrySet();
 		for(Map.Entry<Integer, Object> set : parameterSet ) {
-			if(set.getValue().getClass().equals(Integer.TYPE)) {
+			if(set.getValue().getClass().equals(Integer.class)) {
 				statement.setInt(set.getKey(), ((Integer) set.getValue()).intValue());
-			}else if (set.getValue().getClass().equals(Float.TYPE)) {
+			}else if (set.getValue().getClass().equals(Float.class)) {
 				statement.setFloat(set.getKey(), ((Float) set.getValue()).floatValue());
-			}else if (set.getValue().getClass().equals(Double.TYPE)) {
+			}else if (set.getValue().getClass().equals(Double.class)) {
 				statement.setDouble(set.getKey(), ((Double) set.getValue()).doubleValue());
-			}else if (set.getValue().getClass().equals(Boolean.TYPE)) {
+			}else if (set.getValue().getClass().equals(Boolean.class)) {
 				statement.setBoolean(set.getKey(), ((Boolean) set.getValue()).booleanValue());
-			}else if( set.getValue().getClass().equals(Character.TYPE)) {
+			}else if( set.getValue().getClass().equals(Character.class)) {
 				statement.setString(set.getKey(), (String) set.getValue());
 			}else if(set.getValue().getClass().equals(String.class)) {
 				statement.setString(set.getKey(), (String) set.getValue());

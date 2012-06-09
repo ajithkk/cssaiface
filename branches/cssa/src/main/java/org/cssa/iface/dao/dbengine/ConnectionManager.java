@@ -16,11 +16,14 @@ import org.cssa.iface.dao.commom.LoadProperties;
 
 public class ConnectionManager {
 
+	private static volatile ConnectionManager connectionManager = null; 
+	
 	private String strServer = null;
 	private String strDriver = null;
 	private String strDatabase = null;
+	private String strDbUrl = null;
 
-	private static volatile ConnectionManager connectionManager = null;
+	
 
 	private ConnectionManager() {
 		loadProperties();
@@ -31,6 +34,7 @@ public class ConnectionManager {
 		strDatabase = loadProperties.getStrDatabase();
 		strServer = loadProperties.getStrServer();
 		strDriver = loadProperties.getStrDriver();
+		strDbUrl = loadProperties.getStrUrl();
 
 	}
 
@@ -50,8 +54,10 @@ public class ConnectionManager {
 			SQLException {
 		Connection con = null;
 		Class.forName(strDriver);
-		con = DriverManager.getConnection("jdbc:derby:" + strServer
+		System.out.println(strDbUrl + strServer
 				+ File.separator + strDatabase + " ;create = true");
+		con = DriverManager.getConnection(strDbUrl + strServer
+				+ File.separator + strDatabase + ";create = true");
 		return con;
 	}
 

@@ -28,6 +28,7 @@ public class EventTableModel extends AbstractTableModel {
 	}
 	
 	public void addRow(Events details) {
+		details.setSno(eventList.get(eventList.size()-1).getSno()+1);
 		eventList.add(details);
 		fireTableDataChanged();
 	}
@@ -79,18 +80,6 @@ public class EventTableModel extends AbstractTableModel {
 
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeTableModelListener(TableModelListener l) {
 		// TODO Auto-generated method stub
 		
 	}

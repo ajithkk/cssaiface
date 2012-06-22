@@ -79,7 +79,7 @@ public class EventsController implements ActionListener  {
 		events.setPoints(Integer.valueOf(eventsView.getPoints()));
 		try {
 			eventTableModel.addRow(events);
-			//eventsTransaction.save(events);
+			eventsTransaction.save(events);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

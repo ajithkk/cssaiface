@@ -23,8 +23,6 @@ public class ConnectionManager {
 	private String strDatabase = null;
 	private String strDbUrl = null;
 
-	
-
 	private ConnectionManager() {
 		loadProperties();
 	}
@@ -41,9 +39,7 @@ public class ConnectionManager {
 	public static ConnectionManager getInstance() {
 		if (null == connectionManager) {
 			synchronized (ConnectionManager.class) {
-				if (null == connectionManager) {
-					connectionManager = new ConnectionManager();
-				}
+				connectionManager = new ConnectionManager();
 			}
 
 		}
@@ -54,8 +50,6 @@ public class ConnectionManager {
 			SQLException {
 		Connection con = null;
 		Class.forName(strDriver);
-		System.out.println(strDbUrl + strServer
-				+ File.separator + strDatabase + " ;create = true");
 		con = DriverManager.getConnection(strDbUrl + strServer
 				+ File.separator + strDatabase + ";create = true");
 		return con;

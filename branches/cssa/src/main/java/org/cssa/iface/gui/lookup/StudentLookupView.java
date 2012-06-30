@@ -4,14 +4,18 @@
 package org.cssa.iface.gui.lookup;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.sound.midi.MidiChannel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
@@ -37,13 +41,24 @@ public class StudentLookupView {
 	private CButton btnSearch;
 	private CButton btnClear;
 	private CButton btnCancel;
+	private JButton btnCollegeLookUp;
 	
 	private JTable tblStudentDetails;
 	
 	private StudentLookupController studentLookupController;
 	private StudentLookupTableModel tableModel;
+	private CssaMDIForm mdiForm;
 	
 	
+	public StudentLookupView(StudentLookupController studentLookupController,
+			StudentLookupTableModel tableModel, CssaMDIForm mdiForm) {
+		super();
+		this.studentLookupController = studentLookupController;
+		this.tableModel = tableModel;
+		this.mdiForm = mdiForm;
+	}
+
+
 	/**
 	 * @param studentLookupController
 	 * @param tableModel
@@ -54,7 +69,14 @@ public class StudentLookupView {
 		this.studentLookupController = studentLookupController;
 		this.tableModel = tableModel;
 	}
+	
 
+	public void showEventDetailLookup() {
+		JPanel panel = new JPanel();
+		panel.add(getStudentLookupDetailsBody(), BorderLayout.CENTER);
+		mdiForm.addChild(panel, "Student Lookup Form");
+		
+	}
 	
 	private  JPanel getStudentDetailsPanel() {
 		JPanel panel = new JPanel();
@@ -157,6 +179,9 @@ public class StudentLookupView {
 		
 		tblStudentDetails = new JTable(tableModel);
 		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
+		scrollPane.setMinimumSize(new Dimension(700, 400));
+		scrollPane.setMaximumSize(new Dimension(700, 400));
+		scrollPane.setPreferredSize(new Dimension(700, 400));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		return panel;
@@ -171,13 +196,13 @@ public class StudentLookupView {
 		constraints.insets = new Insets(5, 0, 0, 0);
 		constraints.gridx = 1;
 		constraints.gridy = 5;
-		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(getStudentDetailsPanel(), constraints);
 
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
 		constraints.gridy = 6;
-		constraints.insets = new Insets(10, 0, 10, 0);
+		constraints.insets = new Insets(10, 0,10, 0);
 		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(getButtonPanel(), constraints);
 		
@@ -204,22 +229,11 @@ public class StudentLookupView {
 		return panel;
 	}
 	
-	public JPanel getEventDetailsBody() {
+	public JPanel getStudentLookupDetailsBody() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		GridBagConstraints constraints;
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		panel.add(getTopPanel(), constraints);
-
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.EAST;
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.insets = new Insets(0, 5, 5, 5);
-		panel.add(getBottomPannel(), constraints);
+		panel.setLayout(new BorderLayout());
+		panel.add(getTopPanel(), BorderLayout.NORTH);
+		panel.add(getBottomPannel(), BorderLayout.CENTER);
 
 		return panel;
 	}
@@ -269,6 +283,22 @@ public class StudentLookupView {
 	 */
 	public void setCollegeId(String collegeId) {
 		txtCollegeId.setText(collegeId);
+	}
+
+
+	/**
+	 * @return the tblStudentDetails
+	 */
+	public JTable getTblStudentDetails() {
+		return tblStudentDetails;
+	}
+
+
+	/**
+	 * @param tblStudentDetails the tblStudentDetails to set
+	 */
+	public void setTblStudentDetails(JTable tblStudentDetails) {
+		this.tblStudentDetails = tblStudentDetails;
 	}
 	
 	

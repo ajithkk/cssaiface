@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
+import java.util.Stack;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -17,6 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 import org.cssa.iface.gui.menu.CssaMenuController;
 import org.cssa.iface.gui.toolbar.CssaToolBar;
@@ -31,6 +35,8 @@ public class CssaMDIForm extends JFrame {
 	private JPanel toolBarPanel;
 	ImageUtil imageUtil;
 	private String lookAndFeel = null;
+	JInternalFrame frame;
+	Stack<JInternalFrame> internalFrames;
 	
 	
 	/**
@@ -58,6 +64,8 @@ public class CssaMDIForm extends JFrame {
 		toolBarPanel = new JPanel();
 		desktopPane = new JDesktopPane();
 		imageUtil = new ImageUtil();
+		internalFrames = new Stack<JInternalFrame>();
+		
 		getContentPane().setLayout(new BorderLayout());
 		setLookAndFeel(lookAndFeel);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -92,17 +100,25 @@ public class CssaMDIForm extends JFrame {
 	
 	public void addChild(JPanel panel, String frameTitle) {
 		Dimension screenSize = this.getContentPane().getSize();
-		JInternalFrame frame = new JInternalFrame(frameTitle, true, true, true, true);
+	    frame = new JInternalFrame(frameTitle, true, true, true, true);
 		frame.add(panel);
 		frame.setSize(screenSize);
 		desktopPane.add(frame);
 		frame.setVisible(true);
+		internalFrames.push(frame);
+		frame.addInternalFrameListener(new InternalFrameAdapter() {
+			public void internalFrameClosing(InternalFrameEvent e){
+				closeFrame();
+			}
+		});
 		try {
 			frame.setSelected(true);
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
+		
 	}
+
 
 	/**
 	 * @return the cssaIcon
@@ -149,6 +165,26 @@ public class CssaMDIForm extends JFrame {
 		}
 	}
 
+	/**
+	 * @return the frame
+	 */
+	public JInternalFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * @param frame the frame to set
+	 */
+	public void setFrame(JInternalFrame frame) {
+		this.frame = frame;
+	}
+	
+	public void closeFrame() {
+		if(!internalFrames.empty()) {
+			JInternalFrame frame = internalFrames.pop();
+			frame.dispose();
+		}
+	}
 	
 	
 

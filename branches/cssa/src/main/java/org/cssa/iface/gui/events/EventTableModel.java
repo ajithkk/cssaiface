@@ -7,7 +7,6 @@ import static org.cssa.iface.infrastructure.CSSAConstants.EVENT_DETAILS_COLUMN_N
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import org.cssa.iface.bo.Events;

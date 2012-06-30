@@ -39,7 +39,7 @@ public class CSSAQuery {
 	//events table events table end.
 	
 	//query for getting totel number of college
-	public static final String GET_COLLEGE_COOUNT = "SELECT COUNT("+CSSAConstants.COLLEGE_DETAILS_SNO +") FROM" 
+	public static final String GET_COLLEGE_COOUNT = "SELECT COUNT("+CSSAConstants.COLLEGE_DETAILS_SNO +") FROM " 
 			+ CSSAConstants.COLLEGE_DETAILS_TABLE ;
 	
 	//college_details table query started
@@ -51,8 +51,8 @@ public class CSSAQuery {
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_PHONE+","
 			+CSSAConstants.COLLEGE_DETAILS_NO_OF_PARTICIPANTS+","
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS+","
-			+CSSAConstants.COLLEGE_DETAILS_STATUS +"FROM"+CSSAConstants.COLLEGE_DETAILS_TABLE +"WHERE"
-			+CSSAConstants.COLLEGE_DETAILS_STATUS + "=TRUE ";
+			+CSSAConstants.COLLEGE_DETAILS_STATUS +" FROM "+CSSAConstants.COLLEGE_DETAILS_TABLE +" WHERE "
+			+CSSAConstants.COLLEGE_DETAILS_STATUS + "= TRUE ";
 	
 	public static final String SELECT_COLLEGE_DETAILS = "SELECT "+ CSSAConstants.COLLEGE_DETAILS_SNO +"," 
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +","+CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME + ","
@@ -60,7 +60,7 @@ public class CSSAQuery {
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_PHONE+","
 			+CSSAConstants.COLLEGE_DETAILS_NO_OF_PARTICIPANTS+","
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS+","
-			+CSSAConstants.COLLEGE_DETAILS_STATUS +"FROM"+CSSAConstants.COLLEGE_DETAILS_TABLE +"WHERE"
+			+CSSAConstants.COLLEGE_DETAILS_STATUS +" FROM "+CSSAConstants.COLLEGE_DETAILS_TABLE +" WHERE "
 			+CSSAConstants.COLLEGE_DETAILS_STATUS + "=TRUE  AND "
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +" =  ? ";
 	

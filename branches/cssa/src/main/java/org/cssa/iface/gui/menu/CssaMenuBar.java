@@ -13,6 +13,8 @@ import javax.swing.JMenuItem;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeInitialViewController;
 import org.cssa.iface.gui.events.EventsController;
+import org.cssa.iface.gui.lookup.CollegeLookupController;
+import org.cssa.iface.gui.lookup.StudentLookupController;
 
 /**
  * @author ajith
@@ -212,6 +214,10 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 			controller.displayHelp();
 		} else if(CssaMenuBar.MNU_FILE_NEWCOLLEGE.equals(actionCommand)) {
 			new CollegeInitialViewController(cssaMDIForm).askCollegeInitialView();
+		} else if(CssaMenuBar.MNU_MAINTAIN_COLLEGE.equals(actionCommand)) {
+			new CollegeLookupController(cssaMDIForm).askCollegeLookupView();
+		} else if (CssaMenuBar.MNU_MAINTAIN_STUDENT.equals(actionCommand)) {
+			new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
 		}
 			
 	}

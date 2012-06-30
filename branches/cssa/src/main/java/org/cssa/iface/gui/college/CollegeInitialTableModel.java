@@ -3,30 +3,85 @@
  */
 package org.cssa.iface.gui.college;
 
+import static org.cssa.iface.infrastructure.CSSAConstants.COLLEGE_INITIAL_DETAILS_COLUMN_NAMES;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+
+import org.cssa.iface.bo.StudentDetails;
 
 /**
  * @author ajith
  *
  */
 public class CollegeInitialTableModel extends AbstractTableModel {
+	
+	private List<StudentDetails> studentRegisterNumbers;
+	
+	public CollegeInitialTableModel() {
+		studentRegisterNumbers = new ArrayList<StudentDetails>();
+	}
+	
+	public CollegeInitialTableModel(
+			List<StudentDetails> studentRegisterNumbers) {
+		super();
+		this.studentRegisterNumbers = studentRegisterNumbers;
+	}
 
+	
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return studentRegisterNumbers.size();
 	}
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return COLLEGE_INITIAL_DETAILS_COLUMN_NAMES.length;
+	}
+	@Override
+	public String getColumnName(int columnIndex) {
+		
+		return  COLLEGE_INITIAL_DETAILS_COLUMN_NAMES.length >= columnIndex ? COLLEGE_INITIAL_DETAILS_COLUMN_NAMES[columnIndex]: "COLUMN"+columnIndex;
+	}
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return String.class;
+	}
+
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return false;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		StudentDetails studentRegisterNumber = studentRegisterNumbers.get(rowIndex);
+		switch (columnIndex) {
+		case 0:
+			return studentRegisterNumber.getSno();
+		case 1:
+			return studentRegisterNumber.getStudentId();
+		default: return "";
+		}
+	}
+	
+	/**
+	 * @return the studentRegisterNumbers
+	 */
+	public List<StudentDetails> getStudentRegisterNumbers() {
+		return studentRegisterNumbers;
+	}
+
+
+	/**
+	 * @param studentRegisterNumbers the studentRegisterNumbers to set
+	 */
+	public void setStudentRegisterNumbers(
+			List<StudentDetails> studentRegisterNumbers) {
+		this.studentRegisterNumbers = studentRegisterNumbers;
+		fireTableDataChanged();
 	}
 
 }

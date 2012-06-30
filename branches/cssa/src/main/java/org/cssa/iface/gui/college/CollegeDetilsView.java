@@ -5,18 +5,16 @@ package org.cssa.iface.gui.college;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JFrame;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
 
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
@@ -47,7 +45,24 @@ public class CollegeDetilsView {
 	private CButton btnSave;
 	private CButton btnCancel;
 	private CButton btnClear;
+	private JCheckBox status;
 	
+	private CssaMDIForm mdiForm;
+	private CollegeDetailsController collegeDetailsController;
+	
+	public CollegeDetilsView(CollegeDetailsController collegeDetailsController,
+			CssaMDIForm mdiForm) {
+		this.collegeDetailsController = collegeDetailsController;
+		this.mdiForm = mdiForm;
+
+	}
+	
+	public void showCollegeDetailsView() {
+		JPanel panel = new JPanel();
+		panel.add(getCollegeDetailsPanel(),BorderLayout.CENTER);
+		mdiForm.addChild(panel, "College Details Form");
+	}
+
 	public   JPanel getMainDetailsPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -96,14 +111,15 @@ public class CollegeDetilsView {
 		constraints = new GridBagConstraints();
 		txtCollegeName = new JTextArea();
 		txtCollegeName.setRows(2);
-		txtCollegeName.setColumns(40);
+		txtCollegeName.setColumns(55);
 		txtCollegeName.setLineWrap(true);
-		//txtCollegeName.setPreferredSize(new Dimension(430,20));
+		//txtCollegeName.setPreferredSize(new Dimension(830,20));
 		JScrollPane scrollPane = new JScrollPane(txtCollegeName);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
 		constraints.gridy = 3;
 		constraints.gridwidth = 3;
+		constraints.insets = new Insets(5, 0, 5, 5);
 		panel.add(scrollPane,constraints);
 		
 		constraints = new GridBagConstraints();
@@ -117,14 +133,15 @@ public class CollegeDetilsView {
 		constraints = new GridBagConstraints();
 		txtCollegeAddress = new JTextArea();
 		txtCollegeAddress.setRows(5);
-		txtCollegeAddress.setColumns(40);
+		txtCollegeAddress.setColumns(55);
 		txtCollegeAddress.setLineWrap(true);
-		//txtCollegeName.setPreferredSize(new Dimension(430,20));
+		//txtCollegeName.setPreferredSize(new Dimension(830,20));
 	    scrollPane = new JScrollPane(txtCollegeAddress);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
 		constraints.gridy = 4;
 		constraints.gridwidth = 3;
+		constraints.insets = new Insets(5, 0, 5, 5);
 		panel.add(scrollPane,constraints);
 		
 		constraints = new GridBagConstraints();
@@ -142,6 +159,15 @@ public class CollegeDetilsView {
 		constraints.gridy = 5;
 		constraints.insets = new Insets(5, 0, 5, 5);
 		panel.add(txtCollegePhone, constraints);
+		
+		constraints = new GridBagConstraints();
+		status = new JCheckBox("Status");
+		status.setSelected(true);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		constraints.gridx = 2;
+		constraints.gridy = 5;
+		panel.add(status,constraints);
 		
 		return panel;
 	}
@@ -181,6 +207,11 @@ public class CollegeDetilsView {
 		constraints.gridy = 0;
 		panel.add(btnCancel,constraints);
 		
+		btnCancel.addActionListener(collegeDetailsController);
+		btnClear.addActionListener(collegeDetailsController);
+		btnSave.addActionListener(collegeDetailsController);
+		
+		
 		return panel;
 	}
 	
@@ -204,61 +235,90 @@ public class CollegeDetilsView {
 		panel.add(getMiddleButtonPanel(), constraints);
 		return panel;
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
 
-			@Override
-			public void run() {
-				
-				try {
-				      //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				      for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels())
-				        if ("Nimbus".equals(laf.getName())) UIManager.setLookAndFeel(laf.getClassName());
-				    } catch(Exception e) {
-				      e.printStackTrace();
-				    }
-				JFrame frame = new JFrame();
-				/*try {
-		            // Set System L&F
-		        UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-		    } 
-		    catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		    }
-		    catch (ClassNotFoundException e) {
-		       // handle exception
-		    }
-		    catch (InstantiationException e) {
-		       // handle exception
-		    }
-		    catch (IllegalAccessException e) {
-		       // handle exception
-		    }*/
-
-				frame.setLayout(new GridBagLayout());
-				GridBagConstraints constraints = new GridBagConstraints();
-				constraints.gridx = 0;
-				constraints.gridy = 0;
-				//constraints.anchor = GridBagConstraints.NORTHWEST;
-				// frame.add(new Event().init(),BorderLayout.NORTH);
-				frame.add(new CollegeDetilsView().getCollegeDetailsPanel(),
-						constraints);
-				// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
-				// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
-				//frame.pack();
-				 constraints = new GridBagConstraints();
-				constraints.gridx = 0;
-				constraints.gridy = 2;
-				//constraints.anchor = GridBagConstraints.NORTHWEST;
-				//frame.add(new CollegeDetilsView().getMainDetailsPanel(),
-						//constraints);
-				frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				frame.setSize(800, 400);
-				frame.setVisible(true);
-			}
-		});
+	/**
+	 * @return the txtCollegeId
+	 */
+	public String  getTxtCollegeId() {
+		return txtCollegeId.getText();
 	}
 
+	/**
+	 * @param txtCollegeId the txtCollegeId to set
+	 */
+	public void setTxtCollegeId(String txtCollegeId) {
+		this.txtCollegeId.setText(txtCollegeId);
+	}
+
+	/**
+	 * @return the txtNoOfParticipants
+	 */
+	public String getTxtNoOfParticipants() {
+		return txtNoOfParticipants.getText();
+	}
+
+	/**
+	 * @param txtNoOfParticipants the txtNoOfParticipants to set
+	 */
+	public void setTxtNoOfParticipants(String  txtNoOfParticipants) {
+		this.txtNoOfParticipants.setText(txtNoOfParticipants);
+	}
+
+	/**
+	 * @return the txtCollegeName
+	 */
+	public String getTxtCollegeName() {
+		return txtCollegeName.getText();
+	}
+
+	/**
+	 * @param txtCollegeName the txtCollegeName to set
+	 */
+	public void setTxtCollegeName(String txtCollegeName) {
+		this.txtCollegeName.setText(txtCollegeName);
+	}
+
+	/**
+	 * @return the txtCollegePhone
+	 */
+	public String  getTxtCollegePhone() {
+		return txtCollegePhone.getText();
+	}
+
+	/**
+	 * @param txtCollegePhone the txtCollegePhone to set
+	 */
+	public void setTxtCollegePhone(String txtCollegePhone) {
+		this.txtCollegePhone.setText(txtCollegePhone);
+	}
+
+	/**
+	 * @return the txtCollegeAddress
+	 */
+	public String getTxtCollegeAddress() {
+		return txtCollegeAddress.getText();
+	}
+
+	/**
+	 * @param txtCollegeAddress the txtCollegeAddress to set
+	 */
+	public void setTxtCollegeAddress(String txtCollegeAddress) {
+		this.txtCollegeAddress.setText(txtCollegeAddress);
+	}
+	
+	/**
+	 * 
+	 * @return status
+	 */
+	public boolean getStatus() {
+		return status.isSelected();
+	}
+	
+	/**
+	 * 
+	 * @param status
+	 */
+	public void setStatus(boolean status) {
+		this.status.setSelected(status);
+	}
 }

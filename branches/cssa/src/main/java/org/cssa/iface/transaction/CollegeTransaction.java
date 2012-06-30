@@ -33,6 +33,8 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 
 		int resultId = CSSAConstants.FAIL;
 		String sqlCommand = CSSAQuery.INSERT_ALL_FIELDS_COLLEGE_DETAILS;
+		
+		System.out.println(sqlCommand);
 		String sqlCommand2 = CSSAQuery.INSERT_STUDENT_DETAILS;
 		Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
 		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
@@ -152,7 +154,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 		try {
 			resultId = dbEngineImpl.executeUpdate(parameterMap, sqlCommand);
 		} catch (IfaceException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		return resultId;
@@ -205,6 +207,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 			}
 			dbEngineImpl.closeResultSet(res);
 		} catch (Exception e) {
+			System.out.println(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}

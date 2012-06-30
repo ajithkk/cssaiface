@@ -5,6 +5,7 @@ package org.cssa.iface.gui.lookup;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,6 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
@@ -47,18 +49,18 @@ public class CollegeLookupView {
 	
 	private CollegeLookupController collegeLookupController;
 	private CollegeLookupTableModel tableModel;
-	
-	
+	private CssaMDIForm mdiForm;
 	
 	/**
 	 * @param collegeLookupController
 	 * @param tableModel
 	 */
 	public CollegeLookupView(CollegeLookupController collegeLookupController,
-			CollegeLookupTableModel tableModel) {
+			CollegeLookupTableModel tableModel, CssaMDIForm mdiForm) {
 		super();
 		this.collegeLookupController = collegeLookupController;
 		this.tableModel = tableModel;
+		this.mdiForm = mdiForm;
 	}
 	/**
 	 * default constructor
@@ -71,16 +73,10 @@ public class CollegeLookupView {
 	/**
 	 * display college lookup screen
 	 */
-	/*public void showCollegeLookupScreen() {
-		JTabbedPane tabbedPane = new JTabbedPane();
-		
-	}*/
-	public Component showCollegeLookupScreen() {
-		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab(BorderLayout.CENTER, getEventDetailsBody());
-		//tabbedPane.addTab("Event Details", new EventsView().getEventDetailsBody());
-		tabbedPane.setTitleAt(0, "College Details");
-		return tabbedPane;
+	public void showCollegeLookupScreen() {
+		JPanel panel = new JPanel();
+		panel.add(getEventDetailsBody(),BorderLayout.CENTER);
+		mdiForm.addChild(panel, "College Lookup Form");
 	}
 	
 	public JPanel getCollegeDetailsPanel() {
@@ -168,8 +164,11 @@ public class CollegeLookupView {
 		
 		tblCollegeDetails = new JTable(tableModel);
 		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
+		scrollPane.setMinimumSize(new Dimension(700, 400));
+		scrollPane.setMaximumSize(new Dimension(700, 400));
+		scrollPane.setPreferredSize(new Dimension(700, 400));
 		panel.add(scrollPane, BorderLayout.CENTER);
-
+		tblCollegeDetails.addMouseListener(collegeLookupController);
 		return panel;
 	}
 	
@@ -181,7 +180,7 @@ public class CollegeLookupView {
 		constraints.insets = new Insets(5, 0, 0, 0);
 		constraints.gridx = 1;
 		constraints.gridy = 5;
-		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.anchor = GridBagConstraints.WEST;
 		panel.add(getCollegeDetailsPanel(), constraints);
 
 		constraints = new GridBagConstraints();
@@ -216,21 +215,9 @@ public class CollegeLookupView {
 	
 	public JPanel getEventDetailsBody() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		GridBagConstraints constraints;
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		panel.add(getTopPanel(), constraints);
-
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.EAST;
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.insets = new Insets(0, 5, 5, 5);
-		panel.add(getBottomPannel(), constraints);
-
+		panel.setLayout(new BorderLayout());
+		panel.add(getTopPanel(), BorderLayout.NORTH);
+		panel.add(getBottomPannel(), BorderLayout.CENTER);
 		return panel;
 	}
 
@@ -266,47 +253,19 @@ public class CollegeLookupView {
 	public void setCollegeId(String collegeId) {
 		txtCollegeId.setText(collegeId);
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				JFrame frame = new JFrame();
-				try {
-		            // Set System L&F
-		        UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-		    } 
-		    catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		    }
-		    catch (ClassNotFoundException e) {
-		       // handle exception
-		    }
-		    catch (InstantiationException e) {
-		       // handle exception
-		    }
-		    catch (IllegalAccessException e) {
-		       // handle exception
-		    }
-
-				frame.setLayout(new BorderLayout());
-				// frame.add(new Event().init(),BorderLayout.NORTH);
-				frame.add(new CollegeLookupView().showCollegeLookupScreen(),
-						BorderLayout.CENTER);
-				/*frame.add(new CollegeLookupView().getEventDetailsBody(),
-						BorderLayout.CENTER);*/
-				// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
-				// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
-				frame.pack();
-				frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				frame.setSize(400, 400);
-				frame.setVisible(true);
-			}
-		});
+	/**
+	 * @return the tblCollegeDetails
+	 */
+	public JTable getTblCollegeDetails() {
+		return tblCollegeDetails;
 	}
-
+	/**
+	 * @param tblCollegeDetails the tblCollegeDetails to set
+	 */
+	public void setTblCollegeDetails(JTable tblCollegeDetails) {
+		this.tblCollegeDetails = tblCollegeDetails;
+	}
+	
 }
 	
 

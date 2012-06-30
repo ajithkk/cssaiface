@@ -28,15 +28,13 @@ public class DBEngineImpl {
 	private static DBEngineImpl dbEngineImpl = null;
 
 	private DBEngineImpl() {
-		// getConnection();
+		connectionManager = ConnectionManager.getInstance();
 	}
 
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
-		connectionManager = ConnectionManager.getInstance();
 		return connectionManager.getConnection();
 
 	}
-
 	public static DBEngineImpl getInstance() {
 		if (null == dbEngineImpl) {
 			synchronized (DBEngineImpl.class) {
@@ -52,6 +50,7 @@ public class DBEngineImpl {
 	public ResultSet executeQuery(String query) throws IfaceException {
 		res = null;
 		try {
+			System.out.println(query);
 			con = getConnection();
 		} catch (ClassNotFoundException e1) {
 			throw new IfaceException("Driver is not fount in connection"
@@ -73,8 +72,6 @@ public class DBEngineImpl {
 			throw new IfaceException("Sql exception in Query execution"
 					+ e.getStackTrace());
 		} finally {
-			ConnectionManager connectionManager = ConnectionManager
-					.getInstance();
 			//connectionManager.closeConnection(con);
 			//connectionManager.closeStatement(smt);
 		}
@@ -109,9 +106,7 @@ public class DBEngineImpl {
 			throw new IfaceException("Sql exception in Query execution"
 					+ e.getStackTrace());
 		} finally {
-
-			ConnectionManager connectionManager = ConnectionManager
-					.getInstance();
+			
 			connectionManager.closeConnection(con);
 			connectionManager.closeStatement(smt);
 		}
@@ -140,10 +135,8 @@ public class DBEngineImpl {
 			throw new IfaceException("Statement Creation exception" + e.getStackTrace());
 			
 		}finally {
-
-			ConnectionManager connectionManager = ConnectionManager
-					.getInstance();
-			connectionManager.closeConnection(con);
+			//closePreparedStatement(statement);
+			//connectionManager.closeConnection(con);
 			//connectionManager.closeStatement(smt);
 		}
 		return statement;
@@ -163,22 +156,6 @@ public class DBEngineImpl {
 		}
 		try {
 			statement = con.prepareStatement(sqlCommand);
-			/*Set<Map.Entry<Integer, Object>> parameterSet = parameterMap.entrySet();
-			for(Map.Entry<Integer, Object> set : parameterSet ) {
-				if(set.getValue().getClass().equals(Integer.TYPE)) {
-					statement.setInt(set.getKey(), ((Integer) set.getValue()).intValue());
-				}else if (set.getValue().getClass().equals(Float.TYPE)) {
-					statement.setFloat(set.getKey(), ((Float) set.getValue()).floatValue());
-				}else if (set.getValue().getClass().equals(Double.TYPE)) {
-					statement.setDouble(set.getKey(), ((Double) set.getValue()).doubleValue());
-				}else if (set.getValue().getClass().equals(Boolean.TYPE)) {
-					statement.setBoolean(set.getKey(), ((Boolean) set.getValue()).booleanValue());
-				}else if( set.getValue().getClass().equals(Character.TYPE)) {
-					statement.setString(set.getKey(), (String) set.getValue());
-				}else if(set.getValue().getClass().equals(String.class)) {
-					statement.setString(set.getKey(), (String) set.getValue());
-				}
-			}*/
 			con.setAutoCommit(false);
 			res = setPreparedStatement(statement, parameterMap).executeQuery();
 			commit(con);
@@ -188,10 +165,9 @@ public class DBEngineImpl {
 					+ e.getStackTrace());
 			
 		}finally {
-			ConnectionManager connectionManager = ConnectionManager
-					.getInstance();
 			connectionManager.closeConnection(con);
-			connectionManager.closeStatement(statement);
+			//connectionManager.closeStatement(statement);
+			closePreparedStatement(statement);
 		}
 		
 		return res;
@@ -213,22 +189,6 @@ public class DBEngineImpl {
 		try {
 			statement = con.prepareStatement(sqlCommand);
 			con.setAutoCommit(false);
-			/*Set<Map.Entry<Integer, Object>> parameterSet = parameterMap.entrySet();
-			for(Map.Entry<Integer, Object> set : parameterSet ) {
-				if(set.getValue().getClass().equals(Integer.TYPE)) {
-					statement.setInt(set.getKey(), ((Integer) set.getValue()).intValue());
-				}else if (set.getValue().getClass().equals(Float.TYPE)) {
-					statement.setFloat(set.getKey(), ((Float) set.getValue()).floatValue());
-				}else if (set.getValue().getClass().equals(Double.TYPE)) {
-					statement.setDouble(set.getKey(), ((Double) set.getValue()).doubleValue());
-				}else if (set.getValue().getClass().equals(Boolean.TYPE)) {
-					statement.setBoolean(set.getKey(), ((Boolean) set.getValue()).booleanValue());
-				}else if( set.getValue().getClass().equals(Character.TYPE)) {
-					statement.setString(set.getKey(), (String) set.getValue());
-				}else if(set.getValue().getClass().equals(String.class)) {
-					statement.setString(set.getKey(), (String) set.getValue());
-				}
-			}*/
 			returnId = setPreparedStatement(statement, parameterMap).executeUpdate();
 			commit(con);
 		} catch (SQLException e) {
@@ -237,16 +197,16 @@ public class DBEngineImpl {
 					+ e.getStackTrace());
 			
 		}finally {
-			ConnectionManager connectionManager = ConnectionManager
-					.getInstance();
 			connectionManager.closeConnection(con);
 			connectionManager.closeStatement(statement);
+			closePreparedStatement(statement);
 		}
 		return returnId;
 	}
 	
 	public int[] executeBatch(List<Map<Integer, Object>> batchParameterList, String sqlCommand) throws IfaceException {
 		int returnId[] = null;
+		PreparedStatement statement = null;
 		try {
 			con =getConnection();
 		} catch (ClassNotFoundException e) {
@@ -257,9 +217,9 @@ public class DBEngineImpl {
 					+ e.getStackTrace());
 		}
 		try {
-			//statement = con.prepareStatement(query);
+			statement = con.prepareStatement(sqlCommand);
 			con.setAutoCommit(false);
-			//returnId = statement.executeBatch();
+			returnId = setBatchPreparedStatement(statement, batchParameterList).executeBatch();
 			commit(con);
 		} catch (SQLException e) {
 			rollback(con);
@@ -267,11 +227,9 @@ public class DBEngineImpl {
 					+ e.getStackTrace());
 			
 		}finally {
-
-			ConnectionManager connectionManager = ConnectionManager
-					.getInstance();
 			connectionManager.closeConnection(con);
-			//connectionManager.closeStatement(statement);
+			connectionManager.closeStatement(statement);
+			closePreparedStatement(statement);
 		}
 		return returnId; 
 	}
@@ -302,11 +260,25 @@ public class DBEngineImpl {
 		
 	}
 	
+	private PreparedStatement setBatchPreparedStatement( PreparedStatement statement, List<Map<Integer, Object>> batchParameterList) throws IfaceException {
+		for(Map parameterMap : batchParameterList ) {
+			statement = setPreparedStatement(statement, parameterMap);
+			try {
+				statement.addBatch();
+			} catch (SQLException e) {
+				throw new IfaceException("Sql exception in Query execution"
+						+ e.getStackTrace());
+			}
+		}
+		return statement;
+		
+	}
 
 	public void closeResultSet(ResultSet res) throws IfaceException {
 		if (null != res) {
 			try {
 				res.close();
+				closeStatement(smt);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -337,7 +309,7 @@ public class DBEngineImpl {
 		try {
 			if(con != null &&!con.isClosed()) {
 				con.commit();
-				ConnectionManager.getInstance().closeConnection(con);
+				connectionManager.closeConnection(con);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -348,11 +320,22 @@ public class DBEngineImpl {
 		try {
 			if(null != con && !con.isClosed()) {
 				con.rollback();
-				ConnectionManager.getInstance().closeConnection(con);
+				connectionManager.closeConnection(con);
 			} 
 		} catch (Exception e) {
 			throw new IfaceException(e);
 		}
+	}
+	
+	public void closeConnection() throws IfaceException {
+		try {
+			if(null != con && !con.isClosed()) {
+				connectionManager.closeConnection(con);
+			} 
+		} catch (Exception e) {
+			throw new IfaceException(e);
+		}
+		
 	}
 
 }

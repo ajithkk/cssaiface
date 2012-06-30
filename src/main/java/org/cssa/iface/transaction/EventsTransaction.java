@@ -52,7 +52,7 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 		try {
 			resultId = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.INSERT_EVENTS_TABLE);
 		} catch (IfaceException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} 
 		return resultId;
 	}

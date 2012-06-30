@@ -304,6 +304,7 @@ public class EventsView {
 		GridBagConstraints constraints;
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(10, 5, 0, 10);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		panel.add(getTopPannel(), constraints);

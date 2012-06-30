@@ -10,7 +10,7 @@ import org.cssa.iface.bo.CollegeDetails;
 
 public class CollegeLookupTableModel extends AbstractTableModel {
 	
-	private List<CollegeDetails> collegeList = null;
+	private List<CollegeDetails> collegeList;
 	
 	/**
 	 * default constructor
@@ -29,7 +29,6 @@ public class CollegeLookupTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		
 		return collegeList.size();
 	}
 	
@@ -57,8 +56,34 @@ public class CollegeLookupTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		
 		CollegeDetails college = collegeList.get(rowIndex);
-		return college;
+		switch(columnIndex) {
+			case 0 : return college.getSno();
+			case 1 : return college.getCollegeId();
+			case 2 : return college.getCollegeName();
+			case 3 : return college.getCollegeAddress();
+			case 4 : return college.getCollegePhone();
+			case 5 : return college.getNoOfParticipants();
+			case 6 : return String.valueOf(college.isStatus());
+			default : return "";
+		}
+		
+	}
+
+	/**
+	 * @return the collegeList
+	 */
+	public List<CollegeDetails> getCollegeList() {
+		return collegeList;
+	}
+
+	/**
+	 * @param collegeList the collegeList to set
+	 */
+	public void setCollegeList(List<CollegeDetails> collegeList) {
+		this.collegeList = collegeList;
+		fireTableDataChanged();
 	}
 
 }

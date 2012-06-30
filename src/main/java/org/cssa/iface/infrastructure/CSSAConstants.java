@@ -22,7 +22,7 @@ public class CSSAConstants {
 	
 	public static final int FAIL = -1;
 	
-	public static final String COLLEGE_ID_PRE_STRING = "INT";
+	public static final String COLLEGE_ID_PRE_STRING = "IT";
 	public static final String COLLEGE_ID_PRE_ZERO = "0";
 	
 	public static final String EVENTS_TABLE = "EVENTS";
@@ -41,7 +41,7 @@ public class CSSAConstants {
 	public static final String COLLEGE_DETAILS_COLLEGE_ID = "COLLEGE_ID";
 	public static final String COLLEGE_DETAILS_COLLEGE_NAME = "COLLEGE_NAME";
 	public static final String COLLEGE_DETAILS_COLLEGE_ADDRESS = "COLLEGE_ADDRESS";
-	public static final String COLLEGE_DETAILS_COLLEGE_PHONE = "COLLEGE_PH ONE";
+	public static final String COLLEGE_DETAILS_COLLEGE_PHONE = "COLLEGE_PHONE";
 	public static final String COLLEGE_DETAILS_NO_OF_PARTICIPANTS = "NO_OF_PARTICIPANTS";
 	public static final String COLLEGE_DETAILS_COLLEGE_POINTS = "COLLEGE_POINTS";
 	public static final String COLLEGE_DETAILS_STATUS = "STATUS";
@@ -70,8 +70,10 @@ public class CSSAConstants {
 	public static final String RESULTS_MARK = "MARK";
 	
 	public static final String[] EVENT_DETAILS_COLUMN_NAMES = {"SNO", "EVENT CODE NAME", "EVENT NAME", "NO OF PARTICIPANTS", "POINTS" };
+	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS","STATUS"};
+	public static final String[] COLLEGE_INITIAL_DETAILS_COLUMN_NAMES = {"SNO","STUDENT ID", "STUDENT NAME", "EVENTS"};
+	public static final String[] STUDENT_LOOKUP_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","PHONE NUMBER","ACTIVE"};
 	
-	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS"};
 	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
 	
 	public static final String HELP_FILE = "HelpSet.cs";

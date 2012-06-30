@@ -127,7 +127,7 @@ public class CollegeInitialView {
 		
 		constraints = new GridBagConstraints();
 		txtCollegeName = new JTextArea();
-		txtCollegeName.setRows(1);
+		txtCollegeName.setRows(2);
 		txtCollegeName.setColumns(54);
 		txtCollegeName.setLineWrap(true);
 		//txtCollegeName.setPreferredSize(new Dimension(430,20));
@@ -192,6 +192,10 @@ public class CollegeInitialView {
 		constraints.gridx = 4;
 		constraints.gridy = 0;
 		panel.add(btnCancel,constraints);
+		
+		btnInsert.addActionListener(controller);
+		btnCancel.addActionListener(controller);
+		btnClear.addActionListener(controller);
 		
 		return panel;
 	}
@@ -350,8 +354,8 @@ public class CollegeInitialView {
 	 * method to set number of participants
 	 * @param noOfPArticipants
 	 */
-	public void setNoOfParticipants(int noOfPArticipants) {
-		txtNoOfParticipants.setText(String.valueOf(noOfPArticipants));
+	public void setNoOfParticipants(String noOfPArticipants) {
+		txtNoOfParticipants.setText(noOfPArticipants);
 	}
 	
 	/**
@@ -370,41 +374,16 @@ public class CollegeInitialView {
 	public void setCollegePhone(String collegePhone) {
 		txtCollegePhone.setText(collegePhone);
 	}
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				JFrame frame = new JFrame();
-				/*try {
-		            // Set System L&F
-		        UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-		    } 
-		    catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		    }
-		    catch (ClassNotFoundException e) {
-		       // handle exception
-		    }
-		    catch (InstantiationException e) {
-		       // handle exception
-		    }
-		    catch (IllegalAccessException e) {
-		       // handle exception
-		    }*/
-
-				frame.setLayout(new BorderLayout());
-				// frame.add(new Event().init(),BorderLayout.NORTH);
-				frame.add(new CollegeInitialView().getDetailsBody(),
-						BorderLayout.WEST);
-				// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
-				// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
-				frame.pack();
-				frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				frame.setSize(400, 400);
-				frame.setVisible(true);
-			}
-		});
+	/**
+	 * @return the tblStudentDetails
+	 */
+	public JTable getTblStudentDetails() {
+		return tblStudentDetails;
+	}
+	/**
+	 * @param tblStudentDetails the tblStudentDetails to set
+	 */
+	public void setTblStudentDetails(JTable tblStudentDetails) {
+		this.tblStudentDetails = tblStudentDetails;
 	}
 }

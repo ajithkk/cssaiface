@@ -50,7 +50,7 @@ public class EventsController implements ActionListener  {
 	public void actionPerformed(ActionEvent e) {
 		String command =  e.getActionCommand();
 		if(EventsView.CANCEL.equals(command)) {
-			eventsView.setEventCode("Cancel Clicked");
+			mdiForm.closeFrame();
 		}
 		if(EventsView.CLEAR.equals(command)) {
 			clearEventView();

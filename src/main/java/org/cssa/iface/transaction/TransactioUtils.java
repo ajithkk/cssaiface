@@ -32,6 +32,8 @@ public class TransactioUtils {
 		String collegeId = CSSAConstants.COLLEGE_ID_PRE_STRING;
 		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
 		try{
+			
+			System.out.println(CSSAQuery.GET_COLLEGE_COOUNT);
 			res = dbEngineImpl.executeQuery(CSSAQuery.GET_COLLEGE_COOUNT);
 			if(res.next()) {
 				collegeId+= ((res.getInt(1)+1) < 10 ? CSSAConstants.COLLEGE_ID_PRE_ZERO +String.valueOf(res.getInt(1)) : String.valueOf(res.getInt(1)));

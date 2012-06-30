@@ -29,17 +29,25 @@ public class QueryServices {
 				+CSSAConstants.COLLEGE_DETAILS_COLLEGE_PHONE+","
 				+CSSAConstants.COLLEGE_DETAILS_NO_OF_PARTICIPANTS+","
 				+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS+","
-				+CSSAConstants.COLLEGE_DETAILS_STATUS +"FROM"+CSSAConstants.COLLEGE_DETAILS_TABLE );
-		collegeSearchQuery.append("WHERE");
-		if(null != collegeDetails.getCollegeName()) {
-			collegeSearchQuery.append(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME +" LIKE '" + collegeDetails.getCollegeName() +"'");
-			addStringFlag = true;
+				+CSSAConstants.COLLEGE_DETAILS_STATUS +" FROM "+CSSAConstants.COLLEGE_DETAILS_TABLE );
+		collegeSearchQuery.append(" WHERE ");
+		if(null != collegeDetails.getCollegeName() ) {
+			if(!collegeDetails.getCollegeName().isEmpty()) {
+				String condition =collegeDetails.getCollegeName().replace('*', '%');
+				collegeSearchQuery.append(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME +" LIKE '");
+				collegeSearchQuery.append(condition  +"'");
+				addStringFlag = true;
+			}
 		}
 		if( null != collegeDetails.getCollegeId()) {
-			if(addStringFlag) {
-				collegeSearchQuery.append("AND");
+			if(!collegeDetails.getCollegeId().isEmpty()) {
+				if(addStringFlag) {
+					collegeSearchQuery.append("AND ");
+				}
+				String condition = collegeDetails.getCollegeId().replace('*', '%');
+				collegeSearchQuery.append(CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +" LIKE '");
+				collegeSearchQuery.append(condition.toUpperCase() +"'" );
 			}
-			collegeSearchQuery.append(CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"LIKE '"+ collegeDetails.getCollegeId() +"'" );
 		}
 		return collegeSearchQuery.toString();
 		

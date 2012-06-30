@@ -1,6 +1,8 @@
 package org.cssa.iface.util;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+
+
 /**
  * @author ajith
 * Static convenience methods for common tasks, which eliminate code duplication.

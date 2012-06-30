@@ -28,6 +28,18 @@ public class CollegeLookupFormValidator  extends ValidateUtil {
 		super();
 		this.message = null;
 	}
+	/**
+	 * @return the lookupView
+	 */
+	public CollegeLookupView getLookupView() {
+		return lookupView;
+	}
+	/**
+	 * @param lookupView the lookupView to set
+	 */
+	public void setLookupView(CollegeLookupView lookupView) {
+		this.lookupView = lookupView;
+	}
 	@Override
 	public boolean validateForm() {
 		if(isEmpty(lookupView.getCollegeId())){

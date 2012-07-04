@@ -28,14 +28,17 @@ public class EventsController implements ActionListener  {
 	EventsView eventsView = null;
 	EventTableModel eventTableModel = null;
 	private CssaMDIForm mdiForm;
+	private boolean editFlag;
 	
 	private EventsTransaction eventsTransaction = null;
 	
 	public EventsController() {
 		eventTableModel = new EventTableModel(); 
+		editFlag = false;
 	}
 	public EventsController(CssaMDIForm mdiForm) {
 		this.mdiForm = mdiForm;
+		editFlag = false;
 		eventsTransaction = new EventsTransaction();
 		try {
 			eventTableModel = new EventTableModel(eventsTransaction.loadAll());
@@ -56,14 +59,21 @@ public class EventsController implements ActionListener  {
 			clearEventView();
 		}
 		if(EventsView.SAVE.equals(command)) {
-			performEventSaveAction();
+			if(editFlag) {
+				editFlag = false;
+				performEdit();
+			}else {
+				performEventSaveAction();
+				clearEventView();
+			}
 		}
 		if(EventsView.DELETE.equals(command)) {
 			eventsView.setEventCode("Delete Clicked");
 		}
 		
 		if(EventsView.EDIT.equals(command)) {
-			eventsView.setEventCode("Edit Clicked");
+			editFlag = true;
+			performEditAction();
 		}
 		if(EventsView.PRINT.equals(command)) {
 			eventsView.setEventCode("Print Clicked");
@@ -71,6 +81,22 @@ public class EventsController implements ActionListener  {
 		
 	}
 	
+	private void performEdit() {
+		Events events = new Events();
+		events.setEventId(eventsView.getEventCode());
+		events.setEventName(eventsView.getEventName());
+		events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
+		events.setPoints(Integer.valueOf(eventsView.getPoints()));
+		try {
+			//eventTableModel.addRow(events);
+			eventsTransaction.update(events);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	private void performEventSaveAction() {
 		Events events = new Events();
 		events.setEventId(eventsView.getEventCode());
@@ -85,8 +111,6 @@ public class EventsController implements ActionListener  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		
 	}
 	/**
@@ -104,5 +128,14 @@ public class EventsController implements ActionListener  {
 		eventsView = new EventsView(this,eventTableModel,mdiForm);
 		eventsView.showEventscreen();
 		
+	}
+	
+	public void performEditAction() {
+		int rowSelected = eventsView.getEventTable().getSelectedRow();
+		Events events = eventTableModel.getEventList().get(rowSelected);
+		eventsView.setEventCode(events.getEventId());
+		eventsView.setEventName(events.getEventName());
+		eventsView.setMaxParticipants(String.valueOf(events.getMaxNoOfParticipants()));
+		eventsView.setPoints(String.valueOf(events.getPoints()));
 	}
 }

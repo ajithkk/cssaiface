@@ -350,4 +350,12 @@ public class EventsView {
 	public void setPoints(String point) {
 		txtPoints.setText(point);
 	}
+
+	public JTable getEventTable() {
+		return eventTable;
+	}
+
+	public void setEventTable(JTable eventTable) {
+		this.eventTable = eventTable;
+	}
 }

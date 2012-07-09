@@ -4,7 +4,6 @@
 package org.cssa.iface.gui.student;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,10 +11,12 @@ import java.awt.Insets;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
 
@@ -26,13 +27,20 @@ import org.cssa.iface.gui.controls.CTextField;
 public class StudentDetailsView {
 	
 	public static final String[] GENDER = {"Male", "Female"};
+
+	public static final String SAVE = "Save";
+	public static final String PRINT = "Print";
+	public static final String EDIT = "Edit";
+	public static final String CANCEL = "Cancel";
+	public static final String CLEAR = "clear";
+	public static final String DELETE = "Delete";
+	public static final String ADD = "Add";
 	
 	private CLabel lblStudentId;
 	private CLabel lblCollegeId;
 	private CLabel lblStudentName;
 	private CLabel lblGender;
 	private CLabel lblPhone;
-	private CLabel lblAccommodation;
 	
 	private CTextField txtStudentId;
 	private CTextField txtCollegeId;
@@ -41,9 +49,36 @@ public class StudentDetailsView {
 	
 	private JComboBox cbGender;
 	private JCheckBox ckAccommodation;
-	private JTable eventTable;
+	private JTable studentTable;
+	
+	private CssaMDIForm cssaMDIForm;
+	private StudentDetailsEventTableModel tableModel;
+	private StudentDetailsController controller;
+
+	private CButton btnSave;
+	private CButton btnClear;
+	private CButton btnCancel;
+	private CButton btnDelete;
+	private CButton btnPrint;
+    private CButton btnAdd;
+	private CButton btnEdit;
 	
 	
+	public StudentDetailsView(CssaMDIForm cssaMDIForm,
+			StudentDetailsEventTableModel tableModel,StudentDetailsController controller) {
+		super();
+		this.cssaMDIForm = cssaMDIForm;
+		this.tableModel = tableModel;
+		this.controller = controller;
+	}
+	
+	public void showStudentScreen() {
+		JPanel tabbedPane = new JPanel();
+		tabbedPane.add(getStudentDetailsBody(), BorderLayout.CENTER);
+		cssaMDIForm.addChild(tabbedPane, "Event Details");
+	}
+
+
 	public  JPanel getStudentDetailsPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -60,6 +95,7 @@ public class StudentDetailsView {
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.insets = new Insets(3, 2, 2, 0);
+		txtStudentId.setEditable(false);
 		panel.add(txtStudentId, constraints);
 		
 		lblCollegeId = new CLabel("College Id:");
@@ -76,6 +112,7 @@ public class StudentDetailsView {
 		constraints.gridy = 0;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(3, 2, 3, 0);
+		txtCollegeId.setEditable(false);
 		panel.add(txtCollegeId, constraints);
 		
 		lblStudentName = new CLabel("Student Name:");
@@ -141,23 +178,304 @@ public class StudentDetailsView {
 		
 	}
 	
-	
-	public JPanel getTablePanel() {
+	public JPanel getMiddleButtonPanel() {
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		
-		
+		GridBagConstraints constraints = null;
+
+		constraints = new GridBagConstraints();
+		btnSave = new CButton("Save");
+		btnSave.setMnemonic('S');
+		btnSave.setActionCommand(SAVE);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		panel.add(btnSave, constraints);
+		btnSave.addActionListener(controller);
+
+		constraints = new GridBagConstraints();
+		btnClear = new CButton("Clear");
+		btnClear.setMnemonic('L');
+		btnClear.setActionCommand(CLEAR);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 3;
+		constraints.gridy = 0;
+		panel.add(btnClear, constraints);
+		btnClear.addActionListener(controller);
+
+		constraints = new GridBagConstraints();
+		btnCancel = new CButton("Cancel");
+		btnCancel.setMnemonic('C');
+		btnCancel.setActionCommand(CANCEL);
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 4;
+		constraints.gridy = 0;
+		panel.add(btnCancel, constraints);
+		btnCancel.addActionListener(controller);
 		
 		return panel;
 	}
 	
-	public static void main(String[] args) {
+	public JPanel getSideButtonPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = null;
+
+		constraints = new GridBagConstraints();
+		btnEdit = new CButton("Edit");
+		btnEdit.setMnemonic('E');
+		btnEdit.setActionCommand(EDIT);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(0, 5, 5, 5);
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		panel.add(btnEdit, constraints);
+		btnEdit.addActionListener(controller);
 		
-		JFrame frame = new JFrame();
-		frame.add(new StudentDetailsView().getStudentDetailsPanel(), BorderLayout.NORTH );
-		frame.setSize(new Dimension(400, 200));
-		frame.setVisible(true);
+		constraints = new GridBagConstraints();
+		btnAdd = new CButton("Add");
+		btnAdd.setMnemonic('A');
+		btnAdd.setActionCommand(ADD);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(0, 5, 5, 5);
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		panel.add(btnAdd, constraints);
+		btnAdd.addActionListener(controller);
+		
+
+		constraints = new GridBagConstraints();
+		btnDelete = new CButton("Delete");
+		btnDelete.setMnemonic('D');
+		btnDelete.setActionCommand(DELETE);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(0, 5, 5, 5);
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		panel.add(btnDelete, constraints);
+		btnDelete.addActionListener(controller);
+
+		constraints = new GridBagConstraints();
+		btnPrint = new CButton("Print");
+		btnPrint.setMnemonic('P');
+		btnPrint.setActionCommand(PRINT);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(0, 5, 5, 5);
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		panel.add(btnPrint, constraints);
+		btnPrint.addActionListener(controller);
+		
+		return panel;
 	}
 	
+	
+	public JPanel getTablePannel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		studentTable = new JTable(tableModel);
+		JScrollPane scrollPane = new JScrollPane(studentTable);
+		scrollPane.setMinimumSize(new Dimension(600, 400));
+		scrollPane.setMaximumSize(new Dimension(600, 400));
+		scrollPane.setPreferredSize(new Dimension(600, 400));
+		panel.add(scrollPane, BorderLayout.CENTER);
+
+		return panel;
+	}	
+	
+	
+	public JPanel getTopPannel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.insets = new Insets(5, 0, 0, 0);
+		constraints.gridx = 1;
+		constraints.gridy = 5;
+		constraints.anchor = GridBagConstraints.NORTH;
+		panel.add(getStudentDetailsPanel(), constraints);
+
+		constraints = new GridBagConstraints();
+		constraints.gridx = 1;
+		constraints.gridy = 6;
+		constraints.insets = new Insets(10, 0, 10, 0);
+		constraints.anchor = GridBagConstraints.CENTER;
+		panel.add(getMiddleButtonPanel(), constraints);
+		return panel;
+	}
+
+	public JPanel getBottomPannel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.gridy = 0;
+		constraints.gridx = 1;
+		panel.add(getTablePannel(), constraints);
+
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.NORTHWEST;
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		constraints.insets = new Insets(10, 5, 0, 0);
+		panel.add(getSideButtonPanel(), constraints);
+
+		return panel;
+	}
+
+	public JPanel getStudentDetailsBody() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints;
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(10, 5, 0, 10);
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		panel.add(getTopPannel(), constraints);
+
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.insets = new Insets(0, 5, 5, 5);
+		panel.add(getBottomPannel(), constraints);
+
+		return panel;
+	}
+
+	
+
+	/**
+	 * @return the txtStudentId
+	 */
+	public String getTxtStudentId() {
+		return txtStudentId.getText();
+	}
+
+
+	/**
+	 * @param txtStudentId the txtStudentId to set
+	 */
+	public void setTxtStudentId(String txtStudentId) {
+		this.txtStudentId.setText(txtStudentId);
+	}
+
+
+	/**
+	 * @return the txtCollegeId
+	 */
+	public String  getTxtCollegeId() {
+		return txtCollegeId.getText();
+	}
+
+
+	/**
+	 * @param txtCollegeId the txtCollegeId to set
+	 */
+	public void setTxtCollegeId(String txtCollegeId) {
+		this.txtCollegeId.setText(txtCollegeId);
+	}
+
+
+	/**
+	 * @return the txtStudentName
+	 */
+	public String getTxtStudentName() {
+		return txtStudentName.getText();
+	}
+
+
+	/**
+	 * @param txtStudentName the txtStudentName to set
+	 */
+	public void setTxtStudentName(String  txtStudentName) {
+		this.txtStudentName.setText(txtStudentName);
+	}
+
+
+	/**
+	 * @return the txtPhone
+	 */
+	public String getTxtPhone() {
+		return txtPhone.getText();
+	}
+
+
+	/**
+	 * @param txtPhone the txtPhone to set
+	 */
+	public void setTxtPhone(String txtPhone) {
+		this.txtPhone.setText(txtPhone);
+	}
+
+
+	/**
+	 * @return the cbGender
+	 */
+	public String getCbGender() {
+		return cbGender.getSelectedItem().toString();
+	}
+
+
+	/**
+	 * @param cbGender the cbGender to set
+	 */
+	public void setCbGender(String cbGender) {
+		this.cbGender.setSelectedItem(cbGender);
+	}
+
+
+	/**
+	 * @return the ckAccommodation
+	 */
+	public boolean getCkAccommodation() {
+		return ckAccommodation.isSelected();
+	}
+
+
+	/**
+	 * @param ckAccommodation the ckAccommodation to set
+	 */
+	public void setCkAccommodation(Boolean ckAccommodation) {
+		this.ckAccommodation.setSelected(ckAccommodation);
+	}
+
+
+	/**
+	 * @return the studentTable
+	 */
+	public JTable getStudentTable() {
+		return studentTable;
+	}
+
+
+	/**
+	 * @param studentTable the studentTable to set
+	 */
+	public void setStudentTable(JTable studentTable) {
+		this.studentTable = studentTable;
+	}
+
+
+	/**
+	 * @return the tableModel
+	 */
+	public StudentDetailsEventTableModel getTableModel() {
+		return tableModel;
+	}
+
+
+	/**
+	 * @param tableModel the tableModel to set
+	 */
+	public void setTableModel(StudentDetailsEventTableModel tableModel) {
+		this.tableModel = tableModel;
+	}
 	
 }

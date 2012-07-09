@@ -90,12 +90,12 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 				student.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
 				student.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
 				student.setStudentPoint(res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT));
-				student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+				//student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
 				studentDetails.add(student);
 			}
 			dbEngineImpl.closeResultSet(res);
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}

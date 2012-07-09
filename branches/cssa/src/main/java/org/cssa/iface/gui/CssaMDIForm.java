@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.util.Stack;
 
@@ -15,18 +17,20 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
+import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 
 import org.cssa.iface.gui.menu.CssaMenuController;
 import org.cssa.iface.gui.toolbar.CssaToolBar;
 import org.cssa.iface.gui.util.CssaLookAndFeel;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.util.ImageUtil;
+import org.cssa.iface.util.Util;
+
+
 
 public class CssaMDIForm extends JFrame {
 
@@ -36,7 +40,7 @@ public class CssaMDIForm extends JFrame {
 	ImageUtil imageUtil;
 	private String lookAndFeel = null;
 	JInternalFrame frame;
-	Stack<JInternalFrame> internalFrames;
+	private Stack<JInternalFrame> internalFrames;
 	
 	
 	/**
@@ -48,7 +52,13 @@ public class CssaMDIForm extends JFrame {
 				try {
 					CssaMDIForm frame = new CssaMDIForm();
 					frame.setVisible(true);
-					frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+					//frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+					frame.addWindowListener(new WindowAdapter() {
+						public void windowClosing(WindowEvent e) {
+							Util.exitApplicataion();
+						}
+						
+					});
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,7 +75,7 @@ public class CssaMDIForm extends JFrame {
 		desktopPane = new JDesktopPane();
 		imageUtil = new ImageUtil();
 		internalFrames = new Stack<JInternalFrame>();
-		
+
 		getContentPane().setLayout(new BorderLayout());
 		setLookAndFeel(lookAndFeel);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -89,8 +99,16 @@ public class CssaMDIForm extends JFrame {
 	}
 	
 	public void addChild(JInternalFrame frame) {
+		Dimension screenSize = this.getContentPane().getSize();
 		desktopPane.add(frame);
+		frame.setSize(screenSize);
 		frame.setVisible(true);
+		internalFrames.push(frame);
+		frame.addInternalFrameListener(new InternalFrameAdapter() {
+			public void internalFrameClosing(InternalFrameEvent e){
+				closeFrame();
+			}
+		});
 		try {
 			frame.setSelected(true);
 		} catch (PropertyVetoException e) {
@@ -118,7 +136,26 @@ public class CssaMDIForm extends JFrame {
 		}
 		
 	}
-
+	public void addChild(JTabbedPane tabbedPane, String frameTitle) {
+		Dimension screenSize = this.getContentPane().getSize();
+	    frame = new JInternalFrame(frameTitle, true, true, true, true);
+		frame.add(tabbedPane);
+		frame.setSize(screenSize);
+		desktopPane.add(frame);
+		frame.setVisible(true);
+		internalFrames.push(frame);
+		frame.addInternalFrameListener(new InternalFrameAdapter() {
+			public void internalFrameClosing(InternalFrameEvent e){
+				closeFrame();
+			}
+		});
+		try {
+			frame.setSelected(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	/**
 	 * @return the cssaIcon
@@ -184,6 +221,20 @@ public class CssaMDIForm extends JFrame {
 			JInternalFrame frame = internalFrames.pop();
 			frame.dispose();
 		}
+	}
+
+	/**
+	 * @return the internalFrames
+	 */
+	public Stack<JInternalFrame> getInternalFrames() {
+		return internalFrames;
+	}
+
+	/**
+	 * @param internalFrames the internalFrames to set
+	 */
+	public void setInternalFrames(Stack<JInternalFrame> internalFrames) {
+		this.internalFrames = internalFrames;
 	}
 	
 	

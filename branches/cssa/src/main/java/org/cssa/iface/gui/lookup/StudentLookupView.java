@@ -183,6 +183,7 @@ public class StudentLookupView {
 		scrollPane.setMaximumSize(new Dimension(700, 400));
 		scrollPane.setPreferredSize(new Dimension(700, 400));
 		panel.add(scrollPane, BorderLayout.CENTER);
+		tblStudentDetails.addMouseListener(studentLookupController);
 
 		return panel;
 	}

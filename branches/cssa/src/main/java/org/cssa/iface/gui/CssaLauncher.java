@@ -4,6 +4,8 @@
 package org.cssa.iface.gui;
 
 import java.awt.EventQueue;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
@@ -31,11 +33,24 @@ public class CssaLauncher {
 	
 	private void showMainWindow() {
 		cssaLogger.info("Showing the main window");
-		CssaMDIForm iface = new CssaMDIForm();
-		iface.setVisible(true);
-		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CssaMDIForm iface = new CssaMDIForm();
+					iface.setVisible(true);
+					iface.addWindowListener(new WindowAdapter() {
+						public void windowClosing(WindowEvent e) {
+							Util.exitApplicataion();
+						}
+
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
+		
 	private void initializeLoging() {
 		Properties properties = new Properties();
 		ClassLoader loader = this.getClass().getClassLoader();
@@ -58,6 +73,7 @@ public class CssaLauncher {
 		}
 	}
 	private void logBasicSystemInfo() {
+		//initializeLoging();
 		cssaLogger.info("Launching the application...");
 	    cssaLogger.info(
 	      "Operating System: " + System.getProperty("os.name") + " " + 

@@ -84,17 +84,6 @@ public class CssaSplashScreen  extends Frame {
 		}
 	}
 	
-	public static void main(String[] args) {
-		CssaSplashScreen splashScreen = new CssaSplashScreen("crazy-turtle-cartoon-comic.png");
-		splashScreen.splash();
-		try {
-		      Thread.sleep(3000);
-		    }
-		    catch(InterruptedException ex) {
-		      System.out.println(ex);
-		    }
-		   System.exit(0);
-		  }
 	}
 	
 	

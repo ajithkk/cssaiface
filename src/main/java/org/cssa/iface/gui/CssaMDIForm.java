@@ -41,30 +41,6 @@ public class CssaMDIForm extends JFrame {
 	private String lookAndFeel = null;
 	JInternalFrame frame;
 	private Stack<JInternalFrame> internalFrames;
-	
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CssaMDIForm frame = new CssaMDIForm();
-					frame.setVisible(true);
-					//frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-					frame.addWindowListener(new WindowAdapter() {
-						public void windowClosing(WindowEvent e) {
-							Util.exitApplicataion();
-						}
-						
-					});
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

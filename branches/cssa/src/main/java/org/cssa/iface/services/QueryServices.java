@@ -4,6 +4,7 @@
 package org.cssa.iface.services;
 
 import org.cssa.iface.bo.CollegeDetails;
+import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
 
@@ -51,6 +52,12 @@ public class QueryServices {
 		}
 		return collegeSearchQuery.toString();
 		
+	}
+	
+	public String getStudentDetailsSearchQuery(StudentDetails studentDetails) throws IfaceException {
+		StringBuilder studentSearchQuery = new StringBuilder();
+		
+		return studentSearchQuery.toString();
 	}
 
 }

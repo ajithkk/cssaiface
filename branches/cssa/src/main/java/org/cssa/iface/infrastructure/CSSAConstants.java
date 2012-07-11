@@ -30,6 +30,7 @@ public class CSSAConstants {
 	public static final String COLLEGE_DETAILS_TABLE = "COLLEGE_DETAILS";
 	public static final String STUDENTS_DETAILS_TABLE = "STUDENTS_DETAILS";
 	public static final String RESULTS_TABLE = "RESULTS";
+	public static final String SEMINAR_DETAILS_TABLE = "SEMINAR_DETAILS";
 	
 	public static final String EVENTS_SNO = "SNO";
 	public static final String EVENTS_EVENT_ID = "EVENT_ID";
@@ -68,6 +69,15 @@ public class CSSAConstants {
 	public static final String RESULTS_EVENT_ID = "EVENT_ID";
 	public static final String RESULTS_RESULT_STATUS = "RESULT_STATUS";
 	public static final String RESULTS_MARK = "MARK";
+	
+	public static final String SEMINAR_DETAILS_SNO = "SNO";
+	public static final String SEMINAR_DETAILS_NAME = "NAME";
+	public static final String SEMINAR_DETAILS_COURSE = "COURSE";
+	public static final String SEMINAR_DETAILS_COLLEGE_NAME = "COLLEGE_NAME";
+	public static final String SEMINAR_DETAILS_ADDRESS = "ADDRESS";
+	public static final String SEMINAR_DETAILS_PHONE = "PHONE";
+	public static final String SEMINAR_DETAILS_EMAIL = "EMAIL";
+	public static final String SEMINAR_DETAILS_DUTY_CERTIFICATE = "DUTY_CERTIFICATE";
 	
 	public static final String[] EVENT_DETAILS_COLUMN_NAMES = {"SNO", "EVENT CODE NAME", "EVENT NAME", "NO OF PARTICIPANTS", "POINTS" };
 	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS","STATUS"};

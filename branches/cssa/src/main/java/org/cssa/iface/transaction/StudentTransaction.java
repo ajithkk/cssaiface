@@ -67,7 +67,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			} 
 			dbEngineImpl.closeResultSet(res);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}

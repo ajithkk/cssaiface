@@ -227,7 +227,7 @@ public class GroupEventView {
 		
 		return panel;
 	}
-public JPanel getTableButtonPanel() {
+	public JPanel getTableButtonPanel() {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -254,6 +254,7 @@ public JPanel getTableButtonPanel() {
 	public JPanel getTablePanel() {
 		JPanel panel = new JPanel();
 		tblEventDetails = new JTable();
+		tblEventDetails.setRowHeight(20);
 		JScrollPane scrollPane = new JScrollPane(tblEventDetails);
 		scrollPane.setMinimumSize(new Dimension(600, 200));
 		scrollPane.setMaximumSize(new Dimension(600, 200));
@@ -351,42 +352,4 @@ public JPanel getTableButtonPanel() {
 	public void setCollegeName(String collegeName) {
 		txtCollegeName.setText(collegeName);
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				JFrame frame = new JFrame();
-				/*try {
-		            // Set System L&F
-		        UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-		    } 
-		    catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		    }
-		    catch (ClassNotFoundException e) {
-		       // handle exception
-		    }
-		    catch (InstantiationException e) {
-		       // handle exception
-		    }
-		    catch (IllegalAccessException e) {
-		       // handle exception
-		    }*/
-
-				frame.setLayout(new BorderLayout());
-				frame.add(new GroupEventView().getBody(),
-						BorderLayout.WEST);
-				frame.pack();
-				frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				frame.setSize(400, 400);
-				frame.setVisible(true);
-			}
-		});
-	}
-	
-	
-	
 }

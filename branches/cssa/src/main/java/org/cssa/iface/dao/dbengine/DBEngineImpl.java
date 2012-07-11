@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -250,6 +251,8 @@ public class DBEngineImpl {
 				statement.setString(set.getKey(), (String) set.getValue());
 			}else if(set.getValue().getClass().equals(String.class)) {
 				statement.setString(set.getKey(), (String) set.getValue());
+			} else if (set.getValue().getClass().equals(Date.class)) {
+				statement.setDate(set.getKey(), new java.sql.Date(((Date)set.getValue()).getTime()));
 			}
 		}
 		}catch (Exception e) {

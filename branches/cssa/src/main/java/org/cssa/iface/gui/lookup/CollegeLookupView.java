@@ -163,6 +163,7 @@ public class CollegeLookupView {
 		panel.setLayout(new BorderLayout());
 		
 		tblCollegeDetails = new JTable(tableModel);
+		tblCollegeDetails.setRowHeight(20);
 		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
 		scrollPane.setMinimumSize(new Dimension(700, 400));
 		scrollPane.setMaximumSize(new Dimension(700, 400));

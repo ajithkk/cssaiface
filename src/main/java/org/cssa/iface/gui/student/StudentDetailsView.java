@@ -278,6 +278,7 @@ public class StudentDetailsView {
 		panel.setLayout(new BorderLayout());
 		
 		studentTable = new JTable(tableModel);
+		studentTable.setRowHeight(20);
 		JScrollPane scrollPane = new JScrollPane(studentTable);
 		scrollPane.setMinimumSize(new Dimension(600, 400));
 		scrollPane.setMaximumSize(new Dimension(600, 400));

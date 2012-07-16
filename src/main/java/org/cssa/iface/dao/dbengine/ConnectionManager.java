@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
 import org.cssa.iface.dao.commom.LoadProperties;
+import org.cssa.iface.util.Util;
 /**
  * 
  * @author Ajith k k
@@ -15,6 +17,8 @@ import org.cssa.iface.dao.commom.LoadProperties;
  */
 
 public class ConnectionManager {
+	
+	public static final Logger log = Util.getLogger(ConnectionManager.class);
 
 	private static volatile ConnectionManager connectionManager = null; 
 	
@@ -39,7 +43,9 @@ public class ConnectionManager {
 	public static ConnectionManager getInstance() {
 		if (null == connectionManager) {
 			synchronized (ConnectionManager.class) {
-				connectionManager = new ConnectionManager();
+				if(null == connectionManager) {
+					connectionManager = new ConnectionManager();
+				}
 			}
 
 		}
@@ -61,6 +67,7 @@ public class ConnectionManager {
 				con.close();
 			}
 		} catch (Exception e) {
+			log.error("Exception"+ e);
 			e.printStackTrace();
 		}
 	}
@@ -71,6 +78,7 @@ public class ConnectionManager {
 				smt.close();
 			}
 		} catch (Exception e) {
+			log.error("Exception"+ e);
 			e.printStackTrace();
 		}
 	}
@@ -81,6 +89,7 @@ public class ConnectionManager {
 				res.close();
 			}
 		} catch (Exception e) {
+			log.error("Exception"+ e);
 			e.printStackTrace();
 		}
 	}

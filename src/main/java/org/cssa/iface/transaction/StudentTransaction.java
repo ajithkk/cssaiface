@@ -14,6 +14,7 @@ import org.cssa.iface.dao.dbengine.DBEngineImpl;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.infrastructure.CSSAQuery;
+import org.cssa.iface.util.Util;
 
 /**
  * @author KK
@@ -36,7 +37,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			parameterMap.put(1, object.getCollegeId());
 			parameterMap.put(2, object.getStudentId());
 			parameterMap.put(3, object.getStudentName());
-			parameterMap.put(4, object.getStudentGender());
+			parameterMap.put(4, Util.getGender(object.getStudentGender()));
 			parameterMap.put(5, object.getStudentPhone());
 			resultId = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.INSERT_STUDENT_DETAILS);
 		}catch (Exception e) {
@@ -84,13 +85,14 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			res =  dbEngineImpl.executeQuery(CSSAQuery.SELECT_ALL_STUDENT_DETAILS);
 			while ( res.next()) {
 				StudentDetails student = new StudentDetails();
+				student.setSno(res.getInt(CSSAConstants.STUDENTS_DETAILS_SNO));
 				student .setCollegeId(res.getString(CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID));
 				student.setStudentId(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_ID));
 				student.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
 				student.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
 				student.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
 				student.setStudentPoint(res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT));
-				//student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+				student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
 				studentDetails.add(student);
 			}
 			dbEngineImpl.closeResultSet(res);
@@ -109,7 +111,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
 		try {
 			parameterMap.put(1, object.getStudentName());
-			parameterMap.put(2, object.getStudentGender());
+			parameterMap.put(2, Util.getGender(object.getStudentGender()));
 			parameterMap.put(3, object.getStudentPhone());
 			parameterMap.put(4, object.getStudentPoint());
 			parameterMap.put(5, object.isStatus());
@@ -156,6 +158,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			res =  dbEngineImpl.executeQuery(CSSAQuery.SELECT_ALL_STUDENT_DETAILS_INCLUDE_DELETED);
 			while ( res.next()) {
 				StudentDetails student = new StudentDetails();
+				student.setSno(res.getInt(CSSAConstants.STUDENTS_DETAILS_SNO));
 				student .setCollegeId(res.getString(CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID));
 				student.setStudentId(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_ID));
 				student.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
@@ -173,6 +176,35 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 		}
 		return studentDetails;
 		
+	}
+	
+	public List<StudentDetails> loadAll(String collegeID)throws IfaceException {
+		List<StudentDetails> studentDetails = new ArrayList<StudentDetails>();
+		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
+		res = null;
+		try {
+			Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+			parameterMap.put(1, collegeID);
+			res = dbEngineImpl.executeQuery(parameterMap, CSSAQuery.SELECT_STUDENT_DETAILS_BY_COLLEGE);
+			while ( res.next()) {
+				StudentDetails student = new StudentDetails();
+				student.setSno(res.getInt(CSSAConstants.STUDENTS_DETAILS_SNO));
+				student .setCollegeId(res.getString(CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID));
+				student.setStudentId(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_ID));
+				student.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+				student.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
+				student.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
+				student.setStudentPoint(res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT));
+				student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+				studentDetails.add(student);
+			}
+			dbEngineImpl.closeResultSet(res);
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbEngineImpl.closeResultSet(res);
+		}
+		return studentDetails;	
 	}
 
 }

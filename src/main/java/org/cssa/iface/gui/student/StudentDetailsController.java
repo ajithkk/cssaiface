@@ -5,6 +5,9 @@ package org.cssa.iface.gui.student;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -18,13 +21,14 @@ import org.cssa.iface.transaction.StudentTransaction;
  * @author ajith
  *
  */
-public class StudentDetailsController implements ActionListener{
+public class StudentDetailsController implements ActionListener, MouseListener {
 	
 	private StudentDetailsEventTableModel tableModel;
 	private StudentTransaction transaction;
 	private CollegeDetails collegeDetails;
 	private StudentDetails studentDetails;
 	private StudentDetailsView studentDetailsView;
+	private List<StudentDetails> sList;
 	CssaMDIForm mdiForm;
 	
 	public StudentDetailsController(CssaMDIForm mdiForm) {
@@ -125,8 +129,64 @@ public class StudentDetailsController implements ActionListener{
 		}
 	}
 	
-	public JPanel getStudentDeatilsview() {
-		return studentDetailsView.getStudentDetailsBody();
+	public void setStudentDetails(StudentDetails studentDetails) {
+		if(null != studentDetails) {
+			studentDetailsView.setTxtCollegeId(studentDetails.getCollegeId());
+			studentDetailsView.setTxtStudentId(studentDetails.getStudentId());
+			studentDetailsView.setTxtStudentName(studentDetails.getStudentName());
+			studentDetailsView.setTxtPhone(studentDetails.getStudentPhone());
+			studentDetailsView.setCbGender(studentDetails.getStudentGender());
+			studentDetailsView.setCkAccommodation(studentDetails.isAccommodation());
+		}
 	}
 	
+	public JPanel getStudentDeatilsview() {
+		
+		JPanel panel = studentDetailsView.getStudentDetailsBody();
+		setStudentDetails();
+		return panel;
+	}
+
+	public List<StudentDetails> getsList() {
+		return sList;
+	}
+
+	public void setsList(List<StudentDetails> sList) {
+		this.sList = sList;
+	}
+	
+	public void setStudentTableData(List<StudentDetails> studentDetails) {
+		tableModel.setStudentDetails(studentDetails);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int selectedRow = studentDetailsView.getStudentTable().getSelectedRow();
+		StudentDetails details = tableModel.getStudentDetails().get(selectedRow);
+		setStudentDetails(details);
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

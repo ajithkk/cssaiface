@@ -1,5 +1,8 @@
 package org.cssa.iface.dao.dbengine;
 
+import org.apache.log4j.Logger;
+import org.cssa.iface.util.Util;
+
 /**
  * 
  * @author Krishna Prasad
@@ -7,6 +10,8 @@ package org.cssa.iface.dao.dbengine;
  */
 
 public class DriverManager {
+	
+	public static final Logger log = Util.getLogger(DriverManager.class);
 	
 	String server;
 	String driver;

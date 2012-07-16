@@ -22,9 +22,10 @@ public class CollegeDetailsController implements ActionListener{
 	private CollegeDetails collegeDetails;
 	private CollegeTransaction transaction;
 	
-	
-	
-
+	/**
+	 * 
+	 * @param mdiForm
+	 */
 	public CollegeDetailsController(CssaMDIForm mdiForm) {
 		super();
 		this.mdiForm = mdiForm;
@@ -32,7 +33,11 @@ public class CollegeDetailsController implements ActionListener{
 	}
 
 
-
+ /**
+  * 
+  * @param mdiForm
+  * @param collegeDetails
+  */
 	public CollegeDetailsController(CssaMDIForm mdiForm,
 			CollegeDetails collegeDetails) {
 		super();
@@ -42,15 +47,15 @@ public class CollegeDetailsController implements ActionListener{
 		transaction = new CollegeTransaction();
 		
 	}
-
-
-
+	/**
+	 * 
+	 */
 	private void setCollegeDetails() {
 		collegeDetilsView.setTxtCollegeId(collegeDetails.getCollegeId());
 		collegeDetilsView.setTxtCollegeName(collegeDetails.getCollegeName());
 		collegeDetilsView.setTxtCollegePhone(collegeDetails.getCollegePhone());
 		collegeDetilsView.setTxtNoOfParticipants(String.valueOf(collegeDetails.getNoOfParticipants()));
-		
+		collegeDetilsView.setTxtCollegeAddress(collegeDetails.getCollegeAddress());
 	}
 
 
@@ -99,17 +104,10 @@ public class CollegeDetailsController implements ActionListener{
 		
 	}
 
-
-
 	public void askCollegeDetailsView() {
 		collegeDetilsView.showCollegeDetailsView();
 		if(null != collegeDetails) {
 			setCollegeDetails();
 		}
-		
 	}
-	
-	
-	
-
 }

@@ -9,7 +9,9 @@ import java.net.URL;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.cssa.iface.infrastructure.CSSAConstants;
+import org.cssa.iface.util.Util;
 
 
 /**
@@ -22,6 +24,7 @@ import org.cssa.iface.infrastructure.CSSAConstants;
 public class LoadProperties {
 	
 	private static LoadProperties loadProperties = null;
+	private static final Logger log = Util.getLogger(LoadProperties.class);
 	
 	private String strServer = null;
 	private String strDriver = null;
@@ -88,8 +91,8 @@ public class LoadProperties {
 			String configFilePath = System.getProperty("user.home") +"\\" +CSSAConstants.CONFIG_XML_FILE;
 			FileInputStream is =  new FileInputStream(configFilePath);
 			if(null != is) {
-				System.out.println("System in network model");
-		    	properties.loadFromXML(is);
+		    	log.info("System in network model");
+				properties.loadFromXML(is);
 		        for (Object s : properties.keySet()) {
 		            if (DBConstants.DB_SERVER.equalsIgnoreCase((String) s)) {
 		            	strServer = properties.getProperty((String)s);
@@ -113,7 +116,7 @@ public class LoadProperties {
 			}
 		}catch ( FileNotFoundException fileNotFoundException) {
 			try {
-				System.out.println("System in embedded model");
+				log.info("System in embedded model");
 				ClassLoader loader = this.getClass().getClassLoader();
 				URL  iconUrl = loader.getResource("datebase");
 				
@@ -131,10 +134,10 @@ public class LoadProperties {
 				e.printStackTrace();
 			}
 		} catch (InvalidPropertiesFormatException e) {
-			// TODO Auto-generated catch block
+			log.error(e);
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log.error(e);
 			e.printStackTrace();
 		}
 		
@@ -150,9 +153,4 @@ public class LoadProperties {
 		}
 		return loadProperties;
 	}
-	public static void main(String[] args) {
-		LoadProperties properties = LoadProperties.getInstance();
-		System.out.print(properties.getStrServer());
-	}
-
 }

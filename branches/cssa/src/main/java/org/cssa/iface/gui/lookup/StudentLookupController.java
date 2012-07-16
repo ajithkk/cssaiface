@@ -90,7 +90,8 @@ public class StudentLookupController implements ActionListener, MouseListener {
 		int selectedRow = lookupView.getTblStudentDetails().getSelectedRow();
 		StudentDetails details = tableModel.getStudents().get(selectedRow);
 		//new StudentDetailsController(details, mdiForm).askStudentDetailsView();
-		new StudentAndGroupEventController(details, mdiForm).showStudentAndGroupEventTab();
+		StudentAndGroupEventController studentAndGroupEventController = new  StudentAndGroupEventController(details, mdiForm);
+		studentAndGroupEventController.showStudentAndGroupEventTab();
 	}
 
 

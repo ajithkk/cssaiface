@@ -49,6 +49,7 @@ public class StudentDetailsView {
 	
 	private JComboBox cbGender;
 	private JCheckBox ckAccommodation;
+	private JCheckBox status;
 	private JTable studentTable;
 	
 	private CssaMDIForm cssaMDIForm;
@@ -150,32 +151,60 @@ public class StudentDetailsView {
 		constraints.insets = new Insets(2, 2, 2, 2);
 		panel.add(txtPhone, constraints);
 		
-		lblGender = new CLabel("Gender:");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 2;
 		constraints.gridy = 2;
+		constraints.gridwidth = 2;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(2, 5, 2, 2);
+		panel.add(getGenderPanel(), constraints);
+		
+		return panel;
+		
+	}
+	
+	public JPanel getGenderPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = null;
+		
+		panel.setPreferredSize(new Dimension(300, 20));
+		panel.setMaximumSize(new Dimension(300, 20));
+		panel.setMinimumSize(new Dimension(300, 20));
+		
+		constraints = new GridBagConstraints();
+		lblGender = new CLabel("Gender:");
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
 		constraints.anchor = GridBagConstraints.EAST;
-		constraints.insets = new Insets(2, 3, 3, 2);
+		constraints.insets = new Insets(2, 0, 3, 2);
 		panel.add(lblGender, constraints);
 		
 		cbGender = new JComboBox(GENDER);
 		constraints = new GridBagConstraints();
-		constraints.gridx = 3;
-		constraints.gridy = 2;
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(2, 3, 3, 0);
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.insets = new Insets(2, 5, 3, 5);
 		panel.add(cbGender, constraints);
+		
+		status = new JCheckBox("Status");
+		status.setSelected(true);
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.insets = new Insets(5, 10, 5, 5);
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		panel.add(status,constraints);
 		
 		ckAccommodation = new JCheckBox("Accommodation");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 3;
-		constraints.gridy = 2;
-		constraints.anchor = GridBagConstraints.EAST;
-		constraints.insets = new Insets(2, 3, 3, 0);
+		constraints.gridy = 0;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(2, 10, 3, 0);
 		panel.add(ckAccommodation, constraints);
-		
 		return panel;
-		
 	}
 	
 	public JPanel getMiddleButtonPanel() {
@@ -280,11 +309,11 @@ public class StudentDetailsView {
 		studentTable = new JTable(tableModel);
 		studentTable.setRowHeight(20);
 		JScrollPane scrollPane = new JScrollPane(studentTable);
-		scrollPane.setMinimumSize(new Dimension(600, 400));
-		scrollPane.setMaximumSize(new Dimension(600, 400));
-		scrollPane.setPreferredSize(new Dimension(600, 400));
+		scrollPane.setMinimumSize(new Dimension(600, 200));
+		scrollPane.setMaximumSize(new Dimension(600, 200));
+		scrollPane.setPreferredSize(new Dimension(600, 200));
 		panel.add(scrollPane, BorderLayout.CENTER);
-
+		studentTable.addMouseListener(controller);
 		return panel;
 	}	
 	

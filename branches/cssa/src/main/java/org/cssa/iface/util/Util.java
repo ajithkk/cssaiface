@@ -1,6 +1,7 @@
 package org.cssa.iface.util;
 
 import org.apache.log4j.Logger;
+import org.cssa.iface.infrastructure.CSSAConstants;
 
 
 /**
@@ -25,5 +26,15 @@ public class Util {
 	
 	public static void exitApplicataion() {
 		System.exit(0);
+	}
+	
+	public static char getGender(String gender) {
+		char gen ='0';
+		if("Male".equalsIgnoreCase(gender)) {
+			gen = CSSAConstants.MALE;
+		} else if ("Female".equalsIgnoreCase(gender)) {
+			gen =  CSSAConstants.FEMALE;
+		}
+		return gen;
 	}
 }

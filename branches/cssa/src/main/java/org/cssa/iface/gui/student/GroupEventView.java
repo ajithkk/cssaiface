@@ -89,7 +89,7 @@ public class GroupEventView {
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		constraints.insets = new Insets(5, 0, 5, 5);
-		panel.add(btnSearch, constraints);
+		//panel.add(btnSearch, constraints);
 		
 		lblCollegeName = new CLabel("College Name:");
 		constraints = new GridBagConstraints();
@@ -256,9 +256,9 @@ public class GroupEventView {
 		tblEventDetails = new JTable();
 		tblEventDetails.setRowHeight(20);
 		JScrollPane scrollPane = new JScrollPane(tblEventDetails);
-		scrollPane.setMinimumSize(new Dimension(600, 200));
-		scrollPane.setMaximumSize(new Dimension(600, 200));
-		scrollPane.setPreferredSize(new Dimension(600, 200));
+		scrollPane.setMinimumSize(new Dimension(600, 100));
+		scrollPane.setMaximumSize(new Dimension(600, 100));
+		scrollPane.setPreferredSize(new Dimension(600, 100));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		return panel;

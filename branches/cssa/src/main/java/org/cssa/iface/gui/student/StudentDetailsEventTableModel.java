@@ -78,8 +78,16 @@ public class StudentDetailsEventTableModel  extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		StudentDetails details = studentDetails.get(rowIndex);
+		switch(columnIndex) {
+			case 0: return details.getSno();
+			case 1: return details.getCollegeId();
+			case 2: return details.getStudentId();
+			case 3: return details.getStudentName();
+			case 4: return details.getStudentPhone();
+			case 5: return details.isStatus();
+			default: return "";
+		}
 	}
 
 }

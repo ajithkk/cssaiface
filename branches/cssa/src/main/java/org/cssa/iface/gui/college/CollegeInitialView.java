@@ -203,6 +203,7 @@ public class CollegeInitialView {
 	private  JPanel getTablePannel() {
 		JPanel panel = new JPanel();
 		tblStudentDetails = new JTable(tableModel);
+		tblStudentDetails.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
 		scrollPane.setMinimumSize(new Dimension(600, 200));
 		scrollPane.setMaximumSize(new Dimension(600, 200));

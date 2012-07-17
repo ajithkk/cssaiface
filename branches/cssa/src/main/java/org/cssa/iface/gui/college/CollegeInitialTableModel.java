@@ -52,7 +52,10 @@ public class CollegeInitialTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+		if( 2 < columnIndex) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -63,9 +66,16 @@ public class CollegeInitialTableModel extends AbstractTableModel {
 			return studentRegisterNumber.getSno();
 		case 1:
 			return studentRegisterNumber.getStudentId();
+		case 2: 
+			return studentRegisterNumber.getStudentName();
 		default: return "";
 		}
 	}
+	
+	public void setValueAt(Object value, int row, int col) {
+        studentRegisterNumbers.get(row).setStudentName(value.toString());
+        fireTableCellUpdated(row, col);
+    }
 	
 	/**
 	 * @return the studentRegisterNumbers

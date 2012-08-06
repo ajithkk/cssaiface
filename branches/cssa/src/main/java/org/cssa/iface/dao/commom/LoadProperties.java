@@ -145,10 +145,12 @@ public class LoadProperties {
 	}
 	public static LoadProperties getInstance() {
 		if(null == loadProperties) {
-			if(null == loadProperties){
-				loadProperties = new LoadProperties();
-			}else {
-				return loadProperties;
+			synchronized (LoadProperties.class) {
+				if(null == loadProperties){
+					loadProperties = new LoadProperties();
+				}else {
+					return loadProperties;
+				}
 			}
 		}
 		return loadProperties;

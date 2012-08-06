@@ -12,8 +12,9 @@ public class EventDetails {
 	
 	private int sno;
 	private String studentId;
-	private char groupId;
+	private String groupId;
 	private String eventId;
+	private String collegeId;
 	
 	/**
 	 * @return the sno
@@ -40,15 +41,27 @@ public class EventDetails {
 		this.studentId = studentId;
 	}
 	/**
+	 * @return the collegeId
+	 */
+	public String getCollegeId() {
+		return collegeId;
+	}
+	/**
+	 * @param collegeId the collegeId to set
+	 */
+	public void setCollegeId(String collegeId) {
+		this.collegeId = collegeId;
+	}
+	/**
 	 * @return the groupId
 	 */
-	public char getGroupId() {
+	public String getGroupId() {
 		return groupId;
 	}
 	/**
 	 * @param groupId the groupId to set
 	 */
-	public void setGroupId(char groupId) {
+	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
 	/**

@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
@@ -37,6 +38,10 @@ public class GroupEventView {
 	public static final String REMOVE = "Remove";
 	public static final String DELETE = "Delete";
 	public static final String PRINT = "Print";
+	public static final String EVENT_SELECTED = "Event_Selected";
+	public static final String SAVE = "Save";
+	public static final String CLEAR = "Clear";
+	public static final String GROUP_SELECTED = "Group_Selected";
 	
 	public CLabel lblEventId;
 	public CLabel lblGroupName;
@@ -53,6 +58,9 @@ public class GroupEventView {
 	public CButton  btnDelete;
 	public CButton btnPrint;
 	
+	private CButton btnSave;
+	private CButton btnClear;
+	
 	public JComboBox cmbEventNames;
 	public JComboBox cmbGroupNames;
 	
@@ -60,7 +68,21 @@ public class GroupEventView {
 	public JList lstAddedStudentList;
 	public JTable tblEventDetails;
 	
+	private CssaMDIForm mdiForm;
+	private GroupEventController groupEventController;
+	private GroupEventTableModel tableModel;
+	private boolean collegeVisible;
 	
+	
+	public GroupEventView(CssaMDIForm mdiForm,
+			GroupEventController groupEventController,
+			GroupEventTableModel tableModel) {
+		super();
+		this.mdiForm = mdiForm;
+		this.groupEventController = groupEventController;
+		this.tableModel = tableModel;
+	}
+
 	public JPanel getCollegeSearchPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -89,7 +111,8 @@ public class GroupEventView {
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		constraints.insets = new Insets(5, 0, 5, 5);
-		//panel.add(btnSearch, constraints);
+		panel.add(btnSearch, constraints);
+		btnSearch.addActionListener(groupEventController);
 		
 		lblCollegeName = new CLabel("College Name:");
 		constraints = new GridBagConstraints();
@@ -125,6 +148,8 @@ public class GroupEventView {
 		panel.add(lblEventId, constraints);
 		
 		cmbEventNames = new JComboBox();
+		cmbEventNames.addActionListener(groupEventController);
+		cmbEventNames.setActionCommand(EVENT_SELECTED);
 		cmbEventNames.setMaximumSize(new Dimension(180, 23));
 		cmbEventNames.setMinimumSize(new Dimension(180,23));
 		cmbEventNames.setPreferredSize(new Dimension(180,23));
@@ -145,9 +170,9 @@ public class GroupEventView {
 		constraints.gridwidth = 2;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		JScrollPane scrollPane = new JScrollPane(lstAllStudentIds);
-		/*scrollPane.setMinimumSize(new Dimension(255, 200));
-		scrollPane.setMaximumSize(new Dimension(255, 200));
-		scrollPane.setPreferredSize(new Dimension(250, 200));*/
+		scrollPane.setMinimumSize(new Dimension(255, 175));
+		scrollPane.setMaximumSize(new Dimension(255, 175));
+		scrollPane.setPreferredSize(new Dimension(250, 175));
 		panel.add(scrollPane, constraints);
 
 		return panel;
@@ -168,6 +193,8 @@ public class GroupEventView {
 		panel.add(lblGroupName, constraints);
 		
 		cmbGroupNames = new JComboBox();
+		cmbGroupNames.addActionListener(groupEventController);
+		cmbGroupNames.setActionCommand(GROUP_SELECTED);
 		cmbGroupNames.setMaximumSize(new Dimension(180, 23));
 		cmbGroupNames.setMinimumSize(new Dimension(180,23));
 		cmbGroupNames.setPreferredSize(new Dimension(180,23));
@@ -188,9 +215,9 @@ public class GroupEventView {
 		constraints.gridwidth = 2;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		JScrollPane scrollPane = new JScrollPane(lstAddedStudentList,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	/*	scrollPane.setMinimumSize(new Dimension(255, 200));
-		scrollPane.setMaximumSize(new Dimension(255, 200));
-		scrollPane.setPreferredSize(new Dimension(250, 200));*/
+		scrollPane.setMinimumSize(new Dimension(255, 175));
+		scrollPane.setMaximumSize(new Dimension(255, 175));
+		scrollPane.setPreferredSize(new Dimension(250, 175));
 		panel.add(scrollPane, constraints);
 
 		return panel;
@@ -204,6 +231,7 @@ public class GroupEventView {
 		GridBagConstraints constraints = null;
 
 		btnAdd = new JButton(">>");
+		btnAdd.setActionCommand(ADD);
 		btnAdd.setMinimumSize(new Dimension(50,23));
 		btnAdd.setMaximumSize(new Dimension(50, 23));
 		btnAdd.setPreferredSize(new Dimension(50, 23));
@@ -213,8 +241,10 @@ public class GroupEventView {
 		constraints.gridy = 0;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		panel.add(btnAdd, constraints);
+		btnAdd.addActionListener(groupEventController);
 		
 		btnRemove = new JButton("<<");
+		btnRemove.setActionCommand(REMOVE);
 		btnRemove.setMinimumSize(new Dimension(50,23));
 		btnRemove.setMaximumSize(new Dimension(50, 23));
 		btnRemove.setPreferredSize(new Dimension(50, 23));
@@ -224,6 +254,36 @@ public class GroupEventView {
 		constraints.gridy = 1;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		panel.add(btnRemove, constraints);
+		btnRemove.addActionListener(groupEventController);
+		
+		return panel;
+	}
+	
+  public JPanel getListSideButtonPanel() {
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = null;
+
+		btnSave = new CButton("Save");
+		btnSave.setActionCommand(SAVE);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		panel.add(btnSave, constraints);
+		btnSave.addActionListener(groupEventController);
+		
+		btnClear = new CButton("Clear");
+		btnClear.setActionCommand(CLEAR);
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		panel.add(btnClear, constraints);
+		btnClear.addActionListener(groupEventController);
 		
 		return panel;
 	}
@@ -240,6 +300,7 @@ public class GroupEventView {
 		constraints.gridy = 0;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		panel.add(btnPrint, constraints);
+		btnPrint.addActionListener(groupEventController);
 		
 		btnDelete = new CButton("Delete");
 		constraints = new GridBagConstraints();
@@ -248,23 +309,24 @@ public class GroupEventView {
 		constraints.gridy = 1;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		panel.add(btnDelete, constraints);
+		btnDelete.addActionListener(groupEventController);
 		
 		return panel;
 	}
 	public JPanel getTablePanel() {
 		JPanel panel = new JPanel();
-		tblEventDetails = new JTable();
+		tblEventDetails = new JTable(tableModel);
 		tblEventDetails.setRowHeight(20);
 		JScrollPane scrollPane = new JScrollPane(tblEventDetails);
-		scrollPane.setMinimumSize(new Dimension(600, 100));
-		scrollPane.setMaximumSize(new Dimension(600, 100));
-		scrollPane.setPreferredSize(new Dimension(600, 100));
+		scrollPane.setMinimumSize(new Dimension(600, 200));
+		scrollPane.setMaximumSize(new Dimension(600, 200));
+		scrollPane.setPreferredSize(new Dimension(600, 200));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		return panel;
 	}
 	
-	public JPanel getMiddlePanel() {
+	public JPanel getMiddlePanel1() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = null;
@@ -286,6 +348,28 @@ public class GroupEventView {
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		panel.add(getGruopListPanel(), constraints);
+		
+		
+		return panel;
+		
+	}
+	
+	public JPanel getMiddlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = null;
+		
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		panel.add(getMiddlePanel1(), constraints);
+		
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		panel.add(getListSideButtonPanel(), constraints);
 		
 		return panel;
 		
@@ -315,12 +399,14 @@ public class GroupEventView {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints;
 		
-		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		panel.add(getCollegeSearchPanel(), constraints);
 		
+		if(isCollegeVisible()) {
+			constraints = new GridBagConstraints();
+			constraints.anchor = GridBagConstraints.WEST;
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			panel.add(getCollegeSearchPanel(), constraints);
+		}
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 0;
@@ -352,4 +438,90 @@ public class GroupEventView {
 	public void setCollegeName(String collegeName) {
 		txtCollegeName.setText(collegeName);
 	}
+
+	/**
+	 * @return the lstAllStudentIds
+	 */
+	public JList getLstAllStudentIds() {
+		return lstAllStudentIds;
+	}
+
+	/**
+	 * @param lstAllStudentIds the lstAllStudentIds to set
+	 */
+	public void setLstAllStudentIds(JList lstAllStudentIds) {
+		this.lstAllStudentIds = lstAllStudentIds;
+	}
+
+	/**
+	 * @return the lstAddedStudentList
+	 */
+	public JList getLstAddedStudentList() {
+		return lstAddedStudentList;
+	}
+
+	/**
+	 * @param lstAddedStudentList the lstAddedStudentList to set
+	 */
+	public void setLstAddedStudentList(JList lstAddedStudentList) {
+		this.lstAddedStudentList = lstAddedStudentList;
+	}
+
+	/**
+	 * @return the tblEventDetails
+	 */
+	public JTable getTblEventDetails() {
+		return tblEventDetails;
+	}
+
+	/**
+	 * @param tblEventDetails the tblEventDetails to set
+	 */
+	public void setTblEventDetails(JTable tblEventDetails) {
+		this.tblEventDetails = tblEventDetails;
+	}
+
+	/**
+	 * @return the cmbEventNames
+	 */
+	public JComboBox getCmbEventNames() {
+		return cmbEventNames;
+	}
+
+	/**
+	 * @param cmbEventNames the cmbEventNames to set
+	 */
+	public void setCmbEventNames(JComboBox cmbEventNames) {
+		this.cmbEventNames = cmbEventNames;
+	}
+
+	/**
+	 * @return the cmbGroupNames
+	 */
+	public JComboBox getCmbGroupNames() {
+		return cmbGroupNames;
+	}
+
+	/**
+	 * @param cmbGroupNames the cmbGroupNames to set
+	 */
+	public void setCmbGroupNames(JComboBox cmbGroupNames) {
+		this.cmbGroupNames = cmbGroupNames;
+	}
+
+	/**
+	 * @return the collegeVisible
+	 */
+	public boolean isCollegeVisible() {
+		return collegeVisible;
+	}
+
+	/**
+	 * @param collegeVisible the collegeVisible to set
+	 */
+	public void setCollegeVisible(boolean collegeVisible) {
+		this.collegeVisible = collegeVisible;
+	}
+	
+	
 }

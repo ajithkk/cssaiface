@@ -45,6 +45,7 @@ public class StudentAndGroupEventController {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		setDetails();
 		studentDetailsController.setStudentTableData(details);
+		groupEventController.setStudentDetails(details);
 		JPanel studentPanel = studentDetailsController.getStudentDeatilsview();
 		tabbedPane.addTab("StudentDetails", null, studentPanel, "Student Details");
 		JPanel groupAndEventPanel = groupEventController.getGroupEventView();

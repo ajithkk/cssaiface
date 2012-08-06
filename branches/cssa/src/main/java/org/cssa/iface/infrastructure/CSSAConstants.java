@@ -20,6 +20,8 @@ public class CSSAConstants {
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	public static final String PATH_SEPARATOR = System.getProperty("path.separator");
 	
+	public static final String MAX_TEAM_MEMBERS = "MAX_TEAM_MEMBERS";
+	
 	public static final int FAIL = -1;
 	public static final char MALE = 'M';
 	public static final char FEMALE = 'F';

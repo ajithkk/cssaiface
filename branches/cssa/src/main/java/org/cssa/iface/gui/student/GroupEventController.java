@@ -46,6 +46,7 @@ public class GroupEventController implements ActionListener{
 		//groupEventView = new GroupEventView();
 		addStudent = new Vector<String>();
 		eventDetails = new ArrayList<EventDetails>();
+		eventsDetailsTransaction = new EventsDetailsTransaction();
 	
 	}
 
@@ -62,6 +63,7 @@ public class GroupEventController implements ActionListener{
 		tableModel = new GroupEventTableModel();
 		addStudent = new Vector<String>();
 		eventDetails = new ArrayList<EventDetails>();
+		eventsDetailsTransaction = new EventsDetailsTransaction();
 	}
 
 	/**
@@ -74,6 +76,7 @@ public class GroupEventController implements ActionListener{
 		tableModel = new GroupEventTableModel();
 		addStudent = new Vector<String>();
 		eventDetails = new ArrayList<EventDetails>();
+		eventsDetailsTransaction = new EventsDetailsTransaction();
 	}
 
 	@Override
@@ -108,6 +111,23 @@ public class GroupEventController implements ActionListener{
 	
 	private void performGroupSelectionAction() {
 		String groupName = groupEventView.getCmbGroupNames().getSelectedItem().toString();
+		String collegeId = studentDetails.get(0).getCollegeId();
+		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
+		EventDetails eventDetails = new EventDetails();
+		eventDetails.setCollegeId(collegeId);
+		eventDetails.setGroupId(groupName);
+		eventDetails.setEventId(eventId);
+		try {
+			List<EventDetails> lstEventDetails = eventsDetailsTransaction.loadAll(eventDetails);
+			addStudent = new Vector<String>();
+			for(EventDetails eDetails : lstEventDetails) {
+				addStudent.addElement(eDetails.getStudentId());
+			}
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 
@@ -162,6 +182,7 @@ public class GroupEventController implements ActionListener{
 
 	private void performAddAction() {
 		
+		eventDetails = new ArrayList<EventDetails>();
 		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
 		String groupName = groupEventView.getCmbGroupNames().getSelectedItem().toString();
 		Object[] selecterRegsterNumbers = groupEventView.getLstAllStudentIds().getSelectedValues();
@@ -169,13 +190,20 @@ public class GroupEventController implements ActionListener{
 			for(Object object: selecterRegsterNumbers) {
 				if(!addStudent.contains(object.toString())) {
 					addStudent.addElement(object.toString());
-					/*EventDetails studentParticipation = new EventDetails();
+					EventDetails studentParticipation = new EventDetails();
 					studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
 					studentParticipation.setStudentId(object.toString());
 					studentParticipation.setEventId(eventId);
 					studentParticipation.setGroupId(groupName);
-					eventDetails.add(studentParticipation);*/
+					eventDetails.add(studentParticipation);
 				}
+			}
+			eventsDetailsTransaction = new EventsDetailsTransaction();
+			try {
+				eventsDetailsTransaction.saveAll(eventDetails);
+			} catch (IfaceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			groupEventView.getLstAddedStudentList().setListData(addStudent);
@@ -256,9 +284,6 @@ public class GroupEventController implements ActionListener{
 	public List<EventDetails> getEventDetails() {
 		return eventDetails;
 	}
-
-
-
 
 	/**
 	 * @param eventDetails the eventDetails to set

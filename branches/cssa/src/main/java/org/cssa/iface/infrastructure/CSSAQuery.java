@@ -196,6 +196,15 @@ public class CSSAQuery {
 			+" WHERE "+CSSAConstants.EVENT_DETAILS_STUDENT_ID +"= ? AND " 
 			+ CSSAConstants.EVENT_DETAILS_EVENT_ID +" = ? ";
 	
+	public static final String SELECT_EVENT_PARTICIPANTS = "SELECT "+CSSAConstants.EVENT_DETAILS_COLLEGE_ID +"," 
+			+CSSAConstants.EVENT_DETAILS_STUDENT_ID +","
+			+CSSAConstants.EVENT_DETAILS_EVENT_ID +","
+			+CSSAConstants.EVENT_DETAILS_GROUP_ID +" FROM "+ CSSAConstants.EVENT_DETAILS_TABLE 
+			+" WHERE " +CSSAConstants.EVENT_DETAILS_COLLEGE_ID +" = ? AND "
+			+CSSAConstants.EVENT_DETAILS_EVENT_ID +" = ? AND "
+			+CSSAConstants.EVENT_DETAILS_GROUP_ID+ " = ?";
+	
+	
 	public static final String SELECT_ALL_PARTICIPANTS_DETAILS = "";
 	
 	

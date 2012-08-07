@@ -6,6 +6,7 @@ package org.cssa.iface.transaction;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 
 	@Override
 	public List<EventDetails> loadAll() throws IfaceException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -92,6 +93,46 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 		}
 		result = dbEngineImpl.executeBatch(batchParameterList, CSSAQuery.INSERT_EVENT_DETAILS);
 		return result;
+		
+	}
+	
+	public int[] deleteAll(List<EventDetails> eventDetails) throws IfaceException {
+		dbEngineImpl = new DBEngineImpl();
+		int[] result;
+		List<Map<Integer, Object>> batchParameterList = new ArrayList<Map<Integer,Object>>();
+		for(EventDetails event : eventDetails) {
+			Map<Integer, Object> parameter = new HashMap<Integer, Object>();
+			parameter.put(1, event.getCollegeId());
+			parameter.put(2, event.getEventId());
+			parameter.put(3, event.getGroupId());
+			batchParameterList.add(parameter);
+		}
+		result = dbEngineImpl.executeBatch(batchParameterList, CSSAQuery.DELETE_GROUP_EVENT_DETAILS);
+		return result;
+	}
+	
+	public List<EventDetails> loadAll(EventDetails details) throws IfaceException {
+		List<EventDetails> eventDetails = new ArrayList<EventDetails>();
+		dbEngineImpl = new DBEngineImpl();
+		
+		Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+		parameterMap.put(1, details.getCollegeId());
+		parameterMap.put(2, details.getEventId());
+		parameterMap.put(3, details.getGroupId());
+		try{
+			res = dbEngineImpl.executeQuery(parameterMap, CSSAQuery.SELECT_EVENT_PARTICIPANTS );
+			while(res.next()) {
+				EventDetails eDetails = new EventDetails();
+				eDetails.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+				eDetails.setEventId(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+				eDetails.setGroupId(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
+				eDetails.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+				eventDetails.add(eDetails);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return eventDetails;
 		
 	}
 

@@ -173,7 +173,26 @@ public class GroupEventController implements ActionListener{
 	}
 
 	private void performRemoveAction() {
-		
+		eventDetails = new ArrayList<EventDetails>();
+		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
+		String groupName = groupEventView.getCmbGroupNames().getSelectedItem().toString();
+		Object[] selecterRegsterNumbers = groupEventView.getLstAllStudentIds().getSelectedValues();
+			for(Object object: selecterRegsterNumbers) {
+					EventDetails studentParticipation = new EventDetails();
+					studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
+					studentParticipation.setStudentId(object.toString());
+					studentParticipation.setEventId(eventId);
+					studentParticipation.setGroupId(groupName);
+					eventDetails.add(studentParticipation);
+					addStudent.removeElement(object.toString());
+			}
+			eventsDetailsTransaction = new EventsDetailsTransaction();
+			try {
+				eventsDetailsTransaction.deleteAll(eventDetails);
+			} catch (IfaceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	private void performDeleteAction() {

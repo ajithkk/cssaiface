@@ -135,5 +135,28 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 		return eventDetails;
 		
 	}
+	
+	public List<EventDetails> selectEventParticipants(EventDetails details) throws IfaceException {
+		List<EventDetails> eventDetails = new ArrayList<EventDetails>();
+		dbEngineImpl = new DBEngineImpl();
+		
+		Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+		parameterMap.put(1, details.getCollegeId());
+		parameterMap.put(2, details.getEventId());
+		try{
+			res = dbEngineImpl.executeQuery(parameterMap, CSSAQuery.SELECT_PARTICIPANTS_IN_EVENT );
+			while(res.next()) {
+				EventDetails eDetails = new EventDetails();
+				eDetails.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+				eDetails.setEventId(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+				eDetails.setGroupId(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
+				eDetails.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+				eventDetails.add(eDetails);
+			}
+		}catch (Exception e) {
+			throw new IfaceException(e.toString());
+		}
+		return eventDetails;
+	}
 
 }

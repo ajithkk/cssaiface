@@ -127,6 +127,7 @@ public class GroupEventController implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		groupEventView.getLstAddedStudentList().setListData(addStudent);
 		
 		
 	}
@@ -154,7 +155,7 @@ public class GroupEventController implements ActionListener{
 
 	private void performEventSelectedAction() {
 		
-		if(null == preSelectedEvent) {
+		/*if(null == preSelectedEvent) {
 			preSelectedEvent = groupEventView.getCmbEventNames().getSelectedItem().toString();
 		} else {
 			if(! preSelectedEvent.equals(groupEventView.getCmbEventNames().getSelectedItem().toString())) {
@@ -164,7 +165,33 @@ public class GroupEventController implements ActionListener{
 				preSelectedEvent = groupEventView.getCmbEventNames().getSelectedItem().toString();
 			}
 		}
-
+		*/
+		
+		String selectedEvent = groupEventView.getCmbEventNames().getSelectedItem().toString();
+		String collegeId = studentDetails.get(0).getCollegeId();
+		
+		EventDetails eventDetails = new EventDetails();
+		eventDetails.setCollegeId(collegeId);
+		eventDetails.setEventId(selectedEvent);
+		try {
+			List<EventDetails> lstEventDetails = eventsDetailsTransaction.selectEventParticipants(eventDetails);
+			addStudent = new Vector<String>();
+			Vector<String> allStudent = setAllStudentRegisterNumber();
+			if(lstEventDetails.size() == 0) {
+				groupEventView.getLstAllStudentIds().setListData(allStudent);
+			} else {
+			for(EventDetails eDetails : lstEventDetails) {
+				if(!allStudent.contains(eDetails.getStudentId())) {
+					addStudent.addElement(eDetails.getStudentId());
+				}
+			}
+			groupEventView.getLstAllStudentIds().setListData(addStudent);
+			}
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 
@@ -232,15 +259,17 @@ public class GroupEventController implements ActionListener{
 		
 	}
 
-	public void setAllStudentRegisterNumber() {
+	public Vector<String>  setAllStudentRegisterNumber() {
 		Vector<String> regsterNumber = new Vector<String>();
 		for(StudentDetails student : studentDetails) {
 			regsterNumber.addElement(student.getStudentId());
 		}
-		groupEventView.getLstAllStudentIds().setListData(regsterNumber);
+		//groupEventView.getLstAllStudentIds().setListData(regsterNumber);
+		return regsterNumber;
 	}
 	
 	public void setGroupNames() {
+		groupEventView.getCmbGroupNames().addItem("");
 		for(int i = 0; i < studentDetails.size(); i++) {
 			groupEventView.getCmbGroupNames().addItem("Group"+(i+1));
 		}
@@ -249,6 +278,7 @@ public class GroupEventController implements ActionListener{
 	
 	public void setAllEventName() {
 		eventsTransaction = new EventsTransaction();
+		groupEventView.getCmbEventNames().addItem("");
 		try {
 			events = eventsTransaction.loadAll();
 			for(Events event : events) {
@@ -319,7 +349,7 @@ public class GroupEventController implements ActionListener{
 		tableModel.setStudentDetails(studentDetails);
 		setAllEventName();
 		setGroupNames();
-		setAllStudentRegisterNumber();
+		//setAllStudentRegisterNumber();
 		return panel;
 	}
 

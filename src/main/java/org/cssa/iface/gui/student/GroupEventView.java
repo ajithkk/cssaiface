@@ -369,7 +369,7 @@ public class GroupEventView {
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 2;
 		constraints.gridy = 0;
-		panel.add(getListSideButtonPanel(), constraints);
+		//panel.add(getListSideButtonPanel(), constraints);
 		
 		return panel;
 		

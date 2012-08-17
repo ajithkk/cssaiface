@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.help.plaf.basic.BasicFavoritesNavigatorUI.AddAction;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
 import org.cssa.iface.bo.EventDetails;
@@ -41,6 +43,7 @@ public class GroupEventController implements ActionListener{
 	private GroupEventViewValidator validator;
 	
 	private Vector<String> addStudent;
+	private Vector<String> allStudent;
 	
 	public GroupEventController() {
 		tableModel = new GroupEventTableModel();
@@ -48,7 +51,7 @@ public class GroupEventController implements ActionListener{
 		eventDetails = new ArrayList<EventDetails>();
 		eventsDetailsTransaction = new EventsDetailsTransaction();
 		validator = new GroupEventViewValidator();
-	
+		allStudent = new Vector<String>();
 	}
 
 	/**
@@ -62,6 +65,7 @@ public class GroupEventController implements ActionListener{
 		this.mdiForm = mdiForm;
 		tableModel = new GroupEventTableModel();
 		addStudent = new Vector<String>();
+		allStudent = new Vector<String>();
 		eventDetails = new ArrayList<EventDetails>();
 		eventsDetailsTransaction = new EventsDetailsTransaction();
 		validator = new GroupEventViewValidator();
@@ -78,6 +82,7 @@ public class GroupEventController implements ActionListener{
 		eventDetails = new ArrayList<EventDetails>();
 		eventsDetailsTransaction = new EventsDetailsTransaction();
 		validator = new GroupEventViewValidator();
+		allStudent = new Vector<String>();
 	}
 
 	@Override
@@ -85,10 +90,6 @@ public class GroupEventController implements ActionListener{
 		String actionCommand = arg0.getActionCommand();
 		if(GroupEventView.ADD.equals(actionCommand)){
 			performAddAction();
-			
-		} else if (GroupEventView.DELETE.equals(actionCommand)) {
-			performDeleteAction();
-			
 		} else if (GroupEventView.REMOVE.equals(actionCommand)) {
 			performRemoveAction();
 			
@@ -107,50 +108,65 @@ public class GroupEventController implements ActionListener{
 	
 	private void performGroupSelectionAction() {
 		String groupName = groupEventView.getCmbGroupNames().getSelectedItem().toString();
-		String collegeId = studentDetails.get(0).getCollegeId();
-		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
-		EventDetails eventDetails = new EventDetails();
-		eventDetails.setCollegeId(collegeId);
-		eventDetails.setGroupId(groupName);
-		eventDetails.setEventId(eventId);
-		try {
-			List<EventDetails> lstEventDetails = eventsDetailsTransaction.loadAll(eventDetails);
-			addStudent = new Vector<String>();
-			for(EventDetails eDetails : lstEventDetails) {
-				addStudent.addElement(eDetails.getStudentId());
+		if(!"".equals(groupName)) {
+			String collegeId = studentDetails.get(0).getCollegeId();
+			String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
+			EventDetails eventDetails = new EventDetails();
+			eventDetails.setCollegeId(collegeId);
+			eventDetails.setGroupId(groupName);
+			eventDetails.setEventId(eventId);
+			try {
+				List<EventDetails> lstEventDetails = eventsDetailsTransaction.loadAll(eventDetails);
+				addStudent = new Vector<String>();
+				for(EventDetails eDetails : lstEventDetails) {
+					addStudent.addElement(eDetails.getStudentId());
+				}
+			} catch (IfaceException e) {
+				e.printStackTrace();
 			}
-		} catch (IfaceException e) {
-			e.printStackTrace();
+			validator.setAddedStudent(addStudent);
+			groupEventView.getLstAddedStudentList().setListData(addStudent);
+			
+		} else {
+		
+			groupEventView.getLstAddedStudentList().setListData(new Vector<String>());
+			validator.setAddedStudent(new Vector<String>());
 		}
-		groupEventView.getLstAddedStudentList().setListData(addStudent);
-		
-		
 	}
 
 	private void performEventSelectedAction() {
 		
 		String selectedEvent = groupEventView.getCmbEventNames().getSelectedItem().toString();
-		String collegeId = studentDetails.get(0).getCollegeId();
 		groupEventView.getLstAddedStudentList().setListData(new Vector<String>());
-		EventDetails eventDetails = new EventDetails();
-		eventDetails.setCollegeId(collegeId);
-		eventDetails.setEventId(selectedEvent);
-		try {
-			List<EventDetails> lstEventDetails = eventsDetailsTransaction.selectEventParticipants(eventDetails);
-			addStudent = new Vector<String>();
-			Vector<String> allStudent = validator.getAllStudentRegisterNumber(studentDetails);// setAllStudentRegisterNumber();
-			if(lstEventDetails.size() == 0) {
-				groupEventView.getLstAllStudentIds().setListData(allStudent);
-			} else {
-				addStudent = validator.contatin(allStudent, lstEventDetails);
+		groupEventView.getCmbGroupNames().setSelectedItem("");
+		if(!"".equals(selectedEvent)) {
+			String collegeId = studentDetails.get(0).getCollegeId();
+			EventDetails eventDetails = new EventDetails();
+			eventDetails.setCollegeId(collegeId);
+			eventDetails.setEventId(selectedEvent);
+			try {
+				List<EventDetails> lstEventDetails = eventsDetailsTransaction.selectEventParticipants(eventDetails);
+				allStudent = new Vector<String>();
+				addStudent = new Vector<String>();
+				Vector<String> allStudent = validator.getAllStudentRegisterNumber(studentDetails);// setAllStudentRegisterNumber();
+				if(lstEventDetails.size() == 0) {
+					validator.setAllStudent(allStudent);
+					groupEventView.getLstAllStudentIds().setListData(allStudent);
+				} else {
+					allStudent = validator.contatin(allStudent, lstEventDetails);
+					groupEventView.getLstAllStudentIds().setListData(allStudent);
+					validator.setAllStudent(allStudent);
+				}
+				
+				
+			} catch (IfaceException e) {
+				e.printStackTrace();
 			}
-			groupEventView.getLstAllStudentIds().setListData(addStudent);
 			
-		} catch (IfaceException e) {
-			e.printStackTrace();
+		} else {
+			groupEventView.getLstAllStudentIds().setListData(new Vector<String>());
+			validator.setAllStudent(new Vector<String>());
 		}
-		
-		
 	}
 
 	private void performSearchAcion() {
@@ -158,29 +174,36 @@ public class GroupEventController implements ActionListener{
 	}
 
 	private void performRemoveAction() {
+		
 		eventDetails = new ArrayList<EventDetails>();
 		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
 		String groupName = groupEventView.getCmbGroupNames().getSelectedItem().toString();
-		Object[] selecterRegsterNumbers = groupEventView.getLstAllStudentIds().getSelectedValues();
+		if(!"".equals(eventId) & !"".equals(groupName)) {
+			Object[] selecterRegsterNumbers = groupEventView.getLstAddedStudentList().getSelectedValues();
+			allStudent = validator.getAllStudent();
+			addStudent = validator.getAddedStudent();
 			for(Object object: selecterRegsterNumbers) {
-					EventDetails studentParticipation = new EventDetails();
-					studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
-					studentParticipation.setStudentId(object.toString());
-					studentParticipation.setEventId(eventId);
-					studentParticipation.setGroupId(groupName);
-					eventDetails.add(studentParticipation);
-					addStudent.removeElement(object.toString());
+				EventDetails studentParticipation = new EventDetails();
+				studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
+				studentParticipation.setStudentId(object.toString());
+				studentParticipation.setEventId(eventId);
+				studentParticipation.setGroupId(groupName);
+				eventDetails.add(studentParticipation);
+				addStudent.removeElement(object.toString());
+				allStudent.addElement(object.toString());
 			}
+			
 			eventsDetailsTransaction = new EventsDetailsTransaction();
 			try {
 				eventsDetailsTransaction.deleteAll(eventDetails);
+				groupEventView.getLstAddedStudentList().setListData(addStudent);
+				groupEventView.getLstAllStudentIds().setListData(allStudent);
+				validator.setAllStudent(allStudent);
+				validator.setAddedStudent(addStudent);
 			} catch (IfaceException e) {
 				e.printStackTrace();
 			}
-	}
-
-	private void performDeleteAction() {
-		
+		}
 	}
 
 	private void performAddAction() {
@@ -188,41 +211,43 @@ public class GroupEventController implements ActionListener{
 		eventDetails = new ArrayList<EventDetails>();
 		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
 		String groupName = groupEventView.getCmbGroupNames().getSelectedItem().toString();
-		Object[] selecterRegsterNumbers = groupEventView.getLstAllStudentIds().getSelectedValues();
-		if(setGroup(selecterRegsterNumbers.length)) {
-			for(Object object: selecterRegsterNumbers) {
-				if(!addStudent.contains(object.toString())) {
-					addStudent.addElement(object.toString());
-					EventDetails studentParticipation = new EventDetails();
-					studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
-					studentParticipation.setStudentId(object.toString());
-					studentParticipation.setEventId(eventId);
-					studentParticipation.setGroupId(groupName);
-					eventDetails.add(studentParticipation);
+		if(!"".equals(eventId) & !"".equals(groupName)) {
+			Object[] selecterRegsterNumbers = groupEventView.getLstAllStudentIds().getSelectedValues();
+			allStudent = validator.getAllStudent();
+			addStudent = validator.getAddedStudent();
+			
+			if(setGroup(selecterRegsterNumbers.length)) {
+				for(Object object: selecterRegsterNumbers) {
+					if(!addStudent.contains(object.toString())) {
+						addStudent.addElement(object.toString());
+						EventDetails studentParticipation = new EventDetails();
+						studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
+						studentParticipation.setStudentId(object.toString());
+						studentParticipation.setEventId(eventId);
+						studentParticipation.setGroupId(groupName);
+						eventDetails.add(studentParticipation);
+						allStudent.removeElement(object.toString());
+					}
 				}
+				eventsDetailsTransaction = new EventsDetailsTransaction();
+				try {
+					eventsDetailsTransaction.saveAll(eventDetails);
+					groupEventView.getLstAllStudentIds().setListData(allStudent);
+					groupEventView.getLstAddedStudentList().setListData(addStudent);
+					validator.setAllStudent(allStudent);
+					validator.setAddedStudent(addStudent);
+				} catch (IfaceException e) {
+					e.printStackTrace();
+				}
+				
+				
+			} else {
+				
 			}
-			eventsDetailsTransaction = new EventsDetailsTransaction();
-			try {
-				eventsDetailsTransaction.saveAll(eventDetails);
-			} catch (IfaceException e) {
-				e.printStackTrace();
-			}
-			
-			groupEventView.getLstAddedStudentList().setListData(addStudent);
-		} else {
-			
 		}
 		
 	}
 
-	public Vector<String>  setAllStudentRegisterNumber() {
-		Vector<String> regsterNumber = new Vector<String>();
-		for(StudentDetails student : studentDetails) {
-			regsterNumber.addElement(student.getStudentId());
-		}
-		return regsterNumber;
-	}
-	
 	public void setGroupNames() {
 		groupEventView.getCmbGroupNames().addItem("");
 		for(int i = 0; i < studentDetails.size(); i++) {
@@ -248,12 +273,12 @@ public class GroupEventController implements ActionListener{
 		int maxCount = 0;
 		int aCount = 0;
 		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
-		int studentCount =  addStudent.size();
+		int studentCount =  validator.getAddedStudent().size();
 		for(Events event : events) {
 			maxCount = event.getMaxNoOfParticipants();
 			if(eventId.equals(event.getEventId()) & maxCount > 1) {
-				aCount = studentCount == 0 ? 1: studentCount  % maxCount;
-				if((aCount+count) > maxCount  ) {
+				//aCount = studentCount == 0 ? 1: studentCount  % maxCount;
+				if((studentCount+count) > maxCount  ) {
 					return false;
 				}
 			}
@@ -304,21 +329,4 @@ public class GroupEventController implements ActionListener{
 		setGroupNames();
 		return panel;
 	}
-	
-	public Vector<String> contatin(Vector<String> allStudent, List<EventDetails> details) {
-		boolean find = true;
-		int size = allStudent.size();
-		Vector<String> remainingRegster = allStudent;
-		for(EventDetails event : details) {
-			find = true;
-			for(int i = 0; i < size & find; i++) {
-				if(event.getStudentId().equals(allStudent.get(i))) {
-					find = false;
-					remainingRegster.remove(allStudent.get(i));
-				}
-			}
-		}
-		return remainingRegster;
-	}
-
 }

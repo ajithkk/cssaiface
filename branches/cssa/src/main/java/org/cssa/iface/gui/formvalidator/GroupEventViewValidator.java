@@ -15,6 +15,9 @@ import org.cssa.iface.bo.StudentDetails;
  */
 public class GroupEventViewValidator {
 	
+	private Vector<String>	allStudent;
+	private Vector<String> addedStudent;
+	
 	public Vector<String> contatin(Vector<String> allStudent, List<EventDetails> details) {
 		boolean find = true;
 		int size = allStudent.size();
@@ -38,5 +41,35 @@ public class GroupEventViewValidator {
 		}
 		return regsterNumber;
 	 }
+
+	/**
+	 * @return the allStudent
+	 */
+	public Vector<String> getAllStudent() {
+		return allStudent;
+	}
+
+	/**
+	 * @param allStudent the allStudent to set
+	 */
+	public void setAllStudent(Vector<String> allStudent) {
+		this.allStudent = allStudent;
+	}
+
+	/**
+	 * @return the addedStudent
+	 */
+	public Vector<String> getAddedStudent() {
+		return addedStudent;
+	}
+
+	/**
+	 * @param addedStudent the addedStudent to set
+	 */
+	public void setAddedStudent(Vector<String> addedStudent) {
+		this.addedStudent = addedStudent;
+	}
+	
+	
 	
 }

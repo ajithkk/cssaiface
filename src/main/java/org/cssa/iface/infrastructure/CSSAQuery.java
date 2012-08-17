@@ -190,7 +190,8 @@ public class CSSAQuery {
 	public static final String DELETE_GROUP_EVENT_DETAILS = "DELETE FROM "+CSSAConstants.EVENT_DETAILS_TABLE 
 			+" WHERE "+CSSAConstants.EVENT_DETAILS_COLLEGE_ID +"= ? AND "
 			+CSSAConstants.EVENT_DETAILS_EVENT_ID +"= ? AND "
-			+CSSAConstants.EVENT_DETAILS_GROUP_ID +"= ? " ;
+			+CSSAConstants.EVENT_DETAILS_GROUP_ID +"= ? AND " 
+			+CSSAConstants.EVENT_DETAILS_STUDENT_ID + "= ? ";
 	
 	public static final String DELETE_STUDENT_EVENT_DETAILS = "DELETE FROM "+ CSSAConstants.EVENT_DETAILS_TABLE 
 			+" WHERE "+CSSAConstants.EVENT_DETAILS_STUDENT_ID +"= ? AND " 

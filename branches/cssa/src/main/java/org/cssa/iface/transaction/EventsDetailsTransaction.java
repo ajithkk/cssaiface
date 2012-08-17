@@ -105,6 +105,7 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 			parameter.put(1, event.getCollegeId());
 			parameter.put(2, event.getEventId());
 			parameter.put(3, event.getGroupId());
+			parameter.put(4, event.getStudentId());
 			batchParameterList.add(parameter);
 		}
 		result = dbEngineImpl.executeBatch(batchParameterList, CSSAQuery.DELETE_GROUP_EVENT_DETAILS);

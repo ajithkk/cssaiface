@@ -3,6 +3,7 @@
  */
 package org.cssa.iface.gui.result;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -16,6 +17,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
+import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
@@ -50,6 +52,24 @@ public class InsertResultView {
 	private CButton btnCancel;
 	private CButton btnClear;
 	private CButton btnSearch;
+	
+	private InsertResultController controller;
+	private CssaMDIForm mdiForm;
+	
+	
+	public InsertResultView(InsertResultController controller, CssaMDIForm mdiForm) {
+		super();
+		this.controller = controller;
+		this.mdiForm = mdiForm;
+	}
+	
+	public void showInsertResultScreen() {
+		
+		JPanel panel = new JPanel();
+		panel.add(getInsertResultBody(), BorderLayout.CENTER);
+		mdiForm.addChild(panel, "Insert Result");
+		
+	}
 	
 	public JPanel getMainPanel() {
 		JPanel  panel = new JPanel();
@@ -213,6 +233,40 @@ public class InsertResultView {
 		
 	}
 	
+	public JPanel getInsertResultBody() {
+		
+		JPanel  panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = null;
+		
+		panel.setLayout(new GridBagLayout());
+	    constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		//constraints.anchor = GridBagConstraints.NORTHWEST;
+		// frame.add(new Event().init(),BorderLayout.NORTH);
+		panel.add(getMainPanel(),
+				constraints);
+		// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
+		// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
+		//frame.pack();
+		 constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		//constraints.anchor = GridBagConstraints.NORTHWEST;
+		panel.add(getMiddleButtonPanel(),
+		      constraints);
+		/*
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		//constraints.anchor = GridBagConstraints.NORTHWEST;
+		panel.add(getMiddleButtonPanel(),
+		      constraints);
+		*/
+		return panel;
+	}
+	
 	public void setCollegeId(String collegeId) {
 		txtCollegeId.setText(collegeId);
 	}
@@ -248,62 +302,4 @@ public class InsertResultView {
 	public String getResultStatus() {
 		return cmbResultStatus.getSelectedItem().toString();
 	}
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				/*
-				try {
-				      //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				      for (UIManager.LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels())
-				        if ("Nimbus".equals(laf.getName())) UIManager.setLookAndFeel(laf.getClassName());
-				    } catch(Exception e) {
-				      e.printStackTrace();
-				    }*/
-				JFrame frame = new JFrame();
-				try {
-		            // Set System L&F
-		        UIManager.setLookAndFeel(
-		            UIManager.getSystemLookAndFeelClassName());
-		    } 
-		    catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		    }
-		    catch (ClassNotFoundException e) {
-		       // handle exception
-		    }
-		    catch (InstantiationException e) {
-		       // handle exception
-		    }
-		    catch (IllegalAccessException e) {
-		       // handle exception
-		    }
-
-				frame.setLayout(new GridBagLayout());
-				GridBagConstraints constraints = new GridBagConstraints();
-				constraints.gridx = 0;
-				constraints.gridy = 0;
-				//constraints.anchor = GridBagConstraints.NORTHWEST;
-				// frame.add(new Event().init(),BorderLayout.NORTH);
-				frame.add(new InsertResultView().getMainPanel(),
-						constraints);
-				// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
-				// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
-				//frame.pack();
-				 constraints = new GridBagConstraints();
-				constraints.gridx = 0;
-				constraints.gridy = 2;
-				//constraints.anchor = GridBagConstraints.NORTHWEST;
-				frame.add(new InsertResultView().getMiddleButtonPanel(),
-				      constraints);
-				frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-				frame.setSize(800, 400);
-				frame.setVisible(true);
-			}
-		});
-	}
-	
-
 }

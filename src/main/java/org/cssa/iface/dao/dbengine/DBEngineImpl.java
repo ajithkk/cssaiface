@@ -50,7 +50,6 @@ public class DBEngineImpl {
 	public ResultSet executeQuery(String query) throws IfaceException {
 		res = null;
 		try {
-			System.out.println(query);
 			log.info("Query" +query);
 			con = getConnection();
 		} catch (ClassNotFoundException e1) {

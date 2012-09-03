@@ -13,6 +13,8 @@ import java.awt.Insets;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
@@ -54,13 +56,16 @@ public class InsertResultView {
 	private CButton btnSearch;
 	
 	private InsertResultController controller;
+	private InsertResultTableModel tableModel;
 	private CssaMDIForm mdiForm;
+	private JTable tblCollegeDetails;
 	
 	
-	public InsertResultView(InsertResultController controller, CssaMDIForm mdiForm) {
+	public InsertResultView(InsertResultController controller, CssaMDIForm mdiForm, InsertResultTableModel tableModel) {
 		super();
 		this.controller = controller;
 		this.mdiForm = mdiForm;
+		this.tableModel = tableModel;
 	}
 	
 	public void showInsertResultScreen() {
@@ -117,6 +122,8 @@ public class InsertResultView {
 		constraints.gridy = 1;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(btnSearch, constraints);
+		btnSearch.addActionListener(controller);
+		btnSearch.setActionCommand(SEARCH);
 		
 		lblCollegeId = new CLabel("College Id:");
 		constraints = new GridBagConstraints();
@@ -179,6 +186,7 @@ public class InsertResultView {
 		btnInsert = new CButton("Save");
 		btnInsert.setMnemonic('S');
 		btnInsert.setActionCommand(INSERT);
+		btnInsert.addActionListener(controller);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(0, 5, 0, 5);
 		constraints.gridx =3;
@@ -189,6 +197,7 @@ public class InsertResultView {
 		btnClear = new CButton("Clear");
 		btnClear.setMnemonic('L');
 		btnClear.setActionCommand(CLEAR);
+		btnClear.addActionListener(controller);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(0, 5, 0, 5);
 		constraints.gridx = 4;
@@ -199,6 +208,7 @@ public class InsertResultView {
 		btnCancel = new CButton("Cancel");
 		btnCancel.setMnemonic('C');
 		btnCancel.setActionCommand(CANCEL);
+		btnCancel.addActionListener(controller);
 		constraints.insets = new Insets(0, 5, 0, 5);
 		constraints.gridx = 5;
 		constraints.gridy = 0;
@@ -233,6 +243,21 @@ public class InsertResultView {
 		
 	}
 	
+	public JPanel getTablePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		
+		tblCollegeDetails = new JTable(tableModel);
+		tblCollegeDetails.setRowHeight(20);
+		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
+		scrollPane.setMinimumSize(new Dimension(700, 200));
+		scrollPane.setMaximumSize(new Dimension(700, 200));
+		scrollPane.setPreferredSize(new Dimension(700, 200));
+		panel.add(scrollPane, BorderLayout.CENTER);
+		//tblCollegeDetails.addMouseListener(controller);
+		return panel;
+	}
+	
 	public JPanel getInsertResultBody() {
 		
 		JPanel  panel = new JPanel();
@@ -243,30 +268,53 @@ public class InsertResultView {
 	    constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		//constraints.anchor = GridBagConstraints.NORTHWEST;
-		// frame.add(new Event().init(),BorderLayout.NORTH);
-		panel.add(getMainPanel(),
-				constraints);
-		// frame.add(new Event().getBottamPanel(), BorderLayout.CENTER);
-		// frame.add(new Event().getSideButtonPanel(), BorderLayout.)
-		//frame.pack();
+		panel.add(getMainPanel(),constraints);
 		 constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 2;
-		//constraints.anchor = GridBagConstraints.NORTHWEST;
-		panel.add(getMiddleButtonPanel(),
-		      constraints);
-		/*
+		panel.add(getMiddleButtonPanel(),constraints);
+		
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 3;
-		//constraints.anchor = GridBagConstraints.NORTHWEST;
-		panel.add(getMiddleButtonPanel(),
-		      constraints);
-		*/
+		constraints.insets = new Insets(5, 5, 0, 2);
+		panel.add(getTablePanel(),constraints);
+		
 		return panel;
 	}
 	
+	public JComboBox getCmbEventId() {
+		return cmbEventId;
+	}
+
+	public void setCmbEventId(JComboBox cmbEventId) {
+		this.cmbEventId = cmbEventId;
+	}
+
+	public JComboBox getCmbEventStage() {
+		return cmbEventStage;
+	}
+
+	public void setCmbEventStage(JComboBox cmbEventStage) {
+		this.cmbEventStage = cmbEventStage;
+	}
+
+	public JComboBox getCmbResultStatus() {
+		return cmbResultStatus;
+	}
+
+	public void setCmbResultStatus(JComboBox cmbResultStatus) {
+		this.cmbResultStatus = cmbResultStatus;
+	}
+
+	public JTable getTblCollegeDetails() {
+		return tblCollegeDetails;
+	}
+
+	public void setTblCollegeDetails(JTable tblCollegeDetails) {
+		this.tblCollegeDetails = tblCollegeDetails;
+	}
+
 	public void setCollegeId(String collegeId) {
 		txtCollegeId.setText(collegeId);
 	}

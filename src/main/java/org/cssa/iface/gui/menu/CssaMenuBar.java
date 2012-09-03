@@ -15,6 +15,7 @@ import org.cssa.iface.gui.college.CollegeInitialViewController;
 import org.cssa.iface.gui.events.EventsController;
 import org.cssa.iface.gui.lookup.CollegeLookupController;
 import org.cssa.iface.gui.lookup.StudentLookupController;
+import org.cssa.iface.gui.result.InsertResultController;
 
 /**
  * @author ajith
@@ -218,6 +219,8 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 			new CollegeLookupController(cssaMDIForm).askCollegeLookupView();
 		} else if (CssaMenuBar.MNU_MAINTAIN_STUDENT.equals(actionCommand)) {
 			new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
+		} else if(CssaMenuBar.MNU_MAINTAIN_RESULT.equals(actionCommand)) {
+			new InsertResultController(cssaMDIForm).askInsertResultView();
 		}
 			
 	}

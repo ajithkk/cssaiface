@@ -13,7 +13,9 @@ import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.StudentLookupFormValidator;
+import org.cssa.iface.gui.result.InsertResultController;
 import org.cssa.iface.gui.student.StudentAndGroupEventController;
+import org.cssa.iface.services.LookupService;
 import org.cssa.iface.transaction.StudentTransaction;
 
 /**
@@ -28,11 +30,22 @@ public class StudentLookupController implements ActionListener, MouseListener {
 	private StudentTransaction transaction;
 	private StudentLookupFormValidator validator;
 	List<StudentDetails> studentDetails;
+	private StudentDetails student;
+	private LookupService<StudentDetails> controller;
 	
 	
 	public StudentLookupController(CssaMDIForm mdiForm) {
 		super();
 		this.mdiForm = mdiForm;
+		tableModel = new StudentLookupTableModel();
+		transaction = new StudentTransaction();
+		validator = new StudentLookupFormValidator();
+		controller = null;
+	}
+	
+	public StudentLookupController(CssaMDIForm mdiForm, LookupService<StudentDetails> controller) {
+		this.mdiForm = mdiForm;
+		this.controller = controller;
 		tableModel = new StudentLookupTableModel();
 		transaction = new StudentTransaction();
 		validator = new StudentLookupFormValidator();
@@ -89,9 +102,14 @@ public class StudentLookupController implements ActionListener, MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		int selectedRow = lookupView.getTblStudentDetails().getSelectedRow();
 		StudentDetails details = tableModel.getStudents().get(selectedRow);
-		//new StudentDetailsController(details, mdiForm).askStudentDetailsView();
-		StudentAndGroupEventController studentAndGroupEventController = new  StudentAndGroupEventController(details, mdiForm);
-		studentAndGroupEventController.showStudentAndGroupEventTab();
+		if(null == controller) {
+			//new StudentDetailsController(details, mdiForm).askStudentDetailsView();
+			StudentAndGroupEventController studentAndGroupEventController = new  StudentAndGroupEventController(details, mdiForm);
+			studentAndGroupEventController.showStudentAndGroupEventTab();
+		} else {
+			mdiForm.closeFrame();
+			controller.setResult(details);
+		}
 	}
 
 
@@ -121,5 +139,15 @@ public class StudentLookupController implements ActionListener, MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public StudentDetails getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentDetails student) {
+		this.student = student;
+	}
+	
+	
 
 }

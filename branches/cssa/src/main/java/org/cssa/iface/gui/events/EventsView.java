@@ -57,7 +57,6 @@ public class EventsView {
 
 	private JTable eventTable;
 
-	private EventDetails eventDetails;
 	private EventsController eventsController;
 	private EventTableModel tableModel;
 	
@@ -300,6 +299,7 @@ public class EventsView {
 	}
 
 	public JPanel getEventDetailsBody() {
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints;

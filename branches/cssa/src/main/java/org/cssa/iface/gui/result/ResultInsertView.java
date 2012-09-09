@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
+import org.cssa.iface.gui.controls.CTextField;
 
 /**
  * @author ajith
@@ -28,17 +29,24 @@ public class ResultInsertView {
 	public static final String CLEAR = "Clear";
 	public static final String SEARCH = "Search";
 	public static final String SAVE = "Save";
+	public static final String COLLEGE_SEARCH = "College_Search";
+	public static final String STUDENT_SEARCH = "Student_Search";
 	
 	
 	private CLabel lblEventCode;
 	private CLabel lblEventStage;
+	private CLabel lblCollegeId;
+	private CLabel lblStudentId;
 	
+	private CTextField txtCollegeId;
+	private CTextField txtStudentId;
 	
-
 	private CButton btnSearch;
 	private CButton btnClear;
 	private CButton btnCancel;
 	private CButton btnInsert;
+	private CButton btnStudentSearch;
+	private CButton btnCollegeSearch;
 	
 	private JComboBox cmbEventCode;
 	private JComboBox cmbEventStage;
@@ -59,7 +67,7 @@ public class ResultInsertView {
 		this.controller = controller;
 		this.tableModel = tableModel;
 	}
-	public void showEventscreen() {
+	public void showResultInsertScreen() {
 		JPanel tabbedPane = new JPanel();
 		tabbedPane.add(getResultDetailsBody(), BorderLayout.CENTER);
 		mdiForm.addChild(tabbedPane, "Inser Result");
@@ -89,7 +97,7 @@ public class ResultInsertView {
 		lblEventStage = new CLabel("Event Stage: ");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
-		constraints.gridy = 4;
+		constraints.gridy = 2;
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(5, 5, 0, 2);
 		panel.add(lblEventStage, constraints);
@@ -97,13 +105,70 @@ public class ResultInsertView {
 		cmbEventStage = new JComboBox();
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
-		constraints.gridy = 4;
+		constraints.gridy = 2;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		cmbEventStage.setPreferredSize(new Dimension(250, 23));
 		panel.add(cmbEventStage, constraints);
 		
+		lblCollegeId = new CLabel("College Id");
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.insets = new Insets(5, 5, 0, 2);
+		panel.add(lblCollegeId, constraints);
+		
+		txtCollegeId = new CTextField();
+		constraints = new GridBagConstraints();
+		constraints.gridx = 1;
+		constraints.gridy = 3;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 0, 5, 2);
+		panel.add(txtCollegeId, constraints);
+		
+		btnCollegeSearch = new CButton();
+		btnCollegeSearch.setPreferredSize(new Dimension(40, 23));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.gridx = 2;
+		constraints.gridy = 3;
+		constraints.insets = new Insets(5, 0, 5, 2);
+		panel.add(btnCollegeSearch, constraints);
+		btnCollegeSearch.addActionListener(controller);
+		btnCollegeSearch.setActionCommand(COLLEGE_SEARCH);
+		
+		
+//		lblStudentId = new CLabel("Student Id");
+//		constraints = new GridBagConstraints();
+//		constraints.gridx = 0;
+//		constraints.gridy = 4;
+//		constraints.anchor = GridBagConstraints.EAST;
+//		constraints.insets = new Insets(5, 5, 0, 2);
+//		panel.add(lblStudentId, constraints);
+//		
+//		txtStudentId = new CTextField();
+//		constraints = new GridBagConstraints();
+//		constraints.gridx = 1;
+//		constraints.gridy = 4;
+//		constraints.anchor = GridBagConstraints.WEST;
+//		constraints.insets = new Insets(5, 0, 5, 2);
+//		panel.add(txtStudentId, constraints);
+//		
+//		btnStudentSearch = new CButton();
+//		btnCollegeSearch.setPreferredSize(new Dimension(40, 23));
+//		constraints = new GridBagConstraints();
+//		constraints.anchor = GridBagConstraints.WEST;
+//		constraints.gridx = 2;
+//		constraints.gridy = 4;
+//		constraints.insets = new Insets(5, 0, 5, 2);
+//		panel.add(btnStudentSearch, constraints);
+//		btnStudentSearch.addActionListener(controller);
+//		btnStudentSearch.setActionCommand(COLLEGE_SEARCH);
+		
 		return panel;
+		
+		
 		
 	}
 	
@@ -266,6 +331,54 @@ public JComboBox getCmbEventStage() {
  */
 public void setCmbEventStage(JComboBox cmbEventStage) {
 	this.cmbEventStage = cmbEventStage;
+}
+/**
+ * @return the txtCollegeId
+ */
+public String getTxtCollegeId() {
+	return txtCollegeId.getText();
+}
+/**
+ * @param txtCollegeId the txtCollegeId to set
+ */
+public void setTxtCollegeId(String txtCollegeId) {
+	this.txtCollegeId.setText(txtCollegeId);
+}
+/**
+ * @return the txtStudentId
+ */
+public String getTxtStudentId() {
+	return txtStudentId.getText();
+}
+/**
+ * @param txtStudentId the txtStudentId to set
+ */
+public void setTxtStudentId(String txtStudentId) {
+	this.txtStudentId.setText(txtStudentId);
+}
+/**
+ * @return the tblParticipants
+ */
+public JTable getTblParticipants() {
+	return tblParticipants;
+}
+/**
+ * @param tblParticipants the tblParticipants to set
+ */
+public void setTblParticipants(JTable tblParticipants) {
+	this.tblParticipants = tblParticipants;
+}
+/**
+ * @return the tableModel
+ */
+public ResultInsertTableModel getTableModel() {
+	return tableModel;
+}
+/**
+ * @param tableModel the tableModel to set
+ */
+public void setTableModel(ResultInsertTableModel tableModel) {
+	this.tableModel = tableModel;
 }
 	
 	

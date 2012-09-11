@@ -13,9 +13,9 @@ import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.StudentLookupFormValidator;
-import org.cssa.iface.gui.result.InsertResultController;
 import org.cssa.iface.gui.student.StudentAndGroupEventController;
 import org.cssa.iface.services.LookupService;
+import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.StudentTransaction;
 
 /**
@@ -31,8 +31,7 @@ public class StudentLookupController implements ActionListener, MouseListener {
 	private StudentLookupFormValidator validator;
 	List<StudentDetails> studentDetails;
 	private StudentDetails student;
-	private LookupService<StudentDetails> controller;
-	
+	private  StudentLookupService<StudentDetails> controller;
 	
 	public StudentLookupController(CssaMDIForm mdiForm) {
 		super();
@@ -43,7 +42,7 @@ public class StudentLookupController implements ActionListener, MouseListener {
 		controller = null;
 	}
 	
-	public StudentLookupController(CssaMDIForm mdiForm, LookupService<StudentDetails> controller) {
+	public StudentLookupController(CssaMDIForm mdiForm, StudentLookupService<StudentDetails>  controller) {
 		this.mdiForm = mdiForm;
 		this.controller = controller;
 		tableModel = new StudentLookupTableModel();
@@ -108,7 +107,7 @@ public class StudentLookupController implements ActionListener, MouseListener {
 			studentAndGroupEventController.showStudentAndGroupEventTab();
 		} else {
 			mdiForm.closeFrame();
-			controller.setResult(details);
+			controller.setSelectedStudent(details);
 		}
 	}
 

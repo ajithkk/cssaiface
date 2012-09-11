@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
+import org.cssa.iface.gui.controls.CTextField;
 /**
  * @author Ajith
  *
@@ -30,6 +31,8 @@ public class ParticipantLookupView {
 	
 	private CLabel lblEventCode;
 	private CLabel lblEventStage;
+	private CLabel lblCollegeId;
+	private CLabel lblStudentId;
 	
 	private CButton btnSearch;
 	private CButton btnClear;
@@ -37,6 +40,8 @@ public class ParticipantLookupView {
 	
 	private JComboBox cmbEventCode;
 	private JComboBox cmbEventStage;
+	private CTextField txtCollegeId;
+	private CTextField txtStudentId;
 	private JTable tblParticipants;
 	
 	private CssaMDIForm mdiForm;
@@ -54,7 +59,7 @@ public class ParticipantLookupView {
 		this.controller = controller;
 		this.tableModel = tableModel;
 	}
-	public void showEventscreen() {
+	public void showLookupView() {
 		JPanel tabbedPane = new JPanel();
 		tabbedPane.add(getResultDetailsBody(), BorderLayout.CENTER);
 		mdiForm.addChild(tabbedPane, "Inser Result");
@@ -97,6 +102,41 @@ public class ParticipantLookupView {
 		constraints.insets = new Insets(5, 0, 5, 2);
 		cmbEventStage.setPreferredSize(new Dimension(250, 23));
 		panel.add(cmbEventStage, constraints);
+		
+		lblCollegeId = new CLabel("College Id: ");
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 5;
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.insets = new Insets(5, 5, 0, 2);
+		panel.add(lblCollegeId, constraints);
+		
+		txtCollegeId = new CTextField();
+		constraints = new GridBagConstraints();
+		constraints.gridx = 1;
+		constraints.gridy = 5;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 0, 5, 2);
+		cmbEventStage.setPreferredSize(new Dimension(250, 23));
+		panel.add(txtCollegeId, constraints);
+		
+		lblStudentId = new CLabel("Student Id: ");
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 5;
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.insets = new Insets(5, 5, 0, 2);
+		panel.add(lblStudentId, constraints);
+		
+		txtStudentId = new CTextField();
+		constraints = new GridBagConstraints();
+		constraints.gridx = 1;
+		constraints.gridy = 5;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 0, 5, 2);
+		cmbEventStage.setPreferredSize(new Dimension(250, 23));
+		panel.add(txtStudentId, constraints);
+		
 		
 		return panel;
 		

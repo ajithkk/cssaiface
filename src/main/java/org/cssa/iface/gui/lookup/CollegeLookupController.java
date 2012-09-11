@@ -15,6 +15,7 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeDetailsController;
 import org.cssa.iface.gui.formvalidator.CollegeLookupFormValidator;
 import org.cssa.iface.services.CollegeDetailsQueryEngine;
+import org.cssa.iface.services.CollegeLookupService;
 import org.cssa.iface.transaction.CollegeTransaction;
 
 /**
@@ -23,13 +24,16 @@ import org.cssa.iface.transaction.CollegeTransaction;
  */
 public class CollegeLookupController implements ActionListener, MouseListener {
 	
-	CollegeLookupView lookupView;
-	CollegeLookupFormValidator validator;
-	CollegeDetailsQueryEngine engine;
-	CollegeLookupTableModel tableModel;
+	private CollegeLookupView lookupView;
+	private CollegeLookupFormValidator validator;
+	private CollegeLookupTableModel tableModel;
 	private CssaMDIForm mdiForm;
 	private CollegeTransaction transaction;
+	
 	List<CollegeDetails> collegeDetails;
+	CollegeDetailsQueryEngine engine;
+	
+	private CollegeLookupService<CollegeDetails> collegeLookupService;
 	
 	/**
 	 * default constructor
@@ -39,7 +43,27 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 		tableModel = new CollegeLookupTableModel();
 		this.mdiForm = mdiForm;
 		transaction = new CollegeTransaction();
+		collegeLookupService = null;
 	}
+	
+	
+	
+	/**
+	 * @param mdiForm
+	 * @param collegeLookupService
+	 */
+	public CollegeLookupController(CssaMDIForm mdiForm,
+			CollegeLookupService<CollegeDetails> collegeLookupService) {
+		super();
+		this.mdiForm = mdiForm;
+		this.collegeLookupService = collegeLookupService;
+		validator = new CollegeLookupFormValidator();
+		tableModel = new CollegeLookupTableModel();
+		transaction = new CollegeTransaction();
+	}
+
+
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		validator.setLookupView(lookupView);
@@ -75,6 +99,7 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 		
 		
 	}
+
 	/**
 	 * clear the college look view
 	 */
@@ -82,6 +107,7 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 		lookupView.setCollegeId("");
 		lookupView.setCollegeName("");
 	}
+	
 	
 	/**
 	 * method to ask college lookup view 
@@ -91,28 +117,38 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 		lookupView.showCollegeLookupScreen();
 		
 	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int selectedRow =  lookupView.getTblCollegeDetails().getSelectedRow();
 	    CollegeDetails college = tableModel.getCollegeList().get(selectedRow);
-	    new CollegeDetailsController(mdiForm, college).askCollegeDetailsView();
+	    if(null == collegeLookupService) {
+	    	new CollegeDetailsController(mdiForm, college).askCollegeDetailsView();
+	    } else {
+			collegeLookupService.setSelectedCollege(college);
+			mdiForm.closeFrame();
+		}
 		
 	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub

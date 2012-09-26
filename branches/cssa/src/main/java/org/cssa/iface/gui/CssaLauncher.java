@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.cssa.iface.infrastructure.CSSAConstants;
+import org.cssa.iface.util.EventStorageXML;
 import org.cssa.iface.util.Util;
 
 /**
@@ -51,6 +51,7 @@ public class CssaLauncher {
 		});
 	}
 		
+	@SuppressWarnings("unused")
 	private void initializeLoging() {
 		Properties properties = new Properties();
 		ClassLoader loader = this.getClass().getClassLoader();
@@ -94,10 +95,12 @@ public class CssaLauncher {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
 		CssaLauncher launcher = new CssaLauncher();
 		launcher.logBasicSystemInfo();
 		
+		EventStorageXML xml = new EventStorageXML();
 		try{
 			launcher.showSplashScreen();
 			Thread.sleep(300);

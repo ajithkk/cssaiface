@@ -48,6 +48,9 @@ public class ResultInsertTableModel  extends AbstractTableModel{
 	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
+		if(6 == columnIndex) {
+			return Double.class;
+		}
 		return String.class;
 	}
 	
@@ -75,11 +78,12 @@ public class ResultInsertTableModel  extends AbstractTableModel{
 		case 4: return insert.getEventName();
 		case 5: return insert.getGroupName();
 		case 6: return insert.getMark();
-		case 7: if('P' == insert.getEventStatus()) {
+		case 7: return insert.getEventStatus();
+			/*if('P' == insert.getEventStatus()) {
 			return "Prelims";
 		} else if ('F' == insert.getEventStatus()) {
 			return "Final";
-		}
+		}*/
 		default:
 			break;
 		}

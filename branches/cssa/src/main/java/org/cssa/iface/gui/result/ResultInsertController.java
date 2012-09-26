@@ -5,24 +5,40 @@ package org.cssa.iface.gui.result;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.cssa.iface.bo.CollegeDetails;
+import org.cssa.iface.bo.Events;
+import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.StudentDetails;
+import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.lookup.CollegeLookupController;
+import org.cssa.iface.gui.lookup.StudentLookupController;
 import org.cssa.iface.services.CollegeLookupService;
-import org.cssa.iface.services.LookupService;
+import org.cssa.iface.services.LookupController;
 import org.cssa.iface.services.StudentLookupService;
+import org.cssa.iface.transaction.EventsTransaction;
+import org.cssa.iface.transaction.ResultsTransaction;
+import org.cssa.iface.transaction.TransactioUtils;
+import org.cssa.iface.util.EventStorageXML;
 
 /**
  * @author ajith
  *
  */
-public class ResultInsertController implements ActionListener,LookupService<CollegeDetails> {
+public class ResultInsertController implements ActionListener,CollegeLookupService<CollegeDetails>, LookupController, StudentLookupService<StudentDetails> {
 	
 	
 	private CssaMDIForm mdiForm;
 	private ResultInsertView resultInsertView;
 	private ResultInsertTableModel tableModel;
+	private TransactioUtils transactioUtils;
+	private EventsTransaction eventsTransaction;
+	private List<Events> events;
+	private Map<String, String> eventStateMap;
 	
 	/**
 	 * @param mdiForm
@@ -40,33 +56,129 @@ public class ResultInsertController implements ActionListener,LookupService<Coll
 		String actionCommand = e.getActionCommand();
 		
 		if(actionCommand.equals(ResultInsertView.CANCEL)) {
+			cancelAction();
 			
 		} else if (actionCommand.equals(ResultInsertView.CLEAR)) {
+			clearAction();
 			
 		} else if (actionCommand.equals(ResultInsertView.SEARCH)) {
+			searchAction();
 			
 		} else if (actionCommand.equals(ResultInsertView.SAVE)) {
+			performSaveAction();
 			
 		} else if (actionCommand.equals(ResultInsertView.COLLEGE_SEARCH)) {
 			
+			CollegeLookupController collegeLookupController = new CollegeLookupController(mdiForm, this);
+			collegeLookupController.askCollegeLookupView();
+			
 		} else if (actionCommand.equals(ResultInsertView.STUDENT_SEARCH)) {
 			
+			StudentLookupController studentLookupController = new StudentLookupController(mdiForm, this);
+			studentLookupController.askStudentLookupsereen();
 		}
 	}
+
+	private void performSaveAction() {
+		ResultsTransaction resultsTransaction = new ResultsTransaction();
+		try {
+			resultsTransaction.save(tableModel.getResultList(), resultInsertView.getCmbEventStage().getSelectedItem().toString());
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 
 	public void askResultInsertView() {
 		
 		resultInsertView = new ResultInsertView(mdiForm, this, tableModel);
 		resultInsertView.showResultInsertScreen();
+		setEventId();
+		setEventState();
+	}
+	
+	@Override
+	public void setSelectedCollege(CollegeDetails collegeDetails) {
+		 if(null != collegeDetails) {
+			 resultInsertView.setTxtCollegeId(collegeDetails.getCollegeId());
+		 }
 		
 	}
+
 
 	@Override
-	public void setResult(CollegeDetails e) {
-		// TODO Auto-generated method stub
+	public void searchAction() {
+		transactioUtils = new TransactioUtils();
+		InsertResult inResult = new InsertResult();
+		inResult.setCollegeId(resultInsertView.getTxtCollegeId());
+		inResult.setStudentId(resultInsertView.getTxtStudentId());
+		if(resultInsertView.getCmbEventStage().getSelectedIndex() > 0) {
+			inResult.setEventStatus(resultInsertView.getCmbEventStage().getSelectedItem().toString());
+		}
+		if(resultInsertView.getCmbEventCode().getSelectedIndex() > 0) {
+			inResult.setEventName(resultInsertView.getCmbEventCode().getSelectedItem().toString());
+		}
+		try {
+			List<InsertResult> participantList = transactioUtils.getParticipantsList(inResult);
+			tableModel.setResultList(participantList);
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
+
+	@Override
+	public void clearAction() {
+		resultInsertView.setTxtCollegeId("");
+		resultInsertView.getCmbEventCode().setSelectedIndex(0);
+		resultInsertView.getCmbEventStage().setSelectedIndex(0);
+		
+	}
+
+
+	@Override
+	public void cancelAction() {
+		mdiForm.closeFrame();
+	}
+	
+	private void setEventId() {
+		eventsTransaction = new EventsTransaction();
+		try {
+			events = eventsTransaction.loadAll();
+			resultInsertView.getCmbEventCode().addItem("please select");
+
+			for(Events event : events) {
+				resultInsertView.getCmbEventCode().addItem(event.getEventId());
+			}
+		} catch (IfaceException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setEventState() {
+		EventStorageXML eventStorageXML = new EventStorageXML();
+		eventStateMap = eventStorageXML.getEventStageMap();
+		
+		resultInsertView.getCmbEventStage().addItem("please select");
+		Set<Map.Entry<String, String>> eventStateSet = eventStateMap.entrySet();
+		for(Map.Entry<String, String> set : eventStateSet) {
+			resultInsertView.getCmbEventStage().addItem(set.getValue());
+		}
+		
+	}
+
+
+	@Override
+	public void setSelectedStudent(StudentDetails studentDetails) {
+		if(null != studentDetails) {
+			resultInsertView.setTxtCollegeId(studentDetails.getCollegeId());
+			resultInsertView.setTxtStudentId(studentDetails.getStudentId());
+		}
+	}
 
 
 }

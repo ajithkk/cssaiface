@@ -1,18 +1,22 @@
-package org.cssa.iface.bo;
 /**
  * 
- * @author Ajith
- * @since 12/12/2011
  */
-public class Results {
-	
+package org.cssa.iface.bo;
+
+/**
+ * @author ajith
+ *
+ */
+public class Winners {
 	
 	private int sno;
 	private String collegeId;
 	private String studentId;
 	private String eventId;
-	private String eventStatus;
+	private String winnerStatus;
+	private String groupId;
 	private float mark;
+	
 	
 	/**
 	 * @return the sno
@@ -26,7 +30,6 @@ public class Results {
 	public void setSno(int sno) {
 		this.sno = sno;
 	}
-	
 	/**
 	 * @return the collegeId
 	 */
@@ -64,16 +67,28 @@ public class Results {
 		this.eventId = eventId;
 	}
 	/**
-	 * @return the eventStatus
+	 * @return the winnerStatus
 	 */
-	public String getEventStatus() {
-		return eventStatus;
+	public String getWinnerStatus() {
+		return winnerStatus;
 	}
 	/**
-	 * @param eventStatus the eventStatus to set
+	 * @param winnerStatus the winnerStatus to set
 	 */
-	public void setEventStatus(String eventStatus) {
-		this.eventStatus = eventStatus;
+	public void setWinnerStatus(String winnerStatus) {
+		this.winnerStatus = winnerStatus;
+	}
+	/**
+	 * @return the groupId
+	 */
+	public String getGroupId() {
+		return groupId;
+	}
+	/**
+	 * @param groupId the groupId to set
+	 */
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
 	}
 	/**
 	 * @return the mark
@@ -88,4 +103,6 @@ public class Results {
 		this.mark = mark;
 	}
 	
+	
+
 }

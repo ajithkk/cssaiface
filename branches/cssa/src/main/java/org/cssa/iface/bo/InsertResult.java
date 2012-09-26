@@ -1,10 +1,16 @@
 package org.cssa.iface.bo;
 
+/**
+ * 
+ * @author ajith
+ *
+ */
+
 public class InsertResult extends StudentDetails {
 	
 	private String eventName;
 	private String groupName;
-	private char eventStatus;
+	private String eventStatus;
 	private float mark;
 	
 	/**
@@ -36,13 +42,13 @@ public class InsertResult extends StudentDetails {
 	/**
 	 * @return the eventStatus
 	 */
-	public char getEventStatus() {
+	public String getEventStatus() {
 		return eventStatus;
 	}
 	/**
 	 * @param eventStatus the eventStatus to set
 	 */
-	public void setEventStatus(char eventStatus) {
+	public void setEventStatus(String eventStatus) {
 		this.eventStatus = eventStatus;
 	}
 	/**

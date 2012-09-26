@@ -7,12 +7,16 @@ import java.util.Map;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.cssa.iface.bo.EventDetails;
+import org.cssa.iface.bo.Events;
+import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.InsertResultsTableBo;
 import org.cssa.iface.bo.Results;
 import org.cssa.iface.dao.dbengine.DBEngineImpl;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.infrastructure.CSSAQuery;
+import org.cssa.iface.services.QueryServices;
 
 /**
  * 
@@ -37,8 +41,6 @@ public class TransactioUtils {
 		String collegeId = CSSAConstants.COLLEGE_ID_PRE_STRING;
 		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
 		try{
-			
-			//System.out.println(CSSAQuery.GET_COLLEGE_COOUNT);
 			res = dbEngineImpl.executeQuery(CSSAQuery.GET_COLLEGE_COOUNT);
 			if(res.next()) {
 				collegeId+= ((res.getInt(1)+1) < 10 ? CSSAConstants.COLLEGE_ID_PRE_ZERO +String.valueOf(res.getInt(1)) : String.valueOf(res.getInt(1)));
@@ -94,6 +96,99 @@ public class TransactioUtils {
 			}
 		}
 		return insertResultsTableBo;
+		
+	}
+	
+	public List<InsertResult> getParticipantsList(InsertResult insertResult) throws IfaceException {
+		
+		String query = "";
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		List<InsertResult> participantList = new ArrayList<InsertResult>();
+		
+		if(null != insertResult) {
+			if(null != insertResult.getEventName()) {
+				EventsTransaction eventsTransaction = new EventsTransaction();
+				Events events = eventsTransaction.load(insertResult.getEventName());
+				if(events.getMaxNoOfParticipants() > 1) {
+					query = QueryServices.getParticipationGroupSearch(insertResult);
+				} else {
+					 query = QueryServices.getParticipationSingleSearch(insertResult);
+				}
+			} else {
+				query = QueryServices.getParticipationSingleSearch(insertResult);
+			}
+			
+			try { 
+				System.out.println(query);
+				res = dbEngineImpl.executeQuery(query);
+				while(res.next()) {
+					InsertResult participant = new InsertResult();
+					participant.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+					participant.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+					participant.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+					participant.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
+					participant.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
+					participant.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+					participant.setEventName(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+					participant.setGroupName(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
+					participantList.add(participant);
+					
+				}
+			} catch (Exception e) {
+				dbEngineImpl.closeResultSet(res);
+			}
+			
+			
+		}
+		
+		return participantList;
+		
+	}
+	
+public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) throws IfaceException {
+		
+		String query = "";
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		List<InsertResult> participantList = new ArrayList<InsertResult>();
+		
+		if(null != insertResult) {
+			if(null != insertResult.getEventName()) {
+				EventsTransaction eventsTransaction = new EventsTransaction();
+				Events events = eventsTransaction.load(insertResult.getEventName());
+				if(events.getMaxNoOfParticipants() > 1) {
+					query = QueryServices.getWinnersParticipantGroupSearch(insertResult);
+				} else {
+					 query = QueryServices.getWinnersParticipationSingleSearch(insertResult);
+				}
+			} else {
+				query = QueryServices.getWinnersParticipationSingleSearch(insertResult);
+			}
+			
+			try { 
+				System.out.println(query);
+				res = dbEngineImpl.executeQuery(query);
+				while(res.next()) {
+					InsertResult participant = new InsertResult();
+					participant.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+					participant.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+					participant.setEventStatus(res.getString(CSSAConstants.RESULTS_RESULT_STATUS));
+					participant.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+					participant.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
+					participant.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
+					participant.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+					participant.setEventName(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+					participant.setGroupName(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
+					participantList.add(participant);
+					
+				}
+			} catch (Exception e) {
+				dbEngineImpl.closeResultSet(res);
+			}
+			
+			
+		}
+		
+		return participantList;
 		
 	}
 

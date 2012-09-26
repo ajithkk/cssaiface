@@ -5,19 +5,14 @@ package org.cssa.iface.gui.result;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
 
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
@@ -72,7 +67,7 @@ public class InsertResultView {
 		
 		JPanel panel = new JPanel();
 		panel.add(getInsertResultBody(), BorderLayout.CENTER);
-		mdiForm.addChild(panel, "Insert Result");
+		mdiForm.addChild(panel, "Winners Details");
 		
 	}
 	
@@ -156,7 +151,7 @@ public class InsertResultView {
 		constraints.gridy = 3;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(txtMark, constraints);
-	    
+	  /*  
 		lblEventStage = new CLabel("Event Stage: ");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
@@ -172,7 +167,7 @@ public class InsertResultView {
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		cmbEventStage.setPreferredSize(new Dimension(250, 23));
-		panel.add(cmbEventStage, constraints);
+		panel.add(cmbEventStage, constraints);*/
 		
 		return panel;
 	}
@@ -249,15 +244,15 @@ public class InsertResultView {
 		
 		tblCollegeDetails = new JTable(tableModel);
 		tblCollegeDetails.setRowHeight(20);
+		tblCollegeDetails.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
-		scrollPane.setMinimumSize(new Dimension(700, 200));
-		scrollPane.setMaximumSize(new Dimension(700, 200));
-		scrollPane.setPreferredSize(new Dimension(700, 200));
+		scrollPane.setMinimumSize(new Dimension(700, 300));
+		scrollPane.setMaximumSize(new Dimension(700, 300));
+		scrollPane.setPreferredSize(new Dimension(700, 300));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		//tblCollegeDetails.addMouseListener(controller);
 		return panel;
 	}
-	
 	public JPanel getInsertResultBody() {
 		
 		JPanel  panel = new JPanel();

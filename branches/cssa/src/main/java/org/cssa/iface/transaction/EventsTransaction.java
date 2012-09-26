@@ -138,5 +138,28 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 		}
 		return resultId;
 	}
+	
+	public Events load(String eventId) throws IfaceException {
+		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
+		Map<Integer, Object> parameterMap = new  HashMap<Integer,Object>();
+		parameterMap.put(1, eventId);
+		try {
+			res = dbEngineImpl.executeQuery(parameterMap, CSSAQuery.SELECT_EVENTS_TABLE);
+			if (res.next()) {
+				event = new Events();
+				event.setSno(res.getInt(CSSAConstants.EVENTS_SNO));
+				event.setEventId(res.getString(CSSAConstants.EVENTS_EVENT_ID));
+				event.setEventName(res.getString(CSSAConstants.EVENTS_EVENT_NAME));
+				event.setMaxNoOfParticipants(res.getInt(CSSAConstants.EVENTS_MAX_NO_OF_PARTICIPANTS));
+				event.setPoints(res.getInt(CSSAConstants.EVENTS_EVENT_POINT));
+			}
+			dbEngineImpl.closeResultSet(res);
+		}catch (SQLException e) {
+			// TODO: handle exception
+		}finally {
+			dbEngineImpl.closeResultSet(res);
+		}
+		return event;
+	}
 
 }

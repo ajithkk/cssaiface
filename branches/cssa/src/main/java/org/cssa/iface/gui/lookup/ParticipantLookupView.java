@@ -28,6 +28,7 @@ public class ParticipantLookupView {
 	public static final String CLEAR = "Clear";
 	public static final String SEARCH = "Search";
 	public static final String SAVE = "Save";
+	public static final String STUDENT_SEARCH = "student_search";
 	
 	private CLabel lblEventCode;
 	private CLabel lblEventStage;
@@ -47,6 +48,7 @@ public class ParticipantLookupView {
 	private CssaMDIForm mdiForm;
 	private ParticipantLookupController controller;
 	private ParticipantLookupTableModel tableModel;
+	private CButton btnStudentSearch;
 	
 	/**
 	 * @param mdiForm
@@ -117,13 +119,12 @@ public class ParticipantLookupView {
 		constraints.gridy = 5;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
-		cmbEventStage.setPreferredSize(new Dimension(250, 23));
 		panel.add(txtCollegeId, constraints);
 		
 		lblStudentId = new CLabel("Student Id: ");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
-		constraints.gridy = 5;
+		constraints.gridy = 6;
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(5, 5, 0, 2);
 		panel.add(lblStudentId, constraints);
@@ -131,11 +132,21 @@ public class ParticipantLookupView {
 		txtStudentId = new CTextField();
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
-		constraints.gridy = 5;
+		constraints.gridy = 6;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
-		cmbEventStage.setPreferredSize(new Dimension(250, 23));
 		panel.add(txtStudentId, constraints);
+		
+		btnStudentSearch = new CButton();
+		btnStudentSearch.setPreferredSize(new Dimension(40, 23));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.gridx = 2;
+		constraints.gridy = 6;
+		constraints.insets = new Insets(5, 0, 5, 2);
+		panel.add(btnStudentSearch, constraints);
+		btnStudentSearch.addActionListener(controller);
+		btnStudentSearch.setActionCommand(STUDENT_SEARCH);
 		
 		
 		return panel;
@@ -188,7 +199,9 @@ public class ParticipantLookupView {
 		panel.setLayout(new BorderLayout());
 		
 		tblParticipants = new JTable(tableModel);
+		tblParticipants.addMouseListener(controller);
 		tblParticipants.setRowHeight(20);
+		tblParticipants.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(tblParticipants);
 		scrollPane.setMinimumSize(new Dimension(700, 400));
 		scrollPane.setMaximumSize(new Dimension(700, 400));
@@ -265,6 +278,44 @@ public class ParticipantLookupView {
 	public void setCmbEventStage(JComboBox cmbEventStage) {
 		this.cmbEventStage = cmbEventStage;
 	}
+	/**
+	 * @return the txtCollegeId
+	 */
+	public String getTxtCollegeId() {
+		return txtCollegeId.getText();
+	}
+	/**
+	 * @param txtCollegeId the txtCollegeId to set
+	 */
+	public void setTxtCollegeId(String txtCollegeId) {
+		this.txtCollegeId.setText(txtCollegeId);
+	}
+	/**
+	 * @return the txtStudentId
+	 */
+	public String getTxtStudentId() {
+		return txtStudentId.getText();
+	}
+	/**
+	 * @param txtStudentId the txtStudentId to set
+	 */
+	public void setTxtStudentId(String txtStudentId) {
+		this.txtStudentId.setText(txtStudentId);
+	}
+	/**
+	 * @return the tblParticipants
+	 */
+	public JTable getTblParticipants() {
+		return tblParticipants;
+	}
+	/**
+	 * @param tblParticipants the tblParticipants to set
+	 */
+	public void setTblParticipants(JTable tblParticipants) {
+		this.tblParticipants = tblParticipants;
+	}
+	
+	
 		
 	
 }

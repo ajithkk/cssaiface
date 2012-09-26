@@ -1,10 +1,8 @@
 package org.cssa.iface.dao.commom;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;

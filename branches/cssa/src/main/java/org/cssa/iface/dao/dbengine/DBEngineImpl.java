@@ -256,20 +256,22 @@ public class DBEngineImpl {
 		try{
 		Set<Map.Entry<Integer, Object>> parameterSet = parameterMap.entrySet();
 		for(Map.Entry<Integer, Object> set : parameterSet ) {
-			if(set.getValue().getClass().equals(Integer.class)) {
-				statement.setInt(set.getKey(), ((Integer) set.getValue()).intValue());
-			}else if (set.getValue().getClass().equals(Float.class)) {
-				statement.setFloat(set.getKey(), ((Float) set.getValue()).floatValue());
-			}else if (set.getValue().getClass().equals(Double.class)) {
-				statement.setDouble(set.getKey(), ((Double) set.getValue()).doubleValue());
-			}else if (set.getValue().getClass().equals(Boolean.class)) {
-				statement.setBoolean(set.getKey(), ((Boolean) set.getValue()).booleanValue());
-			}else if( set.getValue().getClass().equals(Character.class)) {
-				statement.setString(set.getKey(), set.getValue().toString());
-			}else if(set.getValue().getClass().equals(String.class)) {
-				statement.setString(set.getKey(), (String) set.getValue());
-			} else if (set.getValue().getClass().equals(Date.class)) {
-				statement.setDate(set.getKey(), new java.sql.Date(((Date)set.getValue()).getTime()));
+			if( null != set.getValue()) {
+				if(set.getValue().getClass().equals(Integer.class)) {
+					statement.setInt(set.getKey(), ((Integer) set.getValue()).intValue());
+				}else if (set.getValue().getClass().equals(Float.class)) {
+					statement.setFloat(set.getKey(), ((Float) set.getValue()).floatValue());
+				}else if (set.getValue().getClass().equals(Double.class)) {
+					statement.setDouble(set.getKey(), ((Double) set.getValue()).doubleValue());
+				}else if (set.getValue().getClass().equals(Boolean.class)) {
+					statement.setBoolean(set.getKey(), ((Boolean) set.getValue()).booleanValue());
+				}else if( set.getValue().getClass().equals(Character.class)) {
+					statement.setString(set.getKey(), set.getValue().toString());
+				}else if(set.getValue().getClass().equals(String.class)) {
+					statement.setString(set.getKey(), (String) set.getValue());
+				} else if (set.getValue().getClass().equals(Date.class)) {
+					statement.setDate(set.getKey(), new java.sql.Date(((Date)set.getValue()).getTime()));
+				}
 			}
 		}
 		}catch (Exception e) {
@@ -281,6 +283,7 @@ public class DBEngineImpl {
 		
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private PreparedStatement setBatchPreparedStatement( PreparedStatement statement, List<Map<Integer, Object>> batchParameterList) throws IfaceException {
 		for(Map parameterMap : batchParameterList ) {
 			statement = setPreparedStatement(statement, parameterMap);

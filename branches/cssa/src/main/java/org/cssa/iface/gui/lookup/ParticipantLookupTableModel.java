@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.cssa.iface.bo.InsertResultsTableBo;
+import org.cssa.iface.bo.InsertResult;
 
 /**
  * 
@@ -17,13 +17,13 @@ import org.cssa.iface.bo.InsertResultsTableBo;
 
 public class ParticipantLookupTableModel extends AbstractTableModel {
 
-	List<InsertResultsTableBo> resultsTableBos;
+	List<InsertResult> resultsTableBos;
 	public ParticipantLookupTableModel() {
 		super();
-		resultsTableBos = new ArrayList<InsertResultsTableBo>();
+		resultsTableBos = new ArrayList<InsertResult>();
 	}
 
-	public ParticipantLookupTableModel(List<InsertResultsTableBo> resultsTableBos) {
+	public ParticipantLookupTableModel(List<InsertResult> resultsTableBos) {
 		super();
 		this.resultsTableBos = resultsTableBos;
 		fireTableDataChanged();
@@ -52,14 +52,15 @@ public class ParticipantLookupTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		
-		InsertResultsTableBo insertResultsTableBo = resultsTableBos.get(rowIndex);
+		InsertResult InsertResult = resultsTableBos.get(rowIndex);
 		switch(columnIndex) {
-		case 0: return insertResultsTableBo.getSno();
-		case 1: return insertResultsTableBo.getCollegeId();
-		case 2: return insertResultsTableBo.getStudentId();
-		case 3: return insertResultsTableBo.getStudentName();
-		case 4: return insertResultsTableBo.getEventId();
-		case 5: return insertResultsTableBo.getGroupName();
+		case 0: return rowIndex+1;
+		case 1: return InsertResult.getCollegeId();
+		case 2: return InsertResult.getStudentId();
+		case 3: return InsertResult.getStudentName();
+		case 4: return InsertResult.getEventName();
+		case 5: return InsertResult.getGroupName();
+		case 6: return InsertResult.getEventStatus();
 		default: return "";
 				
 		}
@@ -74,14 +75,14 @@ public class ParticipantLookupTableModel extends AbstractTableModel {
 	/**
 	 * @return the resultsTableBos
 	 */
-	public List<InsertResultsTableBo> getResultsTableBos() {
+	public List<InsertResult> getResultsTableBos() {
 		return resultsTableBos;
 	}
 
 	/**
 	 * @param resultsTableBos the resultsTableBos to set
 	 */
-	public void setResultsTableBos(List<InsertResultsTableBo> resultsTableBos) {
+	public void setResultsTableBos(List<InsertResult> resultsTableBos) {
 		this.resultsTableBos = resultsTableBos;
 		fireTableDataChanged();
 

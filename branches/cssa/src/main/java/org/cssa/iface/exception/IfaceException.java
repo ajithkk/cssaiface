@@ -6,6 +6,11 @@ package org.cssa.iface.exception;
  */
 
 public class IfaceException  extends Exception{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public IfaceException() {
 		super();
 	}

@@ -18,6 +18,7 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
+import org.cssa.iface.gui.util.FloatEditor;
 
 /**
  * @author ajith
@@ -139,32 +140,32 @@ public class ResultInsertView {
 		btnCollegeSearch.setActionCommand(COLLEGE_SEARCH);
 		
 		
-//		lblStudentId = new CLabel("Student Id");
-//		constraints = new GridBagConstraints();
-//		constraints.gridx = 0;
-//		constraints.gridy = 4;
-//		constraints.anchor = GridBagConstraints.EAST;
-//		constraints.insets = new Insets(5, 5, 0, 2);
-//		panel.add(lblStudentId, constraints);
-//		
-//		txtStudentId = new CTextField();
-//		constraints = new GridBagConstraints();
-//		constraints.gridx = 1;
-//		constraints.gridy = 4;
-//		constraints.anchor = GridBagConstraints.WEST;
-//		constraints.insets = new Insets(5, 0, 5, 2);
-//		panel.add(txtStudentId, constraints);
-//		
-//		btnStudentSearch = new CButton();
-//		btnCollegeSearch.setPreferredSize(new Dimension(40, 23));
-//		constraints = new GridBagConstraints();
-//		constraints.anchor = GridBagConstraints.WEST;
-//		constraints.gridx = 2;
-//		constraints.gridy = 4;
-//		constraints.insets = new Insets(5, 0, 5, 2);
-//		panel.add(btnStudentSearch, constraints);
-//		btnStudentSearch.addActionListener(controller);
-//		btnStudentSearch.setActionCommand(COLLEGE_SEARCH);
+		lblStudentId = new CLabel("Student Id");
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0;
+		constraints.gridy = 4;
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.insets = new Insets(5, 5, 0, 2);
+		panel.add(lblStudentId, constraints);
+		
+		txtStudentId = new CTextField();
+		constraints = new GridBagConstraints();
+		constraints.gridx = 1;
+		constraints.gridy = 4;
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(5, 0, 5, 2);
+		panel.add(txtStudentId, constraints);
+		
+		btnStudentSearch = new CButton();
+		btnStudentSearch.setPreferredSize(new Dimension(40, 23));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.gridx = 2;
+		constraints.gridy = 4;
+		constraints.insets = new Insets(5, 0, 5, 2);
+		panel.add(btnStudentSearch, constraints);
+		btnStudentSearch.addActionListener(controller);
+		btnStudentSearch.setActionCommand(STUDENT_SEARCH);
 		
 		return panel;
 		
@@ -219,6 +220,8 @@ public class ResultInsertView {
 		
 		tblParticipants = new JTable(tableModel);
 		tblParticipants.setRowHeight(20);
+		tblParticipants.setDefaultEditor(Float.class, new FloatEditor(0.0, 500.0));
+		tblParticipants.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(tblParticipants);
 		scrollPane.setMinimumSize(new Dimension(700, 400));
 		scrollPane.setMaximumSize(new Dimension(700, 400));
@@ -286,7 +289,7 @@ public class ResultInsertView {
 		return panel;
 	}
 
-public JPanel getResultDetailsBody() {
+	public JPanel getResultDetailsBody() {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -308,78 +311,78 @@ public JPanel getResultDetailsBody() {
 		return panel;
 	}
 
-/**
- * @return the cmbEventCode
- */
-public JComboBox getCmbEventCode() {
-	return cmbEventCode;
-}
-/**
- * @param cmbEventCode the cmbEventCode to set
- */
-public void setCmbEventCode(JComboBox cmbEventCode) {
-	this.cmbEventCode = cmbEventCode;
-}
-/**
- * @return the cmbEventStage
- */
-public JComboBox getCmbEventStage() {
-	return cmbEventStage;
-}
-/**
- * @param cmbEventStage the cmbEventStage to set
- */
-public void setCmbEventStage(JComboBox cmbEventStage) {
-	this.cmbEventStage = cmbEventStage;
-}
-/**
- * @return the txtCollegeId
- */
-public String getTxtCollegeId() {
-	return txtCollegeId.getText();
-}
-/**
- * @param txtCollegeId the txtCollegeId to set
- */
-public void setTxtCollegeId(String txtCollegeId) {
-	this.txtCollegeId.setText(txtCollegeId);
-}
-/**
- * @return the txtStudentId
- */
-public String getTxtStudentId() {
-	return txtStudentId.getText();
-}
-/**
- * @param txtStudentId the txtStudentId to set
- */
-public void setTxtStudentId(String txtStudentId) {
-	this.txtStudentId.setText(txtStudentId);
-}
-/**
- * @return the tblParticipants
- */
-public JTable getTblParticipants() {
-	return tblParticipants;
-}
-/**
- * @param tblParticipants the tblParticipants to set
- */
-public void setTblParticipants(JTable tblParticipants) {
-	this.tblParticipants = tblParticipants;
-}
-/**
- * @return the tableModel
- */
-public ResultInsertTableModel getTableModel() {
-	return tableModel;
-}
-/**
- * @param tableModel the tableModel to set
- */
-public void setTableModel(ResultInsertTableModel tableModel) {
-	this.tableModel = tableModel;
-}
-	
+	/**
+	 * @return the cmbEventCode
+	 */
+	public JComboBox getCmbEventCode() {
+		return cmbEventCode;
+	}
+	/**
+	 * @param cmbEventCode the cmbEventCode to set
+	 */
+	public void setCmbEventCode(JComboBox cmbEventCode) {
+		this.cmbEventCode = cmbEventCode;
+	}
+	/**
+	 * @return the cmbEventStage
+	 */
+	public JComboBox getCmbEventStage() {
+		return cmbEventStage;
+	}
+	/**
+	 * @param cmbEventStage the cmbEventStage to set
+	 */
+	public void setCmbEventStage(JComboBox cmbEventStage) {
+		this.cmbEventStage = cmbEventStage;
+	}
+	/**
+	 * @return the txtCollegeId
+	 */
+	public String getTxtCollegeId() {
+		return txtCollegeId.getText();
+	}
+	/**
+	 * @param txtCollegeId the txtCollegeId to set
+	 */
+	public void setTxtCollegeId(String txtCollegeId) {
+		this.txtCollegeId.setText(txtCollegeId);
+	}
+	/**
+	 * @return the txtStudentId
+	 */
+	public String getTxtStudentId() {
+		return txtStudentId.getText();
+	}
+	/**
+	 * @param txtStudentId the txtStudentId to set
+	 */
+	public void setTxtStudentId(String txtStudentId) {
+		this.txtStudentId.setText(txtStudentId);
+	}
+	/**
+	 * @return the tblParticipants
+	 */
+	public JTable getTblParticipants() {
+		return tblParticipants;
+	}
+	/**
+	 * @param tblParticipants the tblParticipants to set
+	 */
+	public void setTblParticipants(JTable tblParticipants) {
+		this.tblParticipants = tblParticipants;
+	}
+	/**
+	 * @return the tableModel
+	 */
+	public ResultInsertTableModel getTableModel() {
+		return tableModel;
+	}
+	/**
+	 * @param tableModel the tableModel to set
+	 */
+	public void setTableModel(ResultInsertTableModel tableModel) {
+		this.tableModel = tableModel;
+	}
+		
 	
 }

@@ -1,6 +1,5 @@
 package org.cssa.iface.infrastructure;
 
-import org.cssa.iface.gui.CssaMDIForm;
 
 /**
  * 
@@ -34,7 +33,7 @@ public class CSSAQuery {
 			+ CSSAConstants.EVENTS_EVENT_NAME + ","
 			+ CSSAConstants.EVENTS_MAX_NO_OF_PARTICIPANTS + ","
 			+ CSSAConstants.EVENTS_EVENT_POINT + " FROM "
-			+ CSSAConstants.EVENTS_TABLE +"WHERE "+CSSAConstants.EVENTS_EVENT_ID +"= ?";
+			+ CSSAConstants.EVENTS_TABLE +" WHERE "+CSSAConstants.EVENTS_EVENT_ID +"= ?";
 	
 	public static final String DELETE_EVENTS_TABLE = "DELETE FROM EVENTS WHERE  "+CSSAConstants.EVENTS_EVENT_ID +"= ?";
 	
@@ -263,12 +262,14 @@ public class CSSAQuery {
 	
 	//RESULT table query 
 	
+	
 	public static final String INSERT_RESULT = "INSERT INTO "+CSSAConstants.RESULTS_TABLE +"(" 
 			+CSSAConstants.RESULTS_COLLEGE_ID +", "
 			+CSSAConstants.RESULTS_STUDENT_ID +", "
 			+CSSAConstants.RESULTS_EVENT_ID +", "
 			+CSSAConstants.RESULTS_RESULT_STATUS +", "
-			+CSSAConstants.RESULTS_MARK +") VALUES(?,?,?,?,?)";
+			+CSSAConstants.RESULTS_EVENT_GROUP_ID + ", "
+			+CSSAConstants.RESULTS_MARK +") VALUES(?,?,?,?,?,?)";
 	
 	public static final String SELECT_RESULT = "SELECT "+CSSAConstants.RESULTS_SNO+ " ,"
 			+CSSAConstants.RESULTS_COLLEGE_ID +", "
@@ -299,6 +300,20 @@ public class CSSAQuery {
 				+CSSAConstants.EVENT_DETAILS_GROUP_ID +" FROM "+ CSSAConstants.EVENT_DETAILS_TABLE 
 				+" WHERE "+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_STUDENT_ID +" = ? AND "+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID +" = ?)  AND  STUDENTS_DETAILS.STUDENT_ID = EVENT_DETAILS.STUDENT_ID";
 			//+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" = "+ CSSAConstants.EVENT_DETAILS_STUDENT_ID ;
+	
+	public static final String SELECT_PARTICIPANTS = " SELECT "
+			+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID +" , "
+			+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
+			+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID +","
+			+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_GROUP_ID +"  FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +CSSAConstants.EVENT_DETAILS_TABLE 
+			+" WHERE "
+			+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID +" = ? AND  STUDENTS_DETAILS.STUDENT_ID = EVENT_DETAILS.STUDENT_ID";
+	
+	
 			
 	/*select 
 	EVENT_DETAILS.STUDENT_ID, 
@@ -318,5 +333,23 @@ public class CSSAQuery {
 	STUDENTS_DETAILS.STUDENT_ID = EVENT_DETAILS.STUDENT_ID
 */
 	
+	//final result quert
+	/*select RESULTS.STUDENT_ID, 
+		RESULTS.COLLEGE_ID, 
+		RESULTS.GROUP_ID, 
+		RESULTS.EVENT_ID,
+		STUDENTS_DETAILS.STUDENT_NAME
+		from 
+		RESULTS, STUDENTS_DETAILS 
+		where 
+		RESULTS.COLLEGE_ID = 'IT00' and 
+		RESULTS.EVENT_ID = 'quiz' and 
+		RESULTS.GROUP_ID = 
+		(select RESULTS.GROUP_ID from RESULTS 
+		where RESULTS.STUDENT_ID ='IT002' 
+		and RESULTS.EVENT_ID = 'quiz') and
+		STUDENTS_DETAILS.STUDENT_ID = RESULTS.STUDENT_ID
+		and RESULTS.RESULT_STATUS = 'Prelims'
+*/	
 			
 }

@@ -19,6 +19,10 @@ import org.cssa.iface.util.ImageUtil;
  */
 public class CssaInternalFrame extends JInternalFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTabbedPane  tabbedPane;
 	private CssaMDIForm mdiForm;
 	ImageUtil imageUtil;
@@ -29,7 +33,7 @@ public class CssaInternalFrame extends JInternalFrame{
 	
 	CssaInternalFrame(String title, CssaMDIForm mdiForm){
 		super(title, true, true, true, true);
-		this.mdiForm = mdiForm;
+		this.setMdiForm(mdiForm);
 		imageUtil = new ImageUtil();
 		Dimension size = mdiForm.getContentPane().getSize();
 		this.setSize(size);
@@ -38,6 +42,14 @@ public class CssaInternalFrame extends JInternalFrame{
 	
 	public void setPane(JPanel panel) {
 		tabbedPane.add(panel);
+	}
+
+	public CssaMDIForm getMdiForm() {
+		return mdiForm;
+	}
+
+	public void setMdiForm(CssaMDIForm mdiForm) {
+		this.mdiForm = mdiForm;
 	}
 	
 	

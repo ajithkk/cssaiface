@@ -19,6 +19,7 @@ import org.cssa.iface.bo.InsertResultsTableBo;
 public class InsertResultTableModel extends AbstractTableModel {
 	
 	List<InsertResultsTableBo> resultsTableBos;
+
 	public InsertResultTableModel() {
 		super();
 		resultsTableBos = new ArrayList<InsertResultsTableBo>();
@@ -27,7 +28,6 @@ public class InsertResultTableModel extends AbstractTableModel {
 	public InsertResultTableModel(List<InsertResultsTableBo> resultsTableBos) {
 		super();
 		this.resultsTableBos = resultsTableBos;
-		fireTableDataChanged();
 	}
 
 	@Override

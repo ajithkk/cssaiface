@@ -3,10 +3,7 @@ package org.cssa.iface.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.util.Stack;
 
@@ -28,12 +25,15 @@ import org.cssa.iface.gui.toolbar.CssaToolBar;
 import org.cssa.iface.gui.util.CssaLookAndFeel;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.util.ImageUtil;
-import org.cssa.iface.util.Util;
 
 
 
 public class CssaMDIForm extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JDesktopPane desktopPane;
 	private Icon cssaIcon;
 	private JPanel toolBarPanel;

@@ -8,26 +8,37 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.cssa.iface.bo.Events;
+import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.InsertResultsTableBo;
+import org.cssa.iface.bo.StudentDetails;
+import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.services.LookupController;
 import org.cssa.iface.services.LookupService;
+import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.EventsTransaction;
+import org.cssa.iface.transaction.TransactioUtils;
+import org.cssa.iface.util.EventStorageXML;
 
 /**
  * @author Ajith
  *
  */
-public class ParticipantLookupController implements ActionListener, MouseListener, LookupController {
+public class ParticipantLookupController implements ActionListener, MouseListener, LookupController, StudentLookupService<StudentDetails> {
 	
 	private CssaMDIForm mdiForm;
 	private EventsTransaction eventsTransaction;
 	private ParticipantLookupTableModel tableModel;
 	private ParticipantLookupView lookupView;
 	private List<InsertResultsTableBo> resultsTableBos;
-	private LookupService<InsertResultsTableBo> insertResult;
+	private LookupService<InsertResult> insertResult;
 	private InsertResultsTableBo tableBo;
+	private List<Events> events;
+	
 	
 	/**
 	 * constructor
@@ -46,16 +57,25 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 	 * @param insertResult
 	 */
 	public ParticipantLookupController(CssaMDIForm mdiForm,
-			LookupService<InsertResultsTableBo> insertResult) {
+			LookupService<InsertResult> insertResult) {
 		super();
 		this.mdiForm = mdiForm;
 		this.insertResult = insertResult;
+		tableModel = new ParticipantLookupTableModel();
 	}
 
 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
+		int selectedRow = lookupView.getTblParticipants().getSelectedRow();
+		InsertResult selectedResult = tableModel.getResultsTableBos().get(selectedRow);
+		if(null != insertResult) {
+			mdiForm.closeFrame();
+			insertResult.setResult(selectedResult);
+		}
+		
 		
 	}
 
@@ -90,6 +110,9 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 			
 		} else if (ParticipantLookupView.CLEAR.equals(actionCommand)) {
 			clearAction();
+		} else if (ParticipantLookupView.STUDENT_SEARCH.equals(actionCommand)) {
+			StudentLookupController studentLookupController = new StudentLookupController(mdiForm, this);
+			studentLookupController.askStudentLookupsereen();
 		}
 	}
 
@@ -97,6 +120,23 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 	@Override
 	public void searchAction() {
 		
+		TransactioUtils transactioUtils = new TransactioUtils();
+		InsertResult insertResult = new InsertResult();
+		insertResult.setCollegeId(lookupView.getTxtCollegeId());
+		insertResult.setStudentId(lookupView.getTxtStudentId());
+		if(lookupView.getCmbEventStage().getSelectedIndex() > 0) {
+			insertResult.setEventStatus(lookupView.getCmbEventStage().getSelectedItem().toString());
+		}
+		if(lookupView.getCmbEventCode().getSelectedIndex() > 0) {
+			insertResult.setEventName(lookupView.getCmbEventCode().getSelectedItem().toString());
+		}
+		try {
+			List<InsertResult> winnersList = transactioUtils.getWinnersParticipantsList(insertResult);
+			tableModel.setResultsTableBos(winnersList);
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
@@ -117,6 +157,45 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 	public void askParticipantsLookupView() {
 		lookupView = new ParticipantLookupView(mdiForm, this, tableModel);
 		lookupView.showLookupView();
+		setEventId();
+		setEventState();
+		
+	}
+	
+	public void setEventId() {
+		eventsTransaction = new EventsTransaction();
+		try {
+			 events = eventsTransaction.loadAll();
+			lookupView.getCmbEventCode().addItem("please select");
+			for(Events event : events) {
+				lookupView.getCmbEventCode().addItem(event.getEventId());
+			}
+		} catch (IfaceException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void setEventState() {
+		EventStorageXML eventStorageXML = new EventStorageXML();
+		Map<String, String> eventStateMap = eventStorageXML.getEventStageMap();
+		
+		lookupView.getCmbEventStage().addItem("please select");
+		Set<Map.Entry<String, String>> eventStateSet = eventStateMap.entrySet();
+		for(Map.Entry<String, String> set : eventStateSet) {
+			lookupView.getCmbEventStage().addItem(set.getValue());
+		}
+		
+	}
+
+	@Override
+	public void setSelectedStudent(StudentDetails studentDetails) {
+		
+		if(null != studentDetails) {
+			lookupView.setTxtCollegeId(studentDetails.getCollegeId());
+			lookupView.setTxtStudentId(studentDetails.getStudentId());
+		}
+		
+		
 	}
 
 }

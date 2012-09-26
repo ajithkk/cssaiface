@@ -35,6 +35,7 @@ public class CSSAConstants {
 	public static final String STUDENTS_DETAILS_TABLE = "STUDENTS_DETAILS";
 	public static final String RESULTS_TABLE = "RESULTS";
 	public static final String SEMINAR_DETAILS_TABLE = "SEMINAR_DETAILS";
+	public static final String WINNERS_TABLE = "WINNERS";
 	
 	public static final String EVENTS_SNO = "SNO";
 	public static final String EVENTS_EVENT_ID = "EVENT_ID";
@@ -56,6 +57,9 @@ public class CSSAConstants {
 	public static final String EVENT_DETAILS_GROUP_ID = "GROUP_ID";
 	public static final String EVENT_DETAILS_EVENT_ID = "EVENT_ID";
 	public static final String EVENT_DETAILS_COLLEGE_ID = "COLLEGE_ID";
+	public static final String EVENT_DETAILS_EVENT_STAGE = "EVENT_STAGE";
+	public static final String EVENT_DETAILS_MARK = "MARK";
+	
 	
 	public static final String STUDENTS_DETAILS_SNO = "SNO";
 	public static final String STUDENTS_DETAILS_COLLEGE_ID = "COLLEGE_ID";
@@ -71,8 +75,17 @@ public class CSSAConstants {
 	public static final String RESULTS_COLLEGE_ID = "COLLEGE_ID";
 	public static final String RESULTS_STUDENT_ID = "STUDENT_ID";
 	public static final String RESULTS_EVENT_ID = "EVENT_ID";
+	public static final String RESULTS_EVENT_GROUP_ID = "GROUP_ID";
 	public static final String RESULTS_RESULT_STATUS = "RESULT_STATUS";
 	public static final String RESULTS_MARK = "MARK";
+	
+	public static final String WINNERS_SNO = "SNO";
+	public static final String WINNERS_COLLEGE_ID = "COLLEGE_ID";
+	public static final String WINNERS_STUDENT_ID = "STUDENT_ID";
+	public static final String WINNERS_EVENT_ID = "EVENT_ID";
+	public static final String WINNERS_EVENT_GROUP_ID = "GROUP_ID";
+	public static final String WINNERS_RESULT_STATUS = "RESULT_STATUS";
+	public static final String WINNERS_MARK = "MARK";
 	
 	public static final String SEMINAR_DETAILS_SNO = "SNO";
 	public static final String SEMINAR_DETAILS_NAME = "NAME";
@@ -87,11 +100,11 @@ public class CSSAConstants {
 	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS","STATUS"};
 	public static final String[] COLLEGE_INITIAL_DETAILS_COLUMN_NAMES = {"SNO","STUDENT ID", "STUDENT NAME", "EVENTS"};
 	public static final String[] STUDENT_LOOKUP_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","PHONE NUMBER","ACTIVE"};
-	public static final String[] INSERT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME"};
+	public static final String[] INSERT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
 	public static final String[] INSERT_RESULT_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME","MARK","EVENT STAGE"};
 	
 	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
-	
+
 	public static final String HELP_FILE = "HelpSet.cs";
 	
 	public static final String SYSYEM = "system";

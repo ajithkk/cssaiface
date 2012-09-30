@@ -103,6 +103,15 @@ public class CSSAQuery {
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME +" ,"
 			+CSSAConstants.COLLEGE_DETAILS_NO_OF_PARTICIPANTS +" ) VALUES ( ?,?,? ) ";
 	
+	
+	public static final String INSERT_COLLEGE_POINTS = "UPDATE "+CSSAConstants.COLLEGE_DETAILS_TABLE +" SET "
+			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS +"= ?,"
+			 +" WHERE "
+			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"= ?";
+	
+	
+	
+	
 	//college_details table query end
 	
 	//student_details table query started
@@ -179,6 +188,13 @@ public class CSSAQuery {
 	
 	public static final String RECYCLE_STUDENT_DETAILS = "UPDATE "+CSSAConstants.STUDENTS_DETAILS_TABLE +" SET "
 			+CSSAConstants.STUDENTS_DETAILS_STATUS +" = TRUE  WHERE "+ CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" = ?";
+	
+	
+	public static final String INSERT_STTUDENT_POINTS = "UPDATE "+CSSAConstants.STUDENTS_DETAILS_TABLE +" SET "
+			+CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT +" = ? , "
+			+" WHERE "
+			+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" = ? ";
+	
 	// student Details query ended.
 	
 	//Event details query started.
@@ -315,6 +331,28 @@ public class CSSAQuery {
 	
 	
 			
+	public static final String INSERT_WINNERS = "INSERT INTO "+CSSAConstants.WINNERS_TABLE +"(" 
+			+CSSAConstants.WINNERS_COLLEGE_ID +", "
+			+CSSAConstants.WINNERS_STUDENT_ID +", "
+			+CSSAConstants.WINNERS_EVENT_ID +", "
+			+CSSAConstants.WINNERS_RESULT_STATUS +", "
+			+CSSAConstants.WINNERS_EVENT_GROUP_ID + ", "
+			+CSSAConstants.WINNERS_MARK +") VALUES(?,?,?,?,?,?)";
+	
+	
+	public static final String SELECT_WINNERS = "SELECT "+CSSAConstants.WINNERS_SNO+ " ,"
+			+CSSAConstants.WINNERS_COLLEGE_ID +", "
+			+CSSAConstants.WINNERS_STUDENT_ID +", "
+			+CSSAConstants.WINNERS_EVENT_ID +", "
+			+CSSAConstants.WINNERS_RESULT_STATUS+", "
+			+CSSAConstants.WINNERS_MARK +" FROM "+CSSAConstants.WINNERS_TABLE +" WHERE "+
+			CSSAConstants.WINNERS_STUDENT_ID +" = ? AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ?"; 
+	
+	public static final String UPDATE_WINNERS = "UPDATE "+CSSAConstants.WINNERS_TABLE +" SET" +
+			CSSAConstants.WINNERS_RESULT_STATUS +" = ?"+
+			CSSAConstants.WINNERS_MARK + "= ? WHERE "+ CSSAConstants.WINNERS_STUDENT_ID +" = ? AND "
+			+CSSAConstants.WINNERS_STUDENT_ID +" = ?  AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ? "; 
+	
 	/*select 
 	EVENT_DETAILS.STUDENT_ID, 
 	EVENT_DETAILS.COLLEGE_ID, 

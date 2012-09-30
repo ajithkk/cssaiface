@@ -49,12 +49,18 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 			participantLookupController.askParticipantsLookupView();
 		}
 		
+		if(actionCommand.equals(InsertResultView.INSERT)) {
+			if(null != tableModel.getResultsTableBos()) {
+				
+			}
+		}
+		
 	}
 	
 	public void askInsertResultView() {
 		resultView = new InsertResultView(this, mdiForm, tableModel);				
 		resultView.showInsertResultScreen();
-		setEventId();
+//		setEventId();
 		setResultStatus();
 	}
 	
@@ -85,17 +91,18 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 	public void setResultStatus() {
 	}
 	
-	public void setEventId() {
-		eventsTransaction = new EventsTransaction();
-		try {
-			events = eventsTransaction.loadAll();
-			for(Events event : events) {
-				resultView.getCmbEventId().addItem(event.getEventId());
-			}
-		} catch (IfaceException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void setEventId() {
+//		eventsTransaction = new EventsTransaction();
+//		try {
+//			events = eventsTransaction.loadAll();
+//			resultView.getCmbEventId().addItem("please select");
+//			for(Events event : events) {
+//				resultView.getCmbEventId().addItem(event.getEventId());
+//			}
+//		} catch (IfaceException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	/*@Override
 	public void setSelectedStudent(StudentDetails studentDetail) {
@@ -121,6 +128,16 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 	public void setResult(InsertResult e) {
 		resultView.setStudentId(e.getStudentId());
 		resultView.setCollegeId(e.getCollegeId());
+		resultView.setTxtEventName(e.getEventName());
+		try {
+			List<InsertResult> insertResults = transactioUtils.getWinnersParticipantsList(e);
+			tableModel.setResultsTableBos(insertResults);
+			
+		} catch (IfaceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 	}
 
 }

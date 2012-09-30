@@ -229,7 +229,7 @@ public static String getParticipationGroupSearch(InsertResult insertResult) thro
 		if(null!= results.getCollegeId()) {
 			if(!results.getCollegeId().isEmpty()) {
 				winnersGroupSearch.append(" AND ");
-				winnersGroupSearch.append(CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_COLLEGE_ID+"  = '"+ results.getCollegeId() +"'");
+				winnersGroupSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_COLLEGE_ID+"  = '"+ results.getCollegeId() +"'");
 			}
 		}
 		if(null != results.getGroupName()) {
@@ -284,13 +284,13 @@ public static String getParticipationGroupSearch(InsertResult insertResult) thro
 		if(null!= results.getCollegeId()) {
 			if(!results.getCollegeId().isEmpty()) {
 				winnersSingleSearch.append(" AND ");
-				winnersSingleSearch.append(CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_COLLEGE_ID+"  = '"+ results.getCollegeId() +"'");
+				winnersSingleSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_COLLEGE_ID+"  = '"+ results.getCollegeId() +"'");
 			}
 		}
 		if(null != results.getStudentId()) {
 			if(!results.getStudentId().isEmpty()) {
 				winnersSingleSearch.append(" AND ");
-				winnersSingleSearch.append(CSSAConstants.EVENT_DETAILS_TABLE +"."+ CSSAConstants.EVENT_DETAILS_STUDENT_ID + "= '" +results.getStudentId() +"'");
+				winnersSingleSearch.append(CSSAConstants.RESULTS_TABLE +"."+ CSSAConstants.RESULTS_STUDENT_ID + "= '" +results.getStudentId() +"'");
 			}
 		}
 		return winnersSingleSearch.toString();

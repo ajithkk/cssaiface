@@ -36,10 +36,12 @@ public class InsertResultView {
 	private CLabel lblEventStage;
 	private CLabel lblResultStatus;
 	private CLabel lblMark;
+	private CLabel lblEventName;
 	
 	private CTextField txtCollegeId;
 	private CTextField txtStudentId;
 	private CTextField txtMark;
+	private CTextField txtEventName;
 	
 	private JComboBox cmbEventId;
 	private JComboBox cmbEventStage;
@@ -84,14 +86,14 @@ public class InsertResultView {
 		constraints.insets = new Insets(5, 5, 0, 2);
 		panel.add(lblEventId, constraints);
 		
-		cmbEventId = new JComboBox();
+		txtEventName = new CTextField();
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
-		cmbEventId.setPreferredSize(new Dimension(250, 23));
-		panel.add(cmbEventId, constraints);
+		txtEventName.setEditable(false);
+		panel.add(txtEventName, constraints);
 		
 		lblStudentId = new CLabel("Student Id");
 		constraints = new GridBagConstraints();
@@ -345,4 +347,14 @@ public class InsertResultView {
 	public String getResultStatus() {
 		return cmbResultStatus.getSelectedItem().toString();
 	}
+
+	public String getTxtEventName() {
+		return txtEventName.getText();
+	}
+
+	public void setTxtEventName(String txtEventName) {
+		this.txtEventName.setText(txtEventName);
+	}
+	
+	
 }

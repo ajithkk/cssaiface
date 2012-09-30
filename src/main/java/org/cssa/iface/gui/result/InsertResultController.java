@@ -17,20 +17,22 @@ import org.cssa.iface.services.LookupService;
 import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.TransactioUtils;
+import org.cssa.iface.transaction.WinnerTransaction;
 
 public class InsertResultController implements ActionListener, LookupService<InsertResult>{
 
 	private Results results;
 	private List<Events> events;
-	private List<InsertResultsTableBo> resultsTableBos;
 	private CssaMDIForm mdiForm;
 	private InsertResultView resultView;
 	private InsertResultTableModel tableModel;
 	private StudentDetails studentDetails;
+	private List<InsertResult> insertResults;
 	
 	
 	private TransactioUtils transactioUtils;
 	private EventsTransaction eventsTransaction;
+	private WinnerTransaction winnerTransaction;
 	
 	public InsertResultController(CssaMDIForm mdiForm) {
 		super();
@@ -38,6 +40,7 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 		tableModel = new InsertResultTableModel();
 		studentDetails = new StudentDetails();
 		transactioUtils = new TransactioUtils();
+		winnerTransaction = new WinnerTransaction();
 	}
 
 	@Override
@@ -51,12 +54,24 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 		
 		if(actionCommand.equals(InsertResultView.INSERT)) {
 			if(null != tableModel.getResultsTableBos()) {
-				
+				performSaveAction();
 			}
 		}
 		
 	}
 	
+	private void performSaveAction() {
+		if(null != insertResults) {
+			try {
+				winnerTransaction.saveAll( insertResults);
+			} catch (IfaceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	public void askInsertResultView() {
 		resultView = new InsertResultView(this, mdiForm, tableModel);				
 		resultView.showInsertResultScreen();
@@ -130,7 +145,7 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 		resultView.setCollegeId(e.getCollegeId());
 		resultView.setTxtEventName(e.getEventName());
 		try {
-			List<InsertResult> insertResults = transactioUtils.getWinnersParticipantsList(e);
+			insertResults = transactioUtils.getWinnersParticipantsList(e);
 			tableModel.setResultsTableBos(insertResults);
 			
 		} catch (IfaceException e1) {

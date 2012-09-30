@@ -35,11 +35,13 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 	public static final String MNU_MAINTAIN_STUDENT = "Student";
 	public static final String MNU_MAINTAIN_GROUP_EVENT = "Group";
 	public static final String MNU_MAINTAIN_RESULT = "Result";
+	public static final String MNU_MAINTAIN_WINNERS = "Winners";
 	
 	public static final String MNU_REPORT = "Report";
 	public static final String MNU_REPORT_COLLEGE = "College";
 	public static final String MNU_REPORT_STUDENT = "Student";
 	public static final String MNU_REPORT_RESULT = "Result";
+	public static final String MNU_REPORT_WINNERS = "Winners";
 	
 	public static final String MNU_HELP = "Help";
 	public static final String MNU_HELP_CONTENT = "Help Content";
@@ -105,6 +107,10 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		CssaMenuItem mnuItemResult = new CssaMenuItem(MNU_MAINTAIN_RESULT);
 		mnuItemResult.addActionListener(this);
 		mnuItemResult.setActionCommand(MNU_MAINTAIN_RESULT);
+		
+		CssaMenuItem mnuItemWinners = new CssaMenuItem(MNU_MAINTAIN_WINNERS);
+		mnuItemWinners.addActionListener(this);
+		mnuItemWinners.setActionCommand(MNU_MAINTAIN_WINNERS);
 		
 		maintainMenu.addElement(mnuItemCollege);
 		maintainMenu.addElement(mnuItemStudents);
@@ -221,8 +227,14 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		} else if (CssaMenuBar.MNU_MAINTAIN_STUDENT.equals(actionCommand)) {
 			new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
 		} else if(CssaMenuBar.MNU_MAINTAIN_RESULT.equals(actionCommand)) {
-			//new ResultInsertController(cssaMDIForm).askResultInsertView();
+			new ResultInsertController(cssaMDIForm).askResultInsertView();
+		} else if(CssaMenuBar.MNU_MAINTAIN_WINNERS.equals(actionCommand)) {
 			new InsertResultController(cssaMDIForm).askInsertResultView();
+		} else if(CssaMenuBar.MNU_REPORT_COLLEGE.equals(actionCommand)) {
+			new CollegeLookupController(cssaMDIForm).askCollegeLookupView();
+			
+		} else if(CssaMenuBar.MNU_REPORT_STUDENT.equals(actionCommand)) {
+			new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
 		}
 			
 	}

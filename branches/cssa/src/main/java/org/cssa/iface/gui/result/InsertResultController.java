@@ -54,6 +54,12 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 		
 		if(actionCommand.equals(InsertResultView.INSERT)) {
 			if(null != tableModel.getResultsTableBos()) {
+				
+			}
+		}
+		
+		if(actionCommand.equals(InsertResultView.INSERT)) {
+			if(null != tableModel.getResultsTableBos()) {
 				performSaveAction();
 			}
 		}
@@ -143,6 +149,15 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 	public void setResult(InsertResult e) {
 		resultView.setStudentId(e.getStudentId());
 		resultView.setCollegeId(e.getCollegeId());
+		resultView.setTxtEventName(e.getEventName());
+		try {
+			List<InsertResult> insertResults = transactioUtils.getWinnersParticipantsList(e);
+			tableModel.setResultsTableBos(insertResults);
+			
+		} catch (IfaceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		resultView.setTxtEventName(e.getEventName());
 		try {
 			insertResults = transactioUtils.getWinnersParticipantsList(e);

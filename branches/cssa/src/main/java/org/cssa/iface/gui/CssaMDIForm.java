@@ -112,6 +112,26 @@ public class CssaMDIForm extends JFrame {
 		}
 		
 	}
+	
+	public void addChild(JPanel panel, String frameTitle, Dimension screenSize ) {
+	    frame = new JInternalFrame(frameTitle, false, true, false, true);
+		frame.add(panel);
+		frame.setSize(screenSize);
+		desktopPane.add(frame);
+		frame.setVisible(true);
+		internalFrames.push(frame);
+		frame.addInternalFrameListener(new InternalFrameAdapter() {
+			public void internalFrameClosing(InternalFrameEvent e){
+				closeFrame();
+			}
+		});
+		try {
+			frame.setSelected(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	public void addChild(JTabbedPane tabbedPane, String frameTitle) {
 		Dimension screenSize = this.getContentPane().getSize();
 	    frame = new JInternalFrame(frameTitle, true, true, true, true);
@@ -213,6 +233,4 @@ public class CssaMDIForm extends JFrame {
 		this.internalFrames = internalFrames;
 	}
 	
-	
-
 }

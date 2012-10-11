@@ -10,6 +10,10 @@ import org.cssa.iface.bo.CollegeDetails;
 
 public class CollegeLookupTableModel extends AbstractTableModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<CollegeDetails> collegeList;
 	
 	/**

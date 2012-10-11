@@ -1,20 +1,12 @@
 package org.cssa.iface.gui.events;
 
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
 
 import org.cssa.iface.bo.Events;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
-import org.cssa.iface.gui.college.CollegeDetilsView;
 import org.cssa.iface.transaction.EventsTransaction;
 
 /**

@@ -8,5 +8,7 @@ package org.cssa.iface.gui.report;
  *
  */
 public class ParticipationReportView {
+	
+	
 
 }

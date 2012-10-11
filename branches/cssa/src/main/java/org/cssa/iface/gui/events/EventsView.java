@@ -4,22 +4,14 @@
 package org.cssa.iface.gui.events;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
 
-import org.cssa.iface.bo.EventDetails;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;

@@ -17,6 +17,7 @@ import org.cssa.iface.gui.lookup.CollegeLookupController;
 import org.cssa.iface.gui.lookup.StudentLookupController;
 import org.cssa.iface.gui.result.InsertResultController;
 import org.cssa.iface.gui.result.ResultInsertController;
+import org.cssa.iface.gui.search.SearchTableController;
 
 /**
  * @author ajith
@@ -42,6 +43,19 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 	public static final String MNU_REPORT_STUDENT = "Student";
 	public static final String MNU_REPORT_RESULT = "Result";
 	public static final String MNU_REPORT_WINNERS = "Winners";
+	
+	public static final String ACT_MNU_MAINTAIN = "Maintain";
+	public static final String ACT_MNU_MAINTAIN_COLLEGE = "Maintain_College";
+	public static final String ACT_MNU_MAINTAIN_STUDENT = "Maintain_Student";
+	public static final String ACT_MNU_MAINTAIN_GROUP_EVENT = "Maintain_Group";
+	public static final String ACT_MNU_MAINTAIN_RESULT = "Maintain_Result";
+	public static final String ACT_MNU_MAINTAIN_WINNERS = "Maintain_Winners";
+	
+	public static final String ACT_MNU_REPORT = "Report";
+	public static final String ACT_MNU_REPORT_COLLEGE = "Report_College";
+	public static final String ACT_MNU_REPORT_STUDENT = "Report_Student";
+	public static final String ACT_MNU_REPORT_RESULT = "Report_Result";
+	public static final String ACT_MNU_REPORT_WINNERS = "Report_Winners";
 	
 	public static final String MNU_HELP = "Help";
 	public static final String MNU_HELP_CONTENT = "Help Content";
@@ -133,11 +147,11 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		CssaMenuItem mnuItemResult = new CssaMenuItem(MNU_REPORT_RESULT);
 		
 		mnuItemCollege.addActionListener(this);
-		mnuItemCollege.setActionCommand(MNU_REPORT_COLLEGE);
+		mnuItemCollege.setActionCommand(ACT_MNU_REPORT_COLLEGE);
 		mnuItemStudents.addActionListener(this);
-		mnuItemStudents.setActionCommand(MNU_REPORT_STUDENT);
+		mnuItemStudents.setActionCommand(ACT_MNU_REPORT_STUDENT);
 		mnuItemResult.addActionListener(this);
-		mnuItemResult.setActionCommand(MNU_REPORT_RESULT);
+		mnuItemResult.setActionCommand(ACT_MNU_REPORT_RESULT);
 		
 		reportMenu.addElement(mnuItemCollege);
 		reportMenu.addElement(mnuItemStudents);
@@ -230,11 +244,12 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 			new ResultInsertController(cssaMDIForm).askResultInsertView();
 		} else if(CssaMenuBar.MNU_MAINTAIN_WINNERS.equals(actionCommand)) {
 			new InsertResultController(cssaMDIForm).askInsertResultView();
-		} else if(CssaMenuBar.MNU_REPORT_COLLEGE.equals(actionCommand)) {
+		} else if(CssaMenuBar.ACT_MNU_REPORT_COLLEGE.equals(actionCommand)) {
 			new CollegeLookupController(cssaMDIForm).askCollegeLookupView();
 			
-		} else if(CssaMenuBar.MNU_REPORT_STUDENT.equals(actionCommand)) {
-			new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
+		} else if(CssaMenuBar.ACT_MNU_REPORT_STUDENT.equals(actionCommand)) {
+			//new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
+			new SearchTableController(cssaMDIForm).askSearachTable();
 		}
 			
 	}

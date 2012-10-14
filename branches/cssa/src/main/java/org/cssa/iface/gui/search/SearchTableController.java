@@ -20,9 +20,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import org.cssa.iface.bo.Events;
+import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.transaction.EventsTransaction;
+import org.cssa.iface.transaction.TransactioUtils;
 import org.cssa.iface.util.EventStorageXML;
 
 
@@ -45,6 +47,7 @@ public class SearchTableController implements ActionListener {
 	private JTable table;
 	private JComboBox combo;
 	
+	private TransactioUtils transactioUtils;
 	
 	
 	/**
@@ -86,8 +89,20 @@ public class SearchTableController implements ActionListener {
 	}
 
 	private void searchActionPerformed() {
-		System.out.println(tableModel.getSelectedEvent());
-		System.out.println(tableModel.getSearchKey());
+		transactioUtils = new TransactioUtils();
+		try {
+		List<InsertResult> searchResult = 	transactioUtils.getParticipantsDetailsByEvents(tableModel.getSelectedEvent(), tableModel.getSearchKey());
+		if(null != searchResult) {
+			new SearchResultController(mdiForm, searchResult).askSearchResultView();
+
+		}
+		
+		
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 

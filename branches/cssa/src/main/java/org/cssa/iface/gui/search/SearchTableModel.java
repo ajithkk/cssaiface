@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.transaction.EventsTransaction;
 
 /**
@@ -29,7 +30,12 @@ public class SearchTableModel extends AbstractTableModel{
 		eventList = new ArrayList<String>();
 		searchKey = new HashMap<Integer, String>();
 		selectedEvent = new  ArrayList<String>();
-		
+		try {
+			columnLength = eventsTransaction.loadAll().size();
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -40,11 +46,6 @@ public class SearchTableModel extends AbstractTableModel{
 
 	@Override
 	public int getColumnCount() {
-		try {
-			columnLength = eventsTransaction.loadAll().size();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return columnLength;
 	}
 
@@ -63,8 +64,10 @@ public class SearchTableModel extends AbstractTableModel{
 			return "Event Id";
 		case 2: 
 			return "College Id";
+		case 3: 
+			return "Student Id";
 		default:
-			return "Event ID "+ (col);
+			return "Column "+ (col);
 		}
     }
 	
@@ -93,8 +96,9 @@ public class SearchTableModel extends AbstractTableModel{
 			selectedEvent.add(value.toString());
 			break;
 		default:
-			eventList.add(value.toString());
-       	 	searchKey.put(col, value.toString());
+			eventList.remove(col);
+			eventList.add(col, value.toString());
+			searchKey.put(col, value.toString());
 			break;
 		}
 		

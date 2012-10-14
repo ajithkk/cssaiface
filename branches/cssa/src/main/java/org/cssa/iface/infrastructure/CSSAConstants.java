@@ -102,7 +102,7 @@ public class CSSAConstants {
 	public static final String[] STUDENT_LOOKUP_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","PHONE NUMBER","ACTIVE"};
 	public static final String[] INSERT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
 	public static final String[] INSERT_RESULT_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME","MARK","EVENT STAGE"};
-	
+	public static final String[] EVENT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","COLLEGE NAME", "STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
 	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
 
 	public static final String HELP_FILE = "HelpSet.cs";

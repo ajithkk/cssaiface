@@ -3,6 +3,9 @@
  */
 package org.cssa.iface.services;
 
+import java.util.List;
+import java.util.Map;
+
 import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.Results;
@@ -294,6 +297,87 @@ public static String getParticipationGroupSearch(InsertResult insertResult) thro
 			}
 		}
 		return winnersSingleSearch.toString();
+		
+	}
+	
+	public static  String getParticipantsDetailsByEventsQuery(List<String> eventList, Map<Integer, String> searcKeys) {
+		
+		String table;
+		String round = searcKeys.get(0);
+		String roundQuery = null;
+		StringBuilder eventSearch = new StringBuilder();
+		if(null != round) {
+			if(!round.isEmpty()) {
+				table = CSSAConstants.RESULTS_TABLE;
+				eventSearch.append( "SELECT "
+				+table+"."+CSSAConstants.RESULTS_RESULT_STATUS +", ");
+				roundQuery = " AND "+table+".RESULT_STATUS = '"+round +"' ";
+			} else {
+				table = CSSAConstants.EVENT_DETAILS_TABLE;
+				eventSearch.append( "SELECT ");
+
+			}
+		} else {
+			table = CSSAConstants.EVENT_DETAILS_TABLE;
+			eventSearch.append( "SELECT ");
+
+		}
+		
+			eventSearch.append(table+"."+CSSAConstants.RESULTS_COLLEGE_ID +" , "
+			+table+"."+CSSAConstants.RESULTS_STUDENT_ID +" , "
+			+CSSAConstants.COLLEGE_DETAILS_TABLE+"."+CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME +","
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
+			+table+"."+CSSAConstants.RESULTS_EVENT_ID +","
+			+table+"."+CSSAConstants.RESULTS_EVENT_GROUP_ID+"  FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +table +", "+CSSAConstants.COLLEGE_DETAILS_TABLE
+			+" WHERE STUDENTS_DETAILS.STUDENT_ID ="+table+".STUDENT_ID  AND STUDENTS_DETAILS.COLLEGE_ID = COLLEGE_DETAILS.COLLEGE_ID ");
+		if(null != roundQuery) {
+			eventSearch.append(roundQuery);
+		}
+		if( null != eventList) {
+			boolean inflag = true;
+			boolean comaFlag = true;
+			for(String event : eventList) {
+				if(!event.isEmpty() && !event.equals(" ")) {
+					if(inflag) {
+						eventSearch.append(" AND " +table+". EVENT_ID in (");
+						inflag = false;
+					}
+					if(comaFlag){
+						eventSearch.append("'"+ event+"'");
+						comaFlag = false;
+					} else  {
+						eventSearch.append(",'"+ event+"'");
+					}
+				}
+			}
+			if(!inflag) {
+				eventSearch.append(")");
+			}
+		}
+		
+		String collegeId = searcKeys.get(2);
+		if(null != collegeId) {
+			if(!collegeId.isEmpty()) { 
+				eventSearch.append(" AND "+table+".COLLEGE_ID  LIKE ");
+				String collegeIdReplace = collegeId.replace('*','%');
+				eventSearch.append("'"+collegeIdReplace +"'");
+			}
+		}
+		
+		String studentId = searcKeys.get(3);
+		if(null != studentId) {
+			if(!studentId.isEmpty()) {
+				eventSearch.append(" AND "+table+".STUDENT_ID  LIKE ");
+				String studentIdReplace = studentId.replace('*','%');
+				eventSearch.append("'"+studentIdReplace +"'");
+			}
+		}
+		
+		
+		return eventSearch.toString();
 		
 	}
 	

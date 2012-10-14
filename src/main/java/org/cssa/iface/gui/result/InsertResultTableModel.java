@@ -7,13 +7,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.cssa.iface.bo.CollegeDetails;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
-
 import org.cssa.iface.bo.InsertResult;
 
 public class InsertResultTableModel extends AbstractTableModel {

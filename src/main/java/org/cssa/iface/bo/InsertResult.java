@@ -11,7 +11,22 @@ public class InsertResult extends StudentDetails {
 	private String eventName;
 	private String groupName;
 	private String eventStatus;
+	private String collegeName;
 	private float mark;
+	
+	/**
+	 * @return the collegeName
+	 */
+	public String getCollegeName() {
+		return collegeName;
+	}
+	/**
+	 * @param collegeName the collegeName to set
+	 */
+	public void setCollegeName(String collegeName) {
+		this.collegeName = collegeName;
+	}
+	
 	
 	/**
 	 * @return the eventName

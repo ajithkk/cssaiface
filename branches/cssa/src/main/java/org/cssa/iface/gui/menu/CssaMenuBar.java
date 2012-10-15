@@ -29,7 +29,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 	public static final String MNU_FILE = "File";
 	public static final String MNU_FILE_NEWCOLLEGE = "New College";
 	public static final String MNU_FILE_NEWEVENT = "New Event";
-	public static final String MNU_FILE_SEMINAR = "Seminar";
+	public static final String MNU_FILE_TIME_SHEET = "TimeSheet";
 	public static final String MNU_FILE_EXIT = "Exit";
 	
 	public static final String MNU_MAINTAIN = "Maintain";
@@ -79,7 +79,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		CssaMenuItem mnuItemNewCollege  = new  CssaMenuItem(MNU_FILE_NEWCOLLEGE);
 		CssaMenuItem mnuItemNewEvent = new CssaMenuItem(MNU_FILE_NEWEVENT);
 		CssaMenuItem mnuItemExit = new CssaMenuItem(MNU_FILE_EXIT);
-		CssaMenuItem mnuItemSeminar = new CssaMenuItem(MNU_FILE_SEMINAR);
+		CssaMenuItem mnuItemSeminar = new CssaMenuItem(MNU_FILE_TIME_SHEET);
 		JMenuItem mnuItemExit1 = new JMenuItem(MNU_FILE_EXIT);
 		
 		mnuItemNewCollege.addActionListener(this);
@@ -87,7 +87,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		mnuItemNewEvent.addActionListener(this);
 		mnuItemNewEvent.setActionCommand(MNU_FILE_NEWEVENT);
 		mnuItemSeminar.addActionListener(controller);
-		mnuItemSeminar.setActionCommand(MNU_FILE_SEMINAR);
+		mnuItemSeminar.setActionCommand(MNU_FILE_TIME_SHEET);
 		mnuItemExit.addActionListener(this);
 		mnuItemExit.setActionCommand(MNU_FILE_EXIT);
 		

@@ -36,6 +36,7 @@ public class CSSAConstants {
 	public static final String RESULTS_TABLE = "RESULTS";
 	public static final String SEMINAR_DETAILS_TABLE = "SEMINAR_DETAILS";
 	public static final String WINNERS_TABLE = "WINNERS";
+	public static final String TIMESHEET_TABLE = "TIMESHEET";
 	
 	public static final String EVENTS_SNO = "SNO";
 	public static final String EVENTS_EVENT_ID = "EVENT_ID";
@@ -96,6 +97,14 @@ public class CSSAConstants {
 	public static final String SEMINAR_DETAILS_EMAIL = "EMAIL";
 	public static final String SEMINAR_DETAILS_DUTY_CERTIFICATE = "DUTY_CERTIFICATE";
 	
+	public static final String TIMESHEET_SNO = "SNO";
+	public static final String TIMESHEET_EVENT_ID = "EVENT_ID";
+	public static final String TIMESHEET_START_TIME = "START_TIME";
+	public static final String TIMESHEET_END_TIME = "END_TIME";
+	public static final String TIMESHEET_EVENT_STAGE = "EVENT_STAGE";
+	public static final String TIMESHEET_VENUE = "VENUE";
+	public static final String TIMESHEET_DAY = "DAY";
+	
 	public static final String[] EVENT_DETAILS_COLUMN_NAMES = {"SNO", "EVENT CODE NAME", "EVENT NAME", "NO OF PARTICIPANTS", "POINTS" };
 	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS","STATUS"};
 	public static final String[] COLLEGE_INITIAL_DETAILS_COLUMN_NAMES = {"SNO","STUDENT ID", "STUDENT NAME", "EVENTS"};
@@ -103,6 +112,7 @@ public class CSSAConstants {
 	public static final String[] INSERT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
 	public static final String[] INSERT_RESULT_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME","MARK","EVENT STAGE"};
 	public static final String[] EVENT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","COLLEGE NAME", "STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
+	public static final String[] TIMESHEET_COLUMN_NAMES = {"SNO","DATE","EVENT_ID","START_TIME", "END_TIME","EVENT_ROUND","VENUE"};
 	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
 
 	public static final String HELP_FILE = "HelpSet.cs";

@@ -180,5 +180,5 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 		}
 	}
 
-
+ 
 }

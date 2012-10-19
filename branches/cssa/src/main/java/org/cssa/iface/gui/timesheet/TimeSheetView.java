@@ -25,9 +25,12 @@ public class TimeSheetView {
 	public static final String PRINT = "Print";
 	public static final String SAVE = "Save";
 	public static final String CANCEL = "Cancel";
+	public static final String ADD = "Add";
+	
 	private CButton btnPrint;
 	private CButton btnSave;
 	private CButton btnCancel;
+	private CButton btnAdd;
 	private JTable tblTimeSheet;
 	
 	private CssaMDIForm mdiForm;
@@ -66,15 +69,15 @@ public class TimeSheetView {
 		GridBagConstraints constraints = null;
 
 		constraints = new GridBagConstraints();
-		btnPrint = new CButton("Print");
-		btnPrint.setMnemonic('S');
-		btnPrint.setActionCommand(PRINT);
+		btnAdd = new CButton("Add");
+		btnAdd.setActionCommand(ADD);
+		
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.gridx = 2;
 		constraints.gridy = 0;
-		panel.add(btnPrint, constraints);
-		btnPrint.addActionListener(controller);
+		panel.add(btnAdd, constraints);
+		btnAdd.addActionListener(controller);
 
 		constraints = new GridBagConstraints();
 		btnSave = new CButton("Save");
@@ -88,14 +91,27 @@ public class TimeSheetView {
 		btnSave.addActionListener(controller);
 
 		constraints = new GridBagConstraints();
+		btnPrint = new CButton("Print");
+		btnPrint.setMnemonic('S');
+		btnPrint.setActionCommand(PRINT);
+		
+		constraints.insets = new Insets(5, 5, 5, 5);
+		constraints.gridx = 2;
+		constraints.gridy = 2;
+		panel.add(btnPrint, constraints);
+		btnPrint.addActionListener(controller);
+		
+		constraints = new GridBagConstraints();
+
 		btnCancel = new CButton("Cancel");
 		btnCancel.setMnemonic('C');
 		btnCancel.setActionCommand(CANCEL);
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.gridx = 2;
-		constraints.gridy = 2;
+		constraints.gridy = 3;
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(controller);
+		
 		
 		return panel;
 	}

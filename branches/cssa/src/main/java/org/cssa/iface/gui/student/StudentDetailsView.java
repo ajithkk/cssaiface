@@ -380,6 +380,21 @@ public class StudentDetailsView {
 	}
 
 	
+	
+
+	/**
+	 * @return the status
+	 */
+	public JCheckBox getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(JCheckBox status) {
+		this.status = status;
+	}
 
 	/**
 	 * @return the txtStudentId
@@ -448,8 +463,8 @@ public class StudentDetailsView {
 	/**
 	 * @return the cbGender
 	 */
-	public String getCbGender() {
-		return cbGender.getSelectedItem().toString();
+	public JComboBox getCbGender() {
+		return cbGender;
 	}
 
 
@@ -464,8 +479,8 @@ public class StudentDetailsView {
 	/**
 	 * @return the ckAccommodation
 	 */
-	public boolean getCkAccommodation() {
-		return ckAccommodation.isSelected();
+	public JCheckBox getCkAccommodation() {
+		return ckAccommodation;
 	}
 
 

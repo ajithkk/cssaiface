@@ -202,6 +202,7 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 			while(res.next()) {
 				InsertResult participant = new InsertResult();
 				participant.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+				participant.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
 				participant.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
 				participant.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
 				participant.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));

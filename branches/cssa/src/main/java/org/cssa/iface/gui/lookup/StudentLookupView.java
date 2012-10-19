@@ -74,7 +74,7 @@ public class StudentLookupView {
 	public void showEventDetailLookup() {
 		JPanel panel = new JPanel();
 		panel.add(getStudentLookupDetailsBody(), BorderLayout.CENTER);
-		mdiForm.addChild(panel, "Student Lookup Form");
+		mdiForm.addChild(panel, "Participant Lookup Form");
 		
 	}
 	
@@ -83,7 +83,7 @@ public class StudentLookupView {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = null;
 		
-		lblStudentId = new CLabel("Student Id:");
+		lblStudentId = new CLabel("Participant Id:");
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(10, 5, 5, 5);
@@ -98,7 +98,7 @@ public class StudentLookupView {
 		constraints.gridy = 0;
 		panel.add(txtStudentId, constraints);
 		
-		lblStudentName = new CLabel("Student Name:");
+		lblStudentName = new CLabel("Participant Name:");
 		constraints = new GridBagConstraints();
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.anchor = GridBagConstraints.EAST;

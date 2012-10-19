@@ -19,6 +19,8 @@ import org.cssa.iface.gui.lookup.StudentLookupController;
 import org.cssa.iface.gui.result.InsertResultController;
 import org.cssa.iface.gui.result.ResultInsertController;
 import org.cssa.iface.gui.search.SearchTableController;
+import org.cssa.iface.gui.timesheet.SelectDateDialogController;
+import org.cssa.iface.gui.timesheet.TimeSheetController;
 
 /**
  * @author ajith
@@ -34,28 +36,28 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 	
 	public static final String MNU_MAINTAIN = "Maintain";
 	public static final String MNU_MAINTAIN_COLLEGE = "College";
-	public static final String MNU_MAINTAIN_STUDENT = "Student";
+	public static final String MNU_MAINTAIN_STUDENT = "Participants";
 	public static final String MNU_MAINTAIN_GROUP_EVENT = "Group";
 	public static final String MNU_MAINTAIN_RESULT = "Result";
 	public static final String MNU_MAINTAIN_WINNERS = "Winners";
 	
 	public static final String MNU_REPORT = "Report";
 	public static final String MNU_REPORT_COLLEGE = "College";
-	public static final String MNU_REPORT_STUDENT = "Student";
+	public static final String MNU_REPORT_STUDENT = "Participants";
 	public static final String MNU_REPORT_RESULT = "Result";
 	public static final String MNU_REPORT_WINNERS = "Winners";
 	public static final String MNU_REPORT_EVENT = "Event";
 	
 	public static final String ACT_MNU_MAINTAIN = "Maintain";
 	public static final String ACT_MNU_MAINTAIN_COLLEGE = "Maintain_College";
-	public static final String ACT_MNU_MAINTAIN_STUDENT = "Maintain_Student";
+	public static final String ACT_MNU_MAINTAIN_STUDENT = "Maintain_Participants";
 	public static final String ACT_MNU_MAINTAIN_GROUP_EVENT = "Maintain_Group";
 	public static final String ACT_MNU_MAINTAIN_RESULT = "Maintain_Result";
 	public static final String ACT_MNU_MAINTAIN_WINNERS = "Maintain_Winners";
 	
 	public static final String ACT_MNU_REPORT = "Report";
 	public static final String ACT_MNU_REPORT_COLLEGE = "Report_College";
-	public static final String ACT_MNU_REPORT_STUDENT = "Report_Student";
+	public static final String ACT_MNU_REPORT_STUDENT = "Report_Participants";
 	public static final String ACT_MNU_REPORT_RESULT = "Report_Result";
 	public static final String ACT_MNU_REPORT_WINNERS = "Report_Winners";
 	public static final String ACT_MNU_REPORT_EVENT = "Report_Event";
@@ -86,7 +88,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		mnuItemNewCollege.setActionCommand(MNU_FILE_NEWCOLLEGE);
 		mnuItemNewEvent.addActionListener(this);
 		mnuItemNewEvent.setActionCommand(MNU_FILE_NEWEVENT);
-		mnuItemSeminar.addActionListener(controller);
+		mnuItemSeminar.addActionListener(this);
 		mnuItemSeminar.setActionCommand(MNU_FILE_TIME_SHEET);
 		mnuItemExit.addActionListener(this);
 		mnuItemExit.setActionCommand(MNU_FILE_EXIT);
@@ -259,9 +261,10 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 			new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
 		} else if (CssaMenuBar.ACT_MNU_REPORT_EVENT.equals(actionCommand)) {
 			new SearchTableController(cssaMDIForm).askSearachTable();
-
 		} else if(CssaMenuBar.ACT_MNU_REPORT_RESULT.equals(actionCommand)) {
 			new ParticipantLookupController(cssaMDIForm).askParticipantsLookupView();
+		} else if (CssaMenuBar.MNU_FILE_TIME_SHEET.equals(actionCommand)) {
+			new SelectDateDialogController(cssaMDIForm).askDateDialog();
 		}
 			
 	}

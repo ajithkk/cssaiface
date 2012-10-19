@@ -84,10 +84,14 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 		details.setStudentId(studentDetailsView.getTxtStudentId());
 		details.setStudentName(studentDetailsView.getTxtStudentName());
 		details.setStudentPhone(studentDetailsView.getTxtPhone());
-		details.setAccommodation(studentDetailsView.getCkAccommodation());
-		details.setStudentGender(studentDetailsView.getCbGender());
+		details.setAccommodation(studentDetailsView.getCkAccommodation().isSelected());
+		details.setStatus(studentDetailsView.getStatus().isSelected());
+		if(null != studentDetailsView.getCbGender().getSelectedItem()) {
+		details.setStudentGender(studentDetailsView.getCbGender().getSelectedItem().toString());
+		}
 		try {
 			transaction.update(details);
+			tableModel.setStudentDetails(transaction.loadAll(details.getCollegeId()));
 		} catch (IfaceException e) {
 			e.printStackTrace();
 		}

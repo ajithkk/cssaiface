@@ -5,43 +5,50 @@ package org.cssa.iface.transaction;
 
 import java.util.List;
 
-import org.cssa.iface.bo.TimeSechedule;
+import org.cssa.iface.bo.TimeSchedule;
 import org.cssa.iface.exception.IfaceException;
 
 /**
  * @author ajith
  *
  */
-public class TimeScheduleTransaction implements Transaction<TimeSechedule> {
+public class TimeScheduleTransaction implements Transaction<TimeSchedule> {
 
 	@Override
-	public int save(TimeSechedule object) throws IfaceException {
+	public int save(TimeSchedule object) throws IfaceException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public TimeSechedule load(TimeSechedule object) throws IfaceException {
+	public TimeSchedule load(TimeSchedule object) throws IfaceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<TimeSechedule> loadAll() throws IfaceException {
+	public List<TimeSchedule> loadAll() throws IfaceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int update(TimeSechedule object) throws IfaceException {
+	public int update(TimeSchedule object) throws IfaceException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int delete(TimeSechedule object) throws IfaceException {
+	public int delete(TimeSchedule object) throws IfaceException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public TimeSchedule load(int id) {
+		return null;
+		
+	}
+
+	
 
 }

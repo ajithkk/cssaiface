@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +20,7 @@ import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
 import org.cssa.iface.gui.util.FloatEditor;
+import org.cssa.iface.util.ImageUtil;
 
 /**
  * @author ajith
@@ -128,7 +130,8 @@ public class ResultInsertView {
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(txtCollegeId, constraints);
 		
-		btnCollegeSearch = new CButton();
+		ImageIcon icon = new ImageIcon(new ImageUtil().getImage("search.gif"));
+		btnCollegeSearch = new CButton(icon);
 		btnCollegeSearch.setPreferredSize(new Dimension(40, 23));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -156,8 +159,10 @@ public class ResultInsertView {
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(txtStudentId, constraints);
 		
-		btnStudentSearch = new CButton();
+		 icon = new ImageIcon(new ImageUtil().getImage("search.gif"));
+		btnStudentSearch = new CButton(icon);
 		btnStudentSearch.setPreferredSize(new Dimension(40, 23));
+		
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 2;

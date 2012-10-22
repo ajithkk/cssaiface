@@ -114,7 +114,9 @@ public class CollegeInitialViewController extends AbstractAction {
 		collegeInitialView.setCollegeName("");
 		collegeInitialView.setCollegePhone("");
 		collegeInitialView.setNoOfParticipants("");
-		collegeInitialView.getTblStudentDetails().setModel(new CollegeInitialTableModel());
+		tableModel = new CollegeInitialTableModel();
+		collegeInitialView.getTblStudentDetails().setModel(tableModel);
+		setCollegId();
 	}
 	
 	private void setCollegId() {

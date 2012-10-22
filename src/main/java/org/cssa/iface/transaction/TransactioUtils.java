@@ -43,7 +43,7 @@ public class TransactioUtils {
 		try{
 			res = dbEngineImpl.executeQuery(CSSAQuery.GET_COLLEGE_COOUNT);
 			if(res.next()) {
-				collegeId+= ((res.getInt(1)+1) < 10 ? CSSAConstants.COLLEGE_ID_PRE_ZERO +String.valueOf(res.getInt(1)) : String.valueOf(res.getInt(1)));
+				collegeId+= ((res.getInt(1)+1) < 10 ? CSSAConstants.COLLEGE_ID_PRE_ZERO +String.valueOf(res.getInt(1)+1) : String.valueOf(res.getInt(1)+1));
 			}
 		}catch (Exception e) {
 			throw  new IfaceException(e);

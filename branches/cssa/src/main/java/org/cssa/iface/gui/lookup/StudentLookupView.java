@@ -10,7 +10,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.sound.midi.MidiChannel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +21,7 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
+import org.cssa.iface.util.ImageUtil;
 
 /**
  * @author ajith
@@ -29,6 +32,8 @@ public class StudentLookupView {
 	public static final String CANCEL = "Cancel";
 	public static final String CLEAR = "Clear";
 	public static final String SEARCH = "Search";
+	public static final String PRINT = "Print";
+	public static final String SEARCH_COLLEGE_ID = "Search_college_id";
 	
 	private CLabel lblStudentId;
 	private CLabel lblStudentName;
@@ -42,8 +47,10 @@ public class StudentLookupView {
 	private CButton btnClear;
 	private CButton btnCancel;
 	private JButton btnCollegeLookUp;
+	private CButton print;
 	
 	private JTable tblStudentDetails;
+	private JCheckBox chkAccomodation;
 	
 	private StudentLookupController studentLookupController;
 	private StudentLookupTableModel tableModel;
@@ -128,6 +135,19 @@ public class StudentLookupView {
 		constraints.gridx = 1;
 		constraints.gridy = 2;
 		panel.add(txtCollegeId, constraints);
+		
+		ImageIcon icon = new ImageIcon(new ImageUtil().getImage("search.gif"));
+		btnCollegeLookUp = new CButton(icon);
+		btnCollegeLookUp.setToolTipText("Search College id");
+		btnCollegeLookUp.setPreferredSize(new Dimension(40, 23));
+		constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.gridx = 2;
+		constraints.gridy = 2;
+		constraints.insets = new Insets(5, 5, 5, 5);
+		panel.add(btnCollegeLookUp, constraints);
+		btnCollegeLookUp.addActionListener(studentLookupController);
+		btnCollegeLookUp.setActionCommand(SEARCH_COLLEGE_ID);
 		
 		return panel;
 	}

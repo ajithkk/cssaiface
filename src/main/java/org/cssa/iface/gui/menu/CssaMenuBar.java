@@ -265,6 +265,8 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 			new ParticipantLookupController(cssaMDIForm).askParticipantsLookupView();
 		} else if (CssaMenuBar.MNU_FILE_TIME_SHEET.equals(actionCommand)) {
 			new SelectDateDialogController(cssaMDIForm).askDateDialog();
+		} else if (CssaMenuBar.MNU_MAINTAIN_GROUP_EVENT.equals(actionCommand)) {
+			new StudentLookupController(cssaMDIForm, true, false).askStudentLookupsereen();
 		}
 			
 	}

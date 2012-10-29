@@ -25,12 +25,15 @@ import org.cssa.iface.transaction.StudentTransaction;
  */
 public class StudentLookupController implements ActionListener, MouseListener, CollegeLookupService<CollegeDetails>{
 	
+	private boolean printEanable;
+	private boolean group;
+	
 	private CssaMDIForm mdiForm;
 	private StudentLookupTableModel tableModel;
 	private StudentLookupView lookupView;
 	private StudentTransaction transaction;
 	private StudentLookupFormValidator validator;
-	List<StudentDetails> studentDetails;
+	private List<StudentDetails> studentDetails;
 	private StudentDetails student;
 	private  StudentLookupService<StudentDetails> controller;
 	
@@ -41,6 +44,13 @@ public class StudentLookupController implements ActionListener, MouseListener, C
 		transaction = new StudentTransaction();
 		validator = new StudentLookupFormValidator();
 		controller = null;
+		
+	}
+	
+	public StudentLookupController(CssaMDIForm mdiForm, boolean group, boolean printEnable) {
+		this(mdiForm);
+		this.group = group;
+		this.printEanable = printEnable;
 	}
 	
 	public StudentLookupController(CssaMDIForm mdiForm, StudentLookupService<StudentDetails>  controller) {
@@ -116,15 +126,17 @@ public class StudentLookupController implements ActionListener, MouseListener, C
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		int selectedRow = lookupView.getTblStudentDetails().getSelectedRow();
-		StudentDetails details = tableModel.getStudents().get(selectedRow);
-		if(null == controller) {
-			//new StudentDetailsController(details, mdiForm).askStudentDetailsView();
-			StudentAndGroupEventController studentAndGroupEventController = new  StudentAndGroupEventController(details, mdiForm);
-			studentAndGroupEventController.showStudentAndGroupEventTab();
-		} else {
-			mdiForm.closeFrame();
-			controller.setSelectedStudent(details);
+		if(!printEanable) {
+			int selectedRow = lookupView.getTblStudentDetails().getSelectedRow();
+			StudentDetails details = tableModel.getStudents().get(selectedRow);
+			if(null == controller) {
+				//new StudentDetailsController(details, mdiForm).askStudentDetailsView();
+				StudentAndGroupEventController studentAndGroupEventController = new  StudentAndGroupEventController(details, mdiForm, group);
+				studentAndGroupEventController.showStudentAndGroupEventTab();
+			} else {
+				mdiForm.closeFrame();
+				controller.setSelectedStudent(details);
+			}
 		}
 	}
 

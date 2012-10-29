@@ -5,13 +5,17 @@ package org.cssa.iface.gui.timesheet;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.cssa.iface.bo.TimeSheet;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.report.timesheet.TimeSheetReport;
 import org.cssa.iface.transaction.TimeSheetTransaction;
 import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author ajith
@@ -61,10 +65,32 @@ public class TimeSheetController implements ActionListener {
 			
 		} else if (TimeSheetView.PRINT.equals(actionCommand)) {
 			
+			performPrintAction();
+			
 		}
 		
 	}
 	
+	private void performPrintAction() {
+		List<TimeSheet> timeSheets = tableModel.getTimeSheets();
+		if(null != timeSheets) {
+		String FILE = Util.getReportHome()+"\\Timesheet_"+tableModel.getTimeSheets().get(0).getDate()+".pdf";
+		TimeSheetReport report = new TimeSheetReport(FILE, timeSheets);
+		try {
+			report.createReport();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+	}
+
+
+
+
 	private void performDeleteAction() {
 		int selectedRow = view.getTblTimeSheet().getSelectedRow();
 		try {

@@ -235,6 +235,7 @@ public class DBEngineImpl {
 		}
 		try {
 			statement = con.prepareStatement(sqlCommand);
+			log.info(sqlCommand);
 			con.setAutoCommit(false);
 			returnId = setBatchPreparedStatement(statement, batchParameterList).executeBatch();
 			commit(con);

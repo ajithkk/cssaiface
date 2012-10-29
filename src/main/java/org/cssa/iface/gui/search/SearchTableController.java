@@ -171,8 +171,8 @@ public class SearchTableController implements ActionListener {
 		try {
 		    events = eventsTransaction.loadAll();
 		    int size = events.size();
-			for(int i = 0; i <= size; i++) {
-				columnList.add("");
+			for(int i = 0; i < 7; i++) {
+				columnList.add(" ");
 			}
 //			columnList.add("");
 		}catch (Exception e) {

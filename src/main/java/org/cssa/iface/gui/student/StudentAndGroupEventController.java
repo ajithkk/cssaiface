@@ -17,6 +17,8 @@ import org.cssa.iface.transaction.Transaction;
  */
 
 public class StudentAndGroupEventController {
+	
+	private boolean group;
 
 	private  StudentDetails student;
 	private List<StudentDetails> details;
@@ -32,25 +34,32 @@ public class StudentAndGroupEventController {
 	/**
 	 * @param student
 	 */
-	public StudentAndGroupEventController(StudentDetails student, CssaMDIForm mdiForm) {
+	public StudentAndGroupEventController(StudentDetails student, CssaMDIForm mdiForm, boolean group) {
 		super();
 		this.student = student;
 		this.mdiForm = mdiForm;
+		this.group = group;
 		transaction = new StudentTransaction();
 		studentDetailsController = new StudentDetailsController(student, mdiForm);
 		groupEventController = new GroupEventController(details, mdiForm);
 	}
 	
 	public void showStudentAndGroupEventTab() {
-		JTabbedPane tabbedPane = new JTabbedPane();
 		setDetails();
-		studentDetailsController.setStudentTableData(details);
-		groupEventController.setStudentDetails(details);
-		JPanel studentPanel = studentDetailsController.getStudentDeatilsview();
-		tabbedPane.addTab("StudentDetails", null, studentPanel, "Student Details");
-		JPanel groupAndEventPanel = groupEventController.getGroupEventView();
-		tabbedPane.addTab("Group Event", null, groupAndEventPanel, "Group and event");
-		mdiForm.addChild(tabbedPane, "Student Details");
+		if(group) {
+			groupEventController.setStudentDetails(details);
+			JPanel groupAndEventPanel = groupEventController.getGroupEventView();
+			mdiForm.addChild(groupAndEventPanel, "Group and event");
+		} else {
+			JTabbedPane tabbedPane = new JTabbedPane();
+			studentDetailsController.setStudentTableData(details);
+			groupEventController.setStudentDetails(details);
+			JPanel studentPanel = studentDetailsController.getStudentDeatilsview();
+			tabbedPane.addTab("StudentDetails", null, studentPanel, "Student Details");
+			JPanel groupAndEventPanel = groupEventController.getGroupEventView();
+			tabbedPane.addTab("Group Event", null, groupAndEventPanel, "Group and event");
+			mdiForm.addChild(tabbedPane, "Student Details");
+		}
 	}
 
 	public List<StudentDetails> getDetails() {

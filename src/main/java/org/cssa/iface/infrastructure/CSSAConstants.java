@@ -11,6 +11,7 @@ public class CSSAConstants {
 	
 	public static final String CONFIG_XML_FILE = "cssa_interface.xml";
 	public static final String CONFIG_PROPERTIES_FILE = "CSSA_IFACE.properties";
+	public static final String DATE_FORMAT = "MM/dd/yyyy";
 	
 	public static final String APP_NAME = "Interface Registration software";
 	public static final String APP_VERSION = "2.0";
@@ -108,11 +109,11 @@ public class CSSAConstants {
 	public static final String[] EVENT_DETAILS_COLUMN_NAMES = {"SNO", "EVENT CODE NAME", "EVENT NAME", "NO OF PARTICIPANTS", "POINTS" };
 	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS","STATUS"};
 	public static final String[] COLLEGE_INITIAL_DETAILS_COLUMN_NAMES = {"SNO","STUDENT ID", "STUDENT NAME", "EVENTS"};
-	public static final String[] STUDENT_LOOKUP_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","PHONE NUMBER","ACTIVE"};
+	public static final String[] STUDENT_LOOKUP_COLUMN_NAMES = {"SNO","COLLEGE ID","COLLEGE NAME","STUDENT ID","STUDENT NAME","PHONE NUMBER","POINT","ACCOMMODATION","ACTIVE"};
 	public static final String[] INSERT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
 	public static final String[] INSERT_RESULT_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME","MARK","EVENT STAGE"};
 	public static final String[] EVENT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","COLLEGE NAME", "STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
-	public static final String[] TIMESHEET_COLUMN_NAMES = {"SNO","DATE","EVENT_ID","START_TIME", "END_TIME","EVENT_ROUND","VENUE"};
+	public static final String[] TIMESHEET_COLUMN_NAMES = {"TIME ID","DATE","EVENT NAME","START TIME", "END TIME","EVENT ROUND","VENUE"};
 	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
 
 	public static final String HELP_FILE = "HelpSet.cs";

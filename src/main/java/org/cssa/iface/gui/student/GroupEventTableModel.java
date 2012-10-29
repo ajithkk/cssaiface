@@ -69,6 +69,13 @@ private List<StudentDetails> studentDetails;
 	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
+		if( columnIndex > 6) {
+			return Boolean.class;
+		} else if (0 == columnIndex) {
+			return Integer.class;
+		} else if (6 == columnIndex) {
+			return Float.class;
+		}
 		return String.class;
 	}
 
@@ -80,13 +87,16 @@ private List<StudentDetails> studentDetails;
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		StudentDetails details = studentDetails.get(rowIndex);
 		switch(columnIndex) {
-			case 0: return details.getSno();
-			case 1: return details.getCollegeId();
-			case 2: return details.getStudentId();
-			case 3: return details.getStudentName();
-			case 4: return details.getStudentPhone();
-			case 5: return details.isStatus();
-			default: return "";
+		case 0: return details.getSno();
+		case 1: return details.getCollegeId();
+		case 2: return details.getCollegeName();
+		case 3: return details.getStudentId();
+		case 4: return details.getStudentName();
+		case 5: return details.getStudentPhone();
+		case 6: return details.getStudentPoint();
+		case 7: return details.isAccommodation();
+		case 8: return details.isStatus();
+		default: return "";
 		}
 	}
 

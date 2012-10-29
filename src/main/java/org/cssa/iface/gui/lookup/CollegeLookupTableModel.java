@@ -38,6 +38,11 @@ public class CollegeLookupTableModel extends AbstractTableModel {
 	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
+		if(0 == columnIndex || 5 == columnIndex) {
+			return Integer.class;
+		} else if (6 == columnIndex) {
+			return Boolean.class;
+		}
 		return String.class;
 	}
 
@@ -69,7 +74,7 @@ public class CollegeLookupTableModel extends AbstractTableModel {
 			case 3 : return college.getCollegeAddress();
 			case 4 : return college.getCollegePhone();
 			case 5 : return college.getNoOfParticipants();
-			case 6 : return String.valueOf(college.isStatus());
+			case 6 : return college.isStatus();
 			default : return "";
 		}
 		

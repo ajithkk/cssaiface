@@ -36,7 +36,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 	
 	public static final String MNU_MAINTAIN = "Maintain";
 	public static final String MNU_MAINTAIN_COLLEGE = "College";
-	public static final String MNU_MAINTAIN_STUDENT = "Participants";
+	public static final String MNU_MAINTAIN_STUDENT = "Student";
 	public static final String MNU_MAINTAIN_GROUP_EVENT = "Group";
 	public static final String MNU_MAINTAIN_RESULT = "Result";
 	public static final String MNU_MAINTAIN_WINNERS = "Winners";

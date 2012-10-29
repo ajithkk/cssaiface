@@ -29,7 +29,6 @@ public class ResultsTransaction implements Transaction<Results> {
 	@Override
 	public int save(Results object) throws IfaceException {
 		
-		int[] result;
 		transactionUtils = new TransactioUtils();
 		eventsTransaction = new EventsTransaction();
 		Events events = new Events();
@@ -48,6 +47,7 @@ public class ResultsTransaction implements Transaction<Results> {
 			resultsTableBos = transactionUtils.getGroupResult(object);
 			
 			for(InsertResultsTableBo insertResultsTableBo : resultsTableBos) {
+				parameterMap = new HashMap<Integer, Object>();;
 				parameterMap.put(1, insertResultsTableBo.getCollegeId());
 				parameterMap.put(2, insertResultsTableBo.getStudentId());
 				parameterMap.put(3, insertResultsTableBo.getEventId());
@@ -66,7 +66,7 @@ public class ResultsTransaction implements Transaction<Results> {
 		} 
 
 		try{
-			result = dbEngineImpl.executeBatch(parameterList, CSSAQuery.INSERT_RESULT);
+			int[] result = dbEngineImpl.executeBatch(parameterList, CSSAQuery.INSERT_RESULT);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -17,6 +17,10 @@ import org.cssa.iface.bo.InsertResult;
 
 public class ParticipantLookupTableModel extends AbstractTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	List<InsertResult> resultsTableBos;
 	public ParticipantLookupTableModel() {
 		super();

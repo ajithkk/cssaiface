@@ -4,7 +4,10 @@
 package org.cssa.iface.gui.college;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -13,8 +16,14 @@ import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.report.ReportLauncher;
+import org.cssa.iface.report.bo.StudentRegisterDocument;
+import org.cssa.iface.report.student.StudentRegistrationReport;
 import org.cssa.iface.transaction.CollegeTransaction;
 import org.cssa.iface.transaction.TransactioUtils;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author ajith
@@ -54,10 +63,37 @@ public class CollegeInitialViewController extends AbstractAction {
 		} else if (collegeInitialView.CLEAR.equalsIgnoreCase(actionCommand)) {
 			clearCollegenitialView();
 		} else if (collegeInitialView.PRINT.equalsIgnoreCase(actionCommand)) {
+			performPrintAction();
 			
 		}
 	}
 	
+	private void performPrintAction() {
+		
+		String FILE = Util.getReportHome()+"\\"+collegeInitialView.getCollegeId()+"_"+collegeInitialView.getCollegeName()+".pdf";
+		StudentRegisterDocument document = new StudentRegisterDocument();
+		document.setCollegeName(collegeInitialView.getCollegeName());
+		document.setCollegeId(collegeInitialView.getCollegeId());
+		document.setNumberOfParticipants(Integer.valueOf(collegeInitialView.getNoOfParticipants()));
+		document.setPhoneNumber(collegeInitialView.getCollegePhone());
+		document.setStudentDetails(tableModel.getStudentRegisterNumbers());
+		StudentRegistrationReport report = new StudentRegistrationReport(FILE, document);
+		try {
+			report.createReport();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		
+	}
+
+
+
 	private void insertActionPerformed() {
 		CollegeDetails collegeDetails = new CollegeDetails();
 		collegeDetails.setCollegeId(collegeInitialView.getCollegeId());

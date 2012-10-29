@@ -31,8 +31,8 @@ public class SearchTableModel extends AbstractTableModel{
 		searchKey = new HashMap<Integer, String>();
 		selectedEvent = new  ArrayList<String>();
 		try {
-			columnLength = eventsTransaction.loadAll().size();
-		} catch (IfaceException e) {
+			columnLength = 5;
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

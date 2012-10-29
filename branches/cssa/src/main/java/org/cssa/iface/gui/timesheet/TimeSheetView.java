@@ -137,6 +137,7 @@ public class TimeSheetView {
 		tblTimeSheet = new JTable(tableModel);
 		tblTimeSheet.setRowHeight(20);
 		tblTimeSheet.setFillsViewportHeight(true);
+		tblTimeSheet.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblTimeSheet);
 		scrollPane.setMinimumSize(new Dimension(1170, 550));
 		scrollPane.setMaximumSize(new Dimension(1170, 550));

@@ -53,4 +53,14 @@ public class Util {
 		}
 		return soure;
 	}
+	public static String getReportHome() {
+		return System.getProperty("user.home")+"\\"+CSSAConstants.REPORT_HOME;
+	}
+	
+	public static String getCurrentTimeStamp() {
+	    SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm:ss");
+	    Date now = new Date();
+	    String strDate = sdfDate.format(now);
+	    return strDate;
+	}
 }

@@ -108,6 +108,7 @@ public class SearchResultView {
 		tblSearchResult = new JTable(tableModel);
 		tblSearchResult.setRowHeight(20);
 		tblSearchResult.setFillsViewportHeight(true);
+		tblSearchResult.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblSearchResult);
 		scrollPane.setMinimumSize(new Dimension(1170, 550));
 		scrollPane.setMaximumSize(new Dimension(1170, 550));

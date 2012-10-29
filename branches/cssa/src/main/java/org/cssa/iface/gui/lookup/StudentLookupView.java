@@ -9,7 +9,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.sound.midi.MidiChannel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -90,7 +89,7 @@ public class StudentLookupView {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = null;
 		
-		lblStudentId = new CLabel("Participant Id:");
+		lblStudentId = new CLabel("Student Id:");
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(10, 5, 5, 5);
@@ -105,7 +104,7 @@ public class StudentLookupView {
 		constraints.gridy = 0;
 		panel.add(txtStudentId, constraints);
 		
-		lblStudentName = new CLabel("Participant Name:");
+		lblStudentName = new CLabel("Student Name:");
 		constraints = new GridBagConstraints();
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.anchor = GridBagConstraints.EAST;
@@ -200,6 +199,7 @@ public class StudentLookupView {
 		tblStudentDetails = new JTable(tableModel);
 		tblStudentDetails.setFillsViewportHeight(true);
 		tblStudentDetails.setRowHeight(20);
+		tblStudentDetails.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
 		scrollPane.setMinimumSize(new Dimension(700, 400));
 		scrollPane.setMaximumSize(new Dimension(700, 400));

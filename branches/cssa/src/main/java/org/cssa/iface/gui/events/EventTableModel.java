@@ -55,6 +55,9 @@ public class EventTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
+		if(0 == columnIndex || 3 == columnIndex || 4 == columnIndex ) {
+			return Integer.class;
+		}
 		return String.class;
 	}
 

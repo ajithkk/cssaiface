@@ -7,11 +7,10 @@ package org.cssa.iface.bo;
  * @author Ajith
  * @since 12/12/2011
  */
-public class StudentDetails {
+public class StudentDetails extends CollegeDetails {
 	
 	
 	private int sno;
-	private String collegeId;
 	private String studentId;
 	private String studentName;
 	private String studentGender;
@@ -46,18 +45,6 @@ public class StudentDetails {
 		this.sno = sno;
 	}
 	
-	/**
-	 * @return the collegeId
-	 */
-	public String getCollegeId() {
-		return collegeId;
-	}
-	/**
-	 * @param collegeId the collegeId to set
-	 */
-	public void setCollegeId(String collegeId) {
-		this.collegeId = collegeId;
-	}
 	/**
 	 * @return the studentId
 	 */

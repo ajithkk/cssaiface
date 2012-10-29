@@ -14,6 +14,7 @@ import org.cssa.iface.dao.dbengine.DBEngineImpl;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.infrastructure.CSSAQuery;
+import org.cssa.iface.services.QueryServices;
 import org.cssa.iface.util.Util;
 
 /**
@@ -87,11 +88,43 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 				StudentDetails student = new StudentDetails();
 				student.setSno(res.getInt(CSSAConstants.STUDENTS_DETAILS_SNO));
 				student .setCollegeId(res.getString(CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID));
+				student.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
 				student.setStudentId(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_ID));
 				student.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
 				student.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
 				student.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
 				student.setStudentPoint(res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT));
+				student.setAccommodation(res.getBoolean(CSSAConstants.STUDENT_DETAILS_ACCOMMODATION));
+				student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+				studentDetails.add(student);
+			}
+			dbEngineImpl.closeResultSet(res);
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbEngineImpl.closeResultSet(res);
+		}
+		return studentDetails;
+	}
+
+	public List<StudentDetails> loadAll(StudentDetails studentDetail) throws IfaceException {
+		List<StudentDetails> studentDetails = new ArrayList<StudentDetails>();
+		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
+		res = null;
+		try {
+			String query = QueryServices.getStudentDetailsSearchQuery(studentDetail);
+			res =  dbEngineImpl.executeQuery(query);
+			while ( res.next()) {
+				StudentDetails student = new StudentDetails();
+				student.setSno(res.getInt(CSSAConstants.STUDENTS_DETAILS_SNO));
+				student .setCollegeId(res.getString(CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID));
+				student.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
+				student.setStudentId(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_ID));
+				student.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+				student.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
+				student.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
+				student.setStudentPoint(res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT));
+				student.setAccommodation(res.getBoolean(CSSAConstants.STUDENT_DETAILS_ACCOMMODATION));
 				student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
 				studentDetails.add(student);
 			}
@@ -114,8 +147,9 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			parameterMap.put(2, Util.getGender(object.getStudentGender()));
 			parameterMap.put(3, object.getStudentPhone());
 			parameterMap.put(4, object.getStudentPoint());
-			parameterMap.put(5, object.isStatus());
-			parameterMap.put(6, object.getStudentId());
+			parameterMap.put(5, object.isAccommodation());
+			parameterMap.put(6, object.isStatus());
+			parameterMap.put(7, object.getStudentId());
 			resultId = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.UPDATE_STUDENT_DETAILS);
 		}catch (Exception e) {
 			throw new IfaceException(e);
@@ -195,6 +229,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 				student.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
 				student.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
 				student.setStudentPoint(res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT));
+				student.setAccommodation(res.getBoolean(CSSAConstants.STUDENT_DETAILS_ACCOMMODATION));
 				student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
 				studentDetails.add(student);
 			}

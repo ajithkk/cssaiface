@@ -204,6 +204,7 @@ public class CollegeInitialView {
 		JPanel panel = new JPanel();
 		tblStudentDetails = new JTable(tableModel);
 		tblStudentDetails.setFillsViewportHeight(true);
+		tblStudentDetails.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
 		scrollPane.setMinimumSize(new Dimension(600, 200));
 		scrollPane.setMaximumSize(new Dimension(600, 200));

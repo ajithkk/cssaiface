@@ -11,12 +11,27 @@ import java.util.Date;
  */
 public class TimeSheet {
 	
+	private int sno;
 	private Date date;
 	private String startTime;
 	private String endTime;
 	private String eventId;
 	private String eventStage;
 	private String venue;
+	
+	
+	/**
+	 * @return the sno
+	 */
+	public int getSno() {
+		return sno;
+	}
+	/**
+	 * @param sno the sno to set
+	 */
+	public void setSno(int sno) {
+		this.sno = sno;
+	}
 	/**
 	 * @return the date
 	 */

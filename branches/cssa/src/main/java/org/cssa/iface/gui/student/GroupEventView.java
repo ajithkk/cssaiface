@@ -317,6 +317,7 @@ public class GroupEventView {
 		JPanel panel = new JPanel();
 		tblEventDetails = new JTable(tableModel);
 		tblEventDetails.setRowHeight(20);
+		tblEventDetails.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblEventDetails);
 		scrollPane.setMinimumSize(new Dimension(600, 200));
 		scrollPane.setMaximumSize(new Dimension(600, 200));

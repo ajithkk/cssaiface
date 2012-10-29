@@ -9,12 +9,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.StudentLookupFormValidator;
 import org.cssa.iface.gui.student.StudentAndGroupEventController;
-import org.cssa.iface.services.LookupService;
+import org.cssa.iface.services.CollegeLookupService;
 import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.StudentTransaction;
 
@@ -22,7 +23,7 @@ import org.cssa.iface.transaction.StudentTransaction;
  * @author ajith
  *
  */
-public class StudentLookupController implements ActionListener, MouseListener {
+public class StudentLookupController implements ActionListener, MouseListener, CollegeLookupService<CollegeDetails>{
 	
 	private CssaMDIForm mdiForm;
 	private StudentLookupTableModel tableModel;
@@ -62,6 +63,9 @@ public class StudentLookupController implements ActionListener, MouseListener {
 			
 		} else if (StudentLookupView.CLEAR.equals(actionCommand)) {
 			clearActionPerformed();
+		} else if(StudentLookupView.SEARCH_COLLEGE_ID.equals(actionCommand)) {
+			CollegeLookupController collegeLookup = new CollegeLookupController(mdiForm, this);
+			collegeLookup.askCollegeLookupView();
 		}
 		
 	}
@@ -77,7 +81,7 @@ public class StudentLookupController implements ActionListener, MouseListener {
 
 
 	private void searchActionPerformed() {
-		validator.setLookupView(lookupView);
+		/*validator.setLookupView(lookupView);
 		if(validator.allFieldsEmpty()) {
 			try {
 				studentDetails = transaction.loadAll();
@@ -87,7 +91,20 @@ public class StudentLookupController implements ActionListener, MouseListener {
 				e.printStackTrace();
 			}
 			
-		}
+		} else {*/
+			StudentDetails student = new StudentDetails();
+			student.setCollegeId(lookupView.getCollegeId());
+			student.setStudentId(lookupView.getStudentId());
+			student.setStudentName(lookupView.getStudentName());
+			try {
+				studentDetails = transaction.loadAll(student);
+				tableModel.setStudents(studentDetails);
+			} catch (IfaceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		/*}*/
 		
 	}
 	
@@ -145,6 +162,14 @@ public class StudentLookupController implements ActionListener, MouseListener {
 
 	public void setStudent(StudentDetails student) {
 		this.student = student;
+	}
+
+	@Override
+	public void setSelectedCollege(CollegeDetails e) {
+		if(null != e) {
+			lookupView.setCollegeId(e.getCollegeId());
+		}
+		
 	}
 	
 	

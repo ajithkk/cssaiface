@@ -205,6 +205,7 @@ public class ParticipantLookupView {
 		tblParticipants.addMouseListener(controller);
 		tblParticipants.setRowHeight(20);
 		tblParticipants.setFillsViewportHeight(true);
+		tblParticipants.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblParticipants);
 		scrollPane.setMinimumSize(new Dimension(700, 400));
 		scrollPane.setMaximumSize(new Dimension(700, 400));

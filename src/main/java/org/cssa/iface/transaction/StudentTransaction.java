@@ -74,7 +74,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			dbEngineImpl.closeResultSet(res);
 		}
 
-		return null;
+		return student;
 	}
 
 	@Override
@@ -159,16 +159,18 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 
 	@Override
 	public int delete(StudentDetails object) throws IfaceException {
-		int resultId = CSSAConstants.FAIL;
+		int[] resultId = new int[3];
 		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
 		try {
 			Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
 			parameterMap.put(1, object.getStudentId());
-			resultId = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.DELETE_STUDENT_DETAILS);
+			resultId[0] = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.DELETE_STUDENT_DETAILS);
+			resultId[1] = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.DELETE_STUDENT_DETAIL_FROM_EVENT);
+			resultId[2] = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.DELETE_STUDENT_EVENT_DETAILS_FROM_RESULT);
 		}catch (Exception e) {
 			throw new IfaceException(e);
 		}
-		return resultId;
+		return resultId[0];
 	}
 	
 	public int deleteAll(StudentDetails object) throws IfaceException {
@@ -240,6 +242,31 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			dbEngineImpl.closeResultSet(res);
 		}
 		return studentDetails;	
+	}
+	
+	public StudentDetails addNewStudent(List<StudentDetails> list) throws IfaceException {
+		int count = list.size();
+		String collegeId = list.get(0).getCollegeId();
+		String studentId = collegeId+(count+1);
+		Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+		Map<Integer, Object> parameterMap2 = new HashMap<Integer, Object>();
+		DBEngineImpl dbEngineImpl = DBEngineImpl.getInstance();
+		
+		parameterMap.put(1, count+1);
+		parameterMap.put(2, collegeId);
+		dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.UPDATE_COLLEGE_NO_OF_STUDENTS);
+		
+		parameterMap2.put(1, collegeId);
+		parameterMap2.put(2, studentId);
+		dbEngineImpl.executeUpdate(parameterMap2, CSSAQuery.INSERT_STUDENT_DETAILS);
+		
+		
+		StudentDetails studentDetails = new StudentDetails();
+		studentDetails.setCollegeId(collegeId);
+		studentDetails.setStudentId(studentId);
+		
+		return load(studentDetails);
+		
 	}
 
 }

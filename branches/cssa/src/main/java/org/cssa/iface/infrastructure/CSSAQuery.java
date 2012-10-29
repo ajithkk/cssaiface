@@ -109,6 +109,12 @@ public class CSSAQuery {
 			 +" WHERE "
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"= ?";
 	
+	public static final String UPDATE_COLLEGE_NO_OF_STUDENTS = "UPDATE "+CSSAConstants.COLLEGE_DETAILS_TABLE +" SET "
+			+CSSAConstants.COLLEGE_DETAILS_NO_OF_PARTICIPANTS +"= ? "
+			 +" WHERE "
+			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"= ?";
+	
+	
 	
 	
 	
@@ -234,6 +240,9 @@ public class CSSAQuery {
 			+" WHERE " +CSSAConstants.EVENT_DETAILS_COLLEGE_ID +" = ? AND "
 			+CSSAConstants.EVENT_DETAILS_EVENT_ID +" = ?";
 	
+	public static final String DELETE_STUDENT_DETAIL_FROM_EVENT = "DELETE FROM "+ CSSAConstants.EVENT_DETAILS_TABLE 
+			+" WHERE "+CSSAConstants.EVENT_DETAILS_STUDENT_ID +"= ? ";
+	
 	
 	public static final String SELECT_ALL_PARTICIPANTS_DETAILS = "";
 	
@@ -304,6 +313,10 @@ public class CSSAQuery {
 			CSSAConstants.RESULTS_RESULT_STATUS +" = ?"+
 			CSSAConstants.RESULTS_MARK + "= ? WHERE "+ CSSAConstants.RESULTS_STUDENT_ID +" = ? AND "
 			+CSSAConstants.RESULTS_COLLEGE_ID +" = ?  AND "+ CSSAConstants.RESULTS_EVENT_ID +" = ? "; 
+	
+	
+	public static final String DELETE_STUDENT_EVENT_DETAILS_FROM_RESULT = "DELETE FROM "+ CSSAConstants.RESULTS_TABLE 
+			+" WHERE "+CSSAConstants.RESULTS_STUDENT_ID +"= ? ";
 	
 	public static final String SELECT_GROUP_STUDENT = " SELECT "
 			+CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID +" , "

@@ -12,6 +12,7 @@ public class CSSAConstants {
 	public static final String CONFIG_XML_FILE = "cssa_interface.xml";
 	public static final String CONFIG_PROPERTIES_FILE = "CSSA_IFACE.properties";
 	public static final String DATE_FORMAT = "MM/dd/yyyy";
+	public static final String REPORT_HOME = "report";
 	
 	public static final String APP_NAME = "Interface Registration software";
 	public static final String APP_VERSION = "2.0";

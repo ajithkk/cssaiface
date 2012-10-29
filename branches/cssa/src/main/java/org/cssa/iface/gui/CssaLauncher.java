@@ -6,7 +6,9 @@ package org.cssa.iface.gui;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Properties;
 
@@ -87,9 +89,8 @@ public class CssaLauncher {
 	    cssaLogger.info("Application Name: " + CSSAConstants.APP_NAME + "/" + CSSAConstants.APP_VERSION);
 	    cssaLogger.info("User Home Directory: " + System.getProperty("user.home"));
 	    cssaLogger.info("User Working Directory: " + System.getProperty("user.dir"));
-	    cssaLogger.info("Test INFO logging.");
-	    cssaLogger.info("Test FINE logging.");
-	    cssaLogger.info("Test FINEST logging.");
+	    cssaLogger.info("Creating report home: "+ Util.getReportHome());
+	    new File(Util.getReportHome()).mkdir();
 	}
 	
 	/**

@@ -69,7 +69,13 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 	}
 	
 	private void performAddAction() {
-		// TODO Auto-generated method stub
+		try {
+			StudentDetails student = transaction.addNewStudent(tableModel.getStudentDetails());
+			tableModel.addRow(student);
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -107,7 +113,14 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 	}
 
 	private void performDeleteAction() {
-		// TODO Auto-generated method stub
+	
+		int selectedRow = studentDetailsView.getStudentTable().getSelectedRow();
+		try {
+			transaction.delete(tableModel.getStudentDetails().get(selectedRow));
+		} catch (IfaceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

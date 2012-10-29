@@ -18,7 +18,12 @@ import org.cssa.iface.bo.StudentDetails;
 public class StudentDetailsEventTableModel  extends AbstractTableModel {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<StudentDetails> studentDetails;
+	
 	
 	/**
 	 * @return the studentDetails
@@ -87,7 +92,7 @@ public class StudentDetailsEventTableModel  extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		StudentDetails details = studentDetails.get(rowIndex);
 		switch(columnIndex) {
-		case 0: return details.getSno();
+		case 0: return rowIndex+1;
 		case 1: return details.getCollegeId();
 		case 2: return details.getCollegeName();
 		case 3: return details.getStudentId();
@@ -99,5 +104,7 @@ public class StudentDetailsEventTableModel  extends AbstractTableModel {
 		default: return "";
 		}
 	}
+	
+	
 
 }

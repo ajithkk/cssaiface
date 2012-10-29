@@ -26,11 +26,13 @@ public class TimeSheetView {
 	public static final String SAVE = "Save";
 	public static final String CANCEL = "Cancel";
 	public static final String ADD = "Add";
+	public static final String DELETE = "Delete";
 	
 	private CButton btnPrint;
 	private CButton btnSave;
 	private CButton btnCancel;
 	private CButton btnAdd;
+	private CButton btnDelete;
 	private JTable tblTimeSheet;
 	
 	private CssaMDIForm mdiForm;
@@ -71,7 +73,7 @@ public class TimeSheetView {
 		constraints = new GridBagConstraints();
 		btnAdd = new CButton("Add");
 		btnAdd.setActionCommand(ADD);
-		
+		btnAdd.setMnemonic('A');
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.gridx = 2;
@@ -81,7 +83,7 @@ public class TimeSheetView {
 
 		constraints = new GridBagConstraints();
 		btnSave = new CButton("Save");
-		btnSave.setMnemonic('L');
+		btnSave.setMnemonic('S');
 		btnSave.setActionCommand(SAVE);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 5, 5, 5);
@@ -89,15 +91,26 @@ public class TimeSheetView {
 		constraints.gridy = 1;
 		panel.add(btnSave, constraints);
 		btnSave.addActionListener(controller);
-
+		
 		constraints = new GridBagConstraints();
-		btnPrint = new CButton("Print");
-		btnPrint.setMnemonic('S');
-		btnPrint.setActionCommand(PRINT);
+		btnDelete = new CButton("Delete");
+		btnDelete.setMnemonic('X');
+		btnDelete.setActionCommand(DELETE);
 		
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.gridx = 2;
 		constraints.gridy = 2;
+		panel.add(btnDelete, constraints);
+		btnDelete.addActionListener(controller);
+
+		constraints = new GridBagConstraints();
+		btnPrint = new CButton("Print");
+		btnPrint.setMnemonic('P');
+		btnPrint.setActionCommand(PRINT);
+		
+		constraints.insets = new Insets(5, 5, 5, 5);
+		constraints.gridx = 2;
+		constraints.gridy = 3;
 		panel.add(btnPrint, constraints);
 		btnPrint.addActionListener(controller);
 		
@@ -108,7 +121,7 @@ public class TimeSheetView {
 		btnCancel.setActionCommand(CANCEL);
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.gridx = 2;
-		constraints.gridy = 3;
+		constraints.gridy = 4;
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(controller);
 		

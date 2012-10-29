@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.bo.InsertResult;
-import org.cssa.iface.bo.Results;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
@@ -48,7 +47,7 @@ public class QueryServices {
 		if( null != collegeDetails.getCollegeId()) {
 			if(!collegeDetails.getCollegeId().isEmpty()) {
 				if(addStringFlag) {
-					collegeSearchQuery.append("AND ");
+					collegeSearchQuery.append(" AND ");
 				}
 				String condition = collegeDetails.getCollegeId().replace('*', '%');
 				collegeSearchQuery.append(CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +" LIKE '");
@@ -59,9 +58,50 @@ public class QueryServices {
 		
 	}
 	
+	/**
+	 * 
+	 * @param studentDetails
+	 * @return
+	 * @throws IfaceException
+	 */
 	public static String getStudentDetailsSearchQuery(StudentDetails studentDetails) throws IfaceException {
 		StringBuilder studentSearchQuery = new StringBuilder();
-		
+		studentSearchQuery.append( "SELECT "+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_SNO +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENT_DETAILS_ACCOMMODATION +", "
+				+CSSAConstants.COLLEGE_DETAILS_TABLE+"."+CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME+", "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT +" FROM "+CSSAConstants.STUDENTS_DETAILS_TABLE+", " +CSSAConstants.COLLEGE_DETAILS_TABLE
+				+" WHERE "+CSSAConstants.COLLEGE_DETAILS_TABLE+"."+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"= "+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID);
+			if(null != studentDetails.getStudentId()) {
+				if(!studentDetails.getStudentId().isEmpty()) {
+					studentSearchQuery.append(" AND ");
+					String condition = studentDetails.getStudentId().replace('*', '%');
+					studentSearchQuery.append(CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" LIKE");
+					studentSearchQuery.append("'"+ condition +"'");
+				}
+			}
+			
+			if(null != studentDetails.getStudentName()) {
+				if(!studentDetails.getStudentName().isEmpty()) {
+					studentSearchQuery.append(" AND ");
+					String condition = studentDetails.getStudentName().replace('*', '%');
+					studentSearchQuery.append(CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" LIKE ");
+					studentSearchQuery.append("'"+ condition +"'");
+				}
+			}
+			if(null != studentDetails.getCollegeId()) {
+				if(!studentDetails.getCollegeId().isEmpty()) {
+					studentSearchQuery.append(" AND ");
+					String condition = studentDetails.getCollegeId().replace('*', '%');
+					studentSearchQuery.append(CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID + " LIKE ");
+					studentSearchQuery.append("'"+ condition +"'");
+				}
+			}
 		return studentSearchQuery.toString();
 	}
 	
@@ -109,7 +149,7 @@ public class QueryServices {
 	}
 	
 	
-public static String getParticipationGroupSearch(InsertResult insertResult) throws IfaceException { 
+	public static String getParticipationGroupSearch(InsertResult insertResult) throws IfaceException { 
 		
 	    boolean andFlag = false;
 		StringBuilder participationSearch = new StringBuilder();

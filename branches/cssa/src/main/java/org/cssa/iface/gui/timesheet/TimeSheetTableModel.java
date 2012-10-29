@@ -15,6 +15,10 @@ import org.cssa.iface.bo.TimeSheet;
  */
 public class TimeSheetTableModel  extends AbstractTableModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	List<TimeSheet> timeSheets;
 
 	/**
@@ -39,8 +43,17 @@ public class TimeSheetTableModel  extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+		TimeSheet timeSheet = timeSheets.get(rowIndex);
+		switch (columnIndex) {
+			case 0: return timeSheet.getSno();
+			case 1: return timeSheet.getDate();
+			case 2: return timeSheet.getEventId();
+			case 3: return timeSheet.getStartTime();
+			case 4: return timeSheet.getEndTime();
+			case 5: return timeSheet.getEventStage();
+			case 6: return timeSheet.getVenue();
+			default: return "";
+		}
 	}
 	
 	@Override
@@ -63,7 +76,25 @@ public class TimeSheetTableModel  extends AbstractTableModel{
 
 	@Override
 	public void setValueAt(Object value, int row, int col) {
-		
+		switch (col) {
+		case 2: 
+			timeSheets.get(row).setEventId(value.toString());
+			break;
+		case 3:
+			timeSheets.get(row).setStartTime(value.toString());
+			break;
+		case 4: 
+			timeSheets.get(row).setEndTime(value.toString());
+			break;
+		case 5: 
+			timeSheets.get(row).setEventStage(value.toString());
+			break;
+		case 6:
+			timeSheets.get(row).setVenue(value.toString());
+			break;
+		default:
+			break;
+		}
         fireTableCellUpdated(row, col);
     }
 	
@@ -86,8 +117,5 @@ public class TimeSheetTableModel  extends AbstractTableModel{
 		timeSheets.add(timeSheet);
 		fireTableDataChanged();
 	}
-	
-	
-
 	
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.cssa.iface.bo.EventDetails;
 import org.cssa.iface.bo.Events;
 import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.InsertResultsTableBo;

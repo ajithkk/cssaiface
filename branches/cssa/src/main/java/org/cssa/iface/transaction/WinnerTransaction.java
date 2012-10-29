@@ -86,10 +86,10 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 			studentList.add(studentPoint);
 		}
 		
-		dbEngineImpl.executeBatch(studentList, CSSAQuery.INSERT_STTUDENT_POINTS);
+		 result = dbEngineImpl.executeBatch(studentList, CSSAQuery.INSERT_STTUDENT_POINTS);
 		
 		
-		return null;
+		return result;
 		
 	}
 

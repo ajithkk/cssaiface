@@ -18,6 +18,10 @@ import org.cssa.iface.bo.StudentDetails;
  */
 public class CollegeInitialTableModel extends AbstractTableModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<StudentDetails> studentRegisterNumbers;
 	
 	public CollegeInitialTableModel() {

@@ -240,6 +240,7 @@ public class EventsView {
 		panel.setLayout(new BorderLayout());
 		
 		eventTable = new JTable(tableModel);
+		eventTable.setAutoCreateRowSorter(true);
 		eventTable.setRowHeight(20);
 		JScrollPane scrollPane = new JScrollPane(eventTable);
 		scrollPane.setMinimumSize(new Dimension(600, 400));

@@ -4,21 +4,14 @@
 package org.cssa.iface.gui.lookup;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
 
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
@@ -165,6 +158,7 @@ public class CollegeLookupView {
 		tblCollegeDetails = new JTable(tableModel);
 		tblCollegeDetails.setRowHeight(20);
 		tblCollegeDetails.setFillsViewportHeight(true);
+		tblCollegeDetails.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
 		scrollPane.setMinimumSize(new Dimension(700, 400));
 		scrollPane.setMaximumSize(new Dimension(700, 400));

@@ -1,5 +1,9 @@
 package org.cssa.iface.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.cssa.iface.infrastructure.CSSAConstants;
 
@@ -36,5 +40,17 @@ public class Util {
 			gen =  CSSAConstants.FEMALE;
 		}
 		return gen;
+	}
+	
+	public static Date convertDate(String date) {
+		Date soure = null;
+		SimpleDateFormat dateFormat = new SimpleDateFormat(CSSAConstants.DATE_FORMAT);
+		try {
+			 soure = dateFormat.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return soure;
 	}
 }

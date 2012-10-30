@@ -2,12 +2,18 @@ package org.cssa.iface.gui.events;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.util.List;
 
 
 import org.cssa.iface.bo.Events;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.report.event.EventReport;
 import org.cssa.iface.transaction.EventsTransaction;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * 
@@ -60,7 +66,7 @@ public class EventsController implements ActionListener  {
 			}
 		}
 		if(EventsView.DELETE.equals(command)) {
-			eventsView.setEventCode("Delete Clicked");
+			performDeleteAction();
 		}
 		
 		if(EventsView.EDIT.equals(command)) {
@@ -68,11 +74,43 @@ public class EventsController implements ActionListener  {
 			performEditAction();
 		}
 		if(EventsView.PRINT.equals(command)) {
-			eventsView.setEventCode("Print Clicked");
+			performPrintAction();
 		}
 		
 	}
 	
+	private void performPrintAction() {
+		String FILE = Util.getReportHome()+"\\EventREport.pdf";
+		List<Events> events = eventTableModel.getEventList();
+		if(null != events) {
+			EventReport report = new EventReport(FILE, events);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	private void performDeleteAction() {
+		int rowSelected = eventsView.getEventTable().getSelectedRow();
+		Events events = eventTableModel.getEventList().get(rowSelected);
+		if(null != events) {
+			try {
+				eventsTransaction.delete(events);
+				eventTableModel.setEventList(eventsTransaction.loadAll());
+			} catch (IfaceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
 	private void performEdit() {
 		Events events = new Events();
 		events.setEventId(eventsView.getEventCode());

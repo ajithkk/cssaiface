@@ -17,6 +17,7 @@ import org.cssa.iface.bo.InsertResultsTableBo;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.services.LookupController;
 import org.cssa.iface.services.LookupService;
 import org.cssa.iface.services.StudentLookupService;
@@ -134,8 +135,7 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 			List<InsertResult> winnersList = transactioUtils.getWinnersParticipantsList(insertResult);
 			tableModel.setResultsTableBos(winnersList);
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 
@@ -171,7 +171,7 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 				lookupView.getCmbEventCode().addItem(event.getEventId());
 			}
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 	

@@ -15,6 +15,7 @@ import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.transaction.StudentTransaction;
 
 /**
@@ -73,8 +74,7 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 			StudentDetails student = transaction.addNewStudent(tableModel.getStudentDetails());
 			tableModel.addRow(student);
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 		
 	}
@@ -93,13 +93,13 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 		details.setAccommodation(studentDetailsView.getCkAccommodation().isSelected());
 		details.setStatus(studentDetailsView.getStatus().isSelected());
 		if(null != studentDetailsView.getCbGender().getSelectedItem()) {
-		details.setStudentGender(studentDetailsView.getCbGender().getSelectedItem().toString());
+			details.setStudentGender(studentDetailsView.getCbGender().getSelectedItem().toString());
 		}
 		try {
 			transaction.update(details);
 			tableModel.setStudentDetails(transaction.loadAll(details.getCollegeId()));
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 
@@ -118,8 +118,7 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 		try {
 			transaction.delete(tableModel.getStudentDetails().get(selectedRow));
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 		
 	}

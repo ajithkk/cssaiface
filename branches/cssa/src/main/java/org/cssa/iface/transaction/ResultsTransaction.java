@@ -68,7 +68,7 @@ public class ResultsTransaction implements Transaction<Results> {
 		try{
 			int[] result = dbEngineImpl.executeBatch(parameterList, CSSAQuery.INSERT_RESULT);
 		}catch (Exception e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		}
 		
 		return 0;

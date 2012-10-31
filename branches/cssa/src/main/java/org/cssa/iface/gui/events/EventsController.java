@@ -1,14 +1,20 @@
 package org.cssa.iface.gui.events;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+
 
 import org.cssa.iface.bo.Events;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.formvalidator.ValidateUtil;
+import org.cssa.iface.gui.util.ErrorDialog;
+import org.cssa.iface.gui.util.MessageUtil;
 import org.cssa.iface.report.event.EventReport;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.util.Util;
@@ -41,8 +47,8 @@ public class EventsController implements ActionListener  {
 		try {
 			eventTableModel = new EventTableModel(eventsTransaction.loadAll());
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
+			//e.printStackTrace();
 		}
 		
 	}
@@ -62,7 +68,7 @@ public class EventsController implements ActionListener  {
 				performEdit();
 			}else {
 				performEventSaveAction();
-				clearEventView();
+				//clearEventView();
 			}
 		}
 		if(EventsView.DELETE.equals(command)) {
@@ -72,6 +78,7 @@ public class EventsController implements ActionListener  {
 		if(EventsView.EDIT.equals(command)) {
 			editFlag = true;
 			performEditAction();
+			
 		}
 		if(EventsView.PRINT.equals(command)) {
 			performPrintAction();
@@ -80,18 +87,16 @@ public class EventsController implements ActionListener  {
 	}
 	
 	private void performPrintAction() {
-		String FILE = Util.getReportHome()+"\\EventREport.pdf";
+		String FILE = Util.getReportHome()+"\\EventReport.pdf";
 		List<Events> events = eventTableModel.getEventList();
 		if(null != events) {
 			EventReport report = new EventReport(FILE, events);
 			try {
 				report.createReport();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			}
 		}
 		
@@ -104,42 +109,44 @@ public class EventsController implements ActionListener  {
 				eventsTransaction.delete(events);
 				eventTableModel.setEventList(eventsTransaction.loadAll());
 			} catch (IfaceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			}
 		}
 		
 		
 	}
 	private void performEdit() {
-		Events events = new Events();
-		events.setEventId(eventsView.getEventCode());
-		events.setEventName(eventsView.getEventName());
-		events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
-		events.setPoints(Integer.valueOf(eventsView.getPoints()));
-		try {
-			//eventTableModel.addRow(events);
-			eventsTransaction.update(events);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(validateForm()) {
+			Events events = new Events();
+			events.setEventId(eventsView.getEventCode());
+			events.setEventName(eventsView.getEventName());
+			events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
+			events.setPoints(Integer.valueOf(eventsView.getPoints()));
+			try {
+				//eventTableModel.addRow(events);
+				eventsTransaction.update(events);
+				eventTableModel.setEventList(eventsTransaction.loadAll());
+				clearEventView();
+			} catch (Exception e) {
+				new ErrorDialog(e).setVisible(true);
+			}
 		}
 		
 	}
 	private void performEventSaveAction() {
-		Events events = new Events();
-		events.setEventId(eventsView.getEventCode());
-		events.setEventName(eventsView.getEventName());
-		events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
-		events.setPoints(Integer.valueOf(eventsView.getPoints()));
-		try {
-			eventTableModel.addRow(events);
-			eventsTransaction.save(events);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(validateForm()) {
+			Events events = new Events();
+			events.setEventId(eventsView.getEventCode());
+			events.setEventName(eventsView.getEventName());
+			events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
+			events.setPoints(Integer.valueOf(eventsView.getPoints()));
+			try {
+				eventTableModel.addRow(events);
+				eventsTransaction.save(events);
+				clearEventView();
+			} catch (Exception e) {
+				new ErrorDialog(e).setVisible(true);
+			}
 		}
 		
 	}
@@ -151,6 +158,7 @@ public class EventsController implements ActionListener  {
 		eventsView.setEventName("");
 		eventsView.setMaxParticipants("");
 		eventsView.setPoints("");
+		eventsView.getTxtEventcode().setEditable(true);
 		
 	}
 
@@ -167,5 +175,28 @@ public class EventsController implements ActionListener  {
 		eventsView.setEventName(events.getEventName());
 		eventsView.setMaxParticipants(String.valueOf(events.getMaxNoOfParticipants()));
 		eventsView.setPoints(String.valueOf(events.getPoints()));
+		eventsView.getTxtEventcode().setEditable(false);
+	}
+	
+	private boolean validateForm() {
+		boolean success = false;
+		if(ValidateUtil.isNumber(eventsView.getMaxParticipants())) {
+			eventsView.getTxtMaxParticipants().setBorder(BorderFactory.createLineBorder(Color.gray));
+			success = true;
+		} else {
+			eventsView.getTxtMaxParticipants().setBorder(BorderFactory.createLineBorder(Color.red));
+			new MessageUtil(mdiForm).showErrorMessage("Invalid Number", eventsView.getMaxParticipants()+ "Is not a number.This fiels only contain Integers");
+			return false; 
+		}
+		
+		if(ValidateUtil.isNumber(eventsView.getPoints())) {
+			eventsView.getTxtPoints().setBorder(BorderFactory.createLineBorder(Color.gray));
+			success = true;
+		}else {
+			eventsView.getTxtPoints().setBorder(BorderFactory.createLineBorder(Color.red));
+			new MessageUtil(mdiForm).showErrorMessage("Invalid Number", eventsView.getPoints()+ "Is not a number.This fiels only contain Integers");
+			return false;
+		}
+		return success;
 	}
 }

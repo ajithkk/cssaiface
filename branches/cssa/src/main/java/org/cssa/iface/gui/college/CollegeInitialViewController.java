@@ -3,6 +3,7 @@
  */
 package org.cssa.iface.gui.college;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,11 +12,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.formvalidator.ValidateUtil;
+import org.cssa.iface.gui.util.MessageUtil;
 import org.cssa.iface.report.ReportLauncher;
 import org.cssa.iface.report.bo.StudentRegisterDocument;
 import org.cssa.iface.report.student.StudentRegistrationReport;
@@ -69,25 +75,25 @@ public class CollegeInitialViewController extends AbstractAction {
 	}
 	
 	private void performPrintAction() {
-		
-		String FILE = Util.getReportHome()+"\\"+collegeInitialView.getCollegeId()+"_"+collegeInitialView.getCollegeName()+".pdf";
-		StudentRegisterDocument document = new StudentRegisterDocument();
-		document.setCollegeName(collegeInitialView.getCollegeName());
-		document.setCollegeId(collegeInitialView.getCollegeId());
-		document.setNumberOfParticipants(Integer.valueOf(collegeInitialView.getNoOfParticipants()));
-		document.setPhoneNumber(collegeInitialView.getCollegePhone());
-		document.setStudentDetails(tableModel.getStudentRegisterNumbers());
-		StudentRegistrationReport report = new StudentRegistrationReport(FILE, document);
-		try {
-			report.createReport();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(null != tableModel.getStudentRegisterNumbers()) {
+			String FILE = Util.getReportHome()+"\\"+collegeInitialView.getCollegeId()+"_"+collegeInitialView.getCollegeName()+".pdf";
+			StudentRegisterDocument document = new StudentRegisterDocument();
+			document.setCollegeName(collegeInitialView.getCollegeName());
+			document.setCollegeId(collegeInitialView.getCollegeId());
+			document.setNumberOfParticipants(Integer.valueOf(collegeInitialView.getNoOfParticipants()));
+			document.setPhoneNumber(collegeInitialView.getCollegePhone());
+			document.setStudentDetails(tableModel.getStudentRegisterNumbers());
+			StudentRegistrationReport report = new StudentRegistrationReport(FILE, document);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
 	
 		
 	}
@@ -95,22 +101,27 @@ public class CollegeInitialViewController extends AbstractAction {
 
 
 	private void insertActionPerformed() {
-		CollegeDetails collegeDetails = new CollegeDetails();
-		collegeDetails.setCollegeId(collegeInitialView.getCollegeId());
-		collegeDetails.setNoOfParticipants(Integer.valueOf(collegeInitialView.getNoOfParticipants()));
-		collegeDetails.setCollegeName(collegeInitialView.getCollegeName());
-		collegeDetails.setCollegePhone(collegeInitialView.getCollegePhone());
-		collegeDetails.setCollegeAddress("");
-		collegeDetails.setCollegePoints(0);
-		collegeDetails.setStatus(true);
-		try {
-			transaction.save(collegeDetails);
-		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setStudentIdInTable(); 
 		
+		if(ValidateUtil.isNumber(collegeInitialView.getNoOfParticipants())) {
+			collegeInitialView.getTxtNoOfParticipants().setBorder(BorderFactory.createLineBorder(Color.gray));
+			CollegeDetails collegeDetails = new CollegeDetails();
+			collegeDetails.setCollegeId(collegeInitialView.getCollegeId());
+			collegeDetails.setNoOfParticipants(Integer.valueOf(collegeInitialView.getNoOfParticipants()));
+			collegeDetails.setCollegeName(collegeInitialView.getCollegeName());
+			collegeDetails.setCollegePhone(collegeInitialView.getCollegePhone());
+			collegeDetails.setCollegeAddress("");
+			collegeDetails.setCollegePoints(0);
+			collegeDetails.setStatus(true);
+			try {
+				transaction.save(collegeDetails);
+			} catch (IfaceException e) {
+				e.printStackTrace();
+			}
+			setStudentIdInTable(); 
+		} else {
+			new MessageUtil(mdiForm).showErrorMessage("Invalid Number", collegeInitialView.getNoOfParticipants()+"  Is not a number.This fiels only contain Integers");
+			collegeInitialView.getTxtNoOfParticipants().setBorder(BorderFactory.createLineBorder(Color.red));
+		}
 	}
 
 	private void setStudentIdInTable() {

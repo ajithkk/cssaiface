@@ -15,6 +15,7 @@ import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.StudentLookupFormValidator;
 import org.cssa.iface.gui.student.StudentAndGroupEventController;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.services.CollegeLookupService;
 import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.StudentTransaction;
@@ -110,8 +111,7 @@ public class StudentLookupController implements ActionListener, MouseListener, C
 				studentDetails = transaction.loadAll(student);
 				tableModel.setStudents(studentDetails);
 			} catch (IfaceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			}
 			
 		/*}*/
@@ -121,6 +121,11 @@ public class StudentLookupController implements ActionListener, MouseListener, C
 	public void askStudentLookupsereen() {
 		lookupView = new StudentLookupView(this, tableModel, mdiForm);
 		lookupView.showEventDetailLookup();
+		if(printEanable) {
+			lookupView.getBtnPrint().setVisible(true);
+		} else {
+			lookupView.getBtnPrint().setVisible(false);
+		}
 	}
 
 

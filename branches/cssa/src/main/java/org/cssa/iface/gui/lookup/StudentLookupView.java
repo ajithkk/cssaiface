@@ -46,7 +46,7 @@ public class StudentLookupView {
 	private CButton btnClear;
 	private CButton btnCancel;
 	private JButton btnCollegeLookUp;
-	private CButton print;
+	private CButton btnPrint;
 	
 	private JTable tblStudentDetails;
 	private JCheckBox chkAccomodation;
@@ -189,6 +189,16 @@ public class StudentLookupView {
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(studentLookupController);
 		
+		constraints = new GridBagConstraints();
+		btnPrint = new CButton("Print");
+		btnPrint.setMnemonic('P');
+		btnPrint.setActionCommand(PRINT);
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 5;
+		constraints.gridy = 0;
+		panel.add(btnPrint, constraints);
+		btnPrint.addActionListener(studentLookupController);
+		
 		return panel;
 	}
 	
@@ -323,6 +333,23 @@ public class StudentLookupView {
 	public void setTblStudentDetails(JTable tblStudentDetails) {
 		this.tblStudentDetails = tblStudentDetails;
 	}
+
+
+	/**
+	 * @return the btnPrint
+	 */
+	public CButton getBtnPrint() {
+		return btnPrint;
+	}
+
+
+	/**
+	 * @param btnPrint the btnPrint to set
+	 */
+	public void setBtnPrint(CButton btnPrint) {
+		this.btnPrint = btnPrint;
+	}
+	
 	
 	
 

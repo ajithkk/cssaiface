@@ -66,7 +66,7 @@ public class SearchResultView {
 		GridBagConstraints constraints = null;
 
 		constraints = new GridBagConstraints();
-		btnPrint = new CButton("Search");
+		btnPrint = new CButton("Print");
 		btnPrint.setMnemonic('S');
 		btnPrint.setActionCommand(PRINT);
 		constraints.anchor = GridBagConstraints.WEST;

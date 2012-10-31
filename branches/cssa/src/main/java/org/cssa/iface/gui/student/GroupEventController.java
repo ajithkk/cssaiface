@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import javax.help.plaf.basic.BasicFavoritesNavigatorUI.AddAction;
-import javax.swing.JList;
 import javax.swing.JPanel;
 
 import org.cssa.iface.bo.EventDetails;
@@ -19,6 +17,8 @@ import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.GroupEventViewValidator;
+import org.cssa.iface.gui.util.ErrorDialog;
+import org.cssa.iface.gui.util.MessageUtil;
 import org.cssa.iface.transaction.EventsDetailsTransaction;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.StudentTransaction;
@@ -37,7 +37,6 @@ public class GroupEventController implements ActionListener{
 	private GroupEventView groupEventView;
 	private CssaMDIForm mdiForm;
 	
-	private StudentTransaction studentTransaction;
 	private EventsTransaction eventsTransaction;
 	private EventsDetailsTransaction eventsDetailsTransaction;
 	private GroupEventViewValidator validator;
@@ -122,7 +121,7 @@ public class GroupEventController implements ActionListener{
 					addStudent.addElement(eDetails.getStudentId());
 				}
 			} catch (IfaceException e) {
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			}
 			validator.setAddedStudent(addStudent);
 			groupEventView.getLstAddedStudentList().setListData(addStudent);
@@ -160,7 +159,7 @@ public class GroupEventController implements ActionListener{
 				
 				
 			} catch (IfaceException e) {
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			}
 			
 		} else {
@@ -201,7 +200,7 @@ public class GroupEventController implements ActionListener{
 				validator.setAllStudent(allStudent);
 				validator.setAddedStudent(addStudent);
 			} catch (IfaceException e) {
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			}
 		}
 	}
@@ -237,12 +236,12 @@ public class GroupEventController implements ActionListener{
 					validator.setAllStudent(allStudent);
 					validator.setAddedStudent(addStudent);
 				} catch (IfaceException e) {
-					e.printStackTrace();
+					new ErrorDialog(e).setVisible(true);
 				}
 				
 				
 			} else {
-				
+				new MessageUtil(mdiForm).showErrorMessage("Group count exceeds", "Number of participant is exceeds this group. Please select another group");
 			}
 		}
 		
@@ -265,13 +264,12 @@ public class GroupEventController implements ActionListener{
 				groupEventView.getCmbEventNames().addItem(event.getEventId());
 			}
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 	
 	private boolean setGroup(int count) {
 		int maxCount = 0;
-		int aCount = 0;
 		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
 		int studentCount =  validator.getAddedStudent().size();
 		for(Events event : events) {

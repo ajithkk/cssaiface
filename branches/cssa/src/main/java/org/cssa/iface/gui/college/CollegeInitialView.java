@@ -388,4 +388,17 @@ public class CollegeInitialView {
 	public void setTblStudentDetails(JTable tblStudentDetails) {
 		this.tblStudentDetails = tblStudentDetails;
 	}
+	/**
+	 * @return the txtNoOfParticipants
+	 */
+	public CTextField getTxtNoOfParticipants() {
+		return txtNoOfParticipants;
+	}
+	/**
+	 * @param txtNoOfParticipants the txtNoOfParticipants to set
+	 */
+	public void setTxtNoOfParticipants(CTextField txtNoOfParticipants) {
+		this.txtNoOfParticipants = txtNoOfParticipants;
+	}
+	
 }

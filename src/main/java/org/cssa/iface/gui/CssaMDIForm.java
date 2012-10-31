@@ -232,5 +232,21 @@ public class CssaMDIForm extends JFrame {
 	public void setInternalFrames(Stack<JInternalFrame> internalFrames) {
 		this.internalFrames = internalFrames;
 	}
+
+	/**
+	 * @return the toolBarPanel
+	 */
+	public JPanel getToolBarPanel() {
+		return toolBarPanel;
+	}
+
+	/**
+	 * @param toolBarPanel the toolBarPanel to set
+	 */
+	public void setToolBarPanel(JPanel toolBarPanel) {
+		this.toolBarPanel = toolBarPanel;
+	}
+	
+	
 	
 }

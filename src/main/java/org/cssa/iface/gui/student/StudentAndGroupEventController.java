@@ -8,6 +8,7 @@ import javax.swing.JTabbedPane;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.transaction.StudentTransaction;
 import org.cssa.iface.transaction.Transaction;
 /**
@@ -70,7 +71,7 @@ public class StudentAndGroupEventController {
 		try {
 			details = transaction.loadAll(student.getCollegeId());
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 	

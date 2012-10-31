@@ -69,7 +69,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			} 
 			dbEngineImpl.closeResultSet(res);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -100,7 +100,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			}
 			dbEngineImpl.closeResultSet(res);
 		}catch (Exception e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -130,7 +130,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			}
 			dbEngineImpl.closeResultSet(res);
 		}catch (Exception e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -206,7 +206,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			}
 			dbEngineImpl.closeResultSet(res);
 		}catch (Exception e) {
-			// TODO: handle exception
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -237,7 +237,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 			}
 			dbEngineImpl.closeResultSet(res);
 		}catch (Exception e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}

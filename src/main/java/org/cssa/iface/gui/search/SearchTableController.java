@@ -23,6 +23,7 @@ import org.cssa.iface.bo.Events;
 import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.TransactioUtils;
 import org.cssa.iface.util.EventStorageXML;
@@ -99,8 +100,7 @@ public class SearchTableController implements ActionListener {
 		
 		
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 		
 		
@@ -141,7 +141,7 @@ public class SearchTableController implements ActionListener {
 			renderer.setToolTipText("Click for combo box");
 			tableColumn.setCellRenderer(renderer);
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 	
@@ -162,8 +162,7 @@ public class SearchTableController implements ActionListener {
 			renderer.setToolTipText("Click for combo box");
 			tableColumn.setCellRenderer(renderer);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 	public void setTableData() {

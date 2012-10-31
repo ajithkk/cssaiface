@@ -6,9 +6,11 @@ package org.cssa.iface.gui.college;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.transaction.CollegeTransaction;
 
 /**
@@ -65,9 +67,9 @@ public class CollegeDetailsController implements ActionListener{
 		String actionCommand = e.getActionCommand();
 		if(CollegeDetilsView.SAVE.equals(actionCommand)) {
 			performSaveAction();
-		} else if (collegeDetilsView.CANCEL.equals(actionCommand)) {
+		} else if (CollegeDetilsView.CANCEL.equals(actionCommand)) {
 			performCancelAction();
-		} else if (collegeDetilsView.CLEAR.equals(actionCommand)) {
+		} else if (CollegeDetilsView.CLEAR.equals(actionCommand)) {
 			performClearAction();
 			
 		}
@@ -98,7 +100,7 @@ public class CollegeDetailsController implements ActionListener{
 		try {
 			transaction.update(details);
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		

@@ -17,6 +17,7 @@ import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.lookup.CollegeLookupController;
 import org.cssa.iface.gui.lookup.StudentLookupController;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.services.CollegeLookupService;
 import org.cssa.iface.services.LookupController;
 import org.cssa.iface.services.StudentLookupService;
@@ -84,8 +85,7 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 		try {
 			resultsTransaction.save(tableModel.getResultList(), resultInsertView.getCmbEventStage().getSelectedItem().toString());
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 		
 	}
@@ -124,8 +124,7 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 			List<InsertResult> participantList = transactioUtils.getParticipantsList(inResult);
 			tableModel.setResultList(participantList);
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 		
 	}
@@ -155,7 +154,7 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 				resultInsertView.getCmbEventCode().addItem(event.getEventId());
 			}
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 	}
 	

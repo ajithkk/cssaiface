@@ -1,10 +1,16 @@
 package org.cssa.iface.dao.dbengine;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -47,21 +53,25 @@ public class DBEngineImpl {
 		return dbEngineImpl;
 	}
 	
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws IfaceException
+	 */
 	public ResultSet executeQuery(String query) throws IfaceException {
 		res = null;
 		try {
-			log.info("Query" +query);
+			log.info("Query: " +query);
 			con = getConnection();
 		} catch (ClassNotFoundException e1) {
 			log.error("Exception"+ e1);
-			throw new IfaceException("Driver is not fount in connection"
-					+ e1.getStackTrace());
+			throw new IfaceException("Driver is not fount in connection",e1);
 
 		} catch (SQLException e1) {
 			log.error("Exception"+ e1);
 			e1.printStackTrace();
-			throw new IfaceException("Sql exception in connection"
-					+ e1.getStackTrace());
+			throw new IfaceException("Sql exception in connection",e1);
 		}
 		try {
 			smt = con.createStatement();
@@ -71,8 +81,7 @@ public class DBEngineImpl {
 		} catch (SQLException e) {
 			rollback(con);
 			e.printStackTrace();
-			throw new IfaceException("Sql exception in Query execution"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in Query execution",e);
 		} finally {
 			//connectionManager.closeConnection(con);
 			//connectionManager.closeStatement(smt);
@@ -80,27 +89,31 @@ public class DBEngineImpl {
 		return res;
 
 	}
-
+    
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws IfaceException
+	 */
 	public int executeUpdate(String query) throws IfaceException {
 		int returnId = -1;
 		try {
 			con = getConnection();
 		} catch (ClassNotFoundException e) {
-			throw new IfaceException("Driver is not fount in connection"
-					+ e.getStackTrace());
+			log.error("Exception"+ e);
+			throw new IfaceException("Driver is not fount in connection",e);
 		} catch (SQLException e) {
 			log.error("Exception"+ e);
 			e.printStackTrace();
-			throw new IfaceException("Sql exception in connection"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in connection",e);
 		}
 
 		try {
 			smt = con.createStatement();
 		} catch (SQLException e1) {
 			log.error("Exception"+ e1);
-			throw new IfaceException("Sql exception in connection creation"
-					+ e1.getStackTrace());
+			throw new IfaceException("Sql exception in connection creation",e1);
 		}
 		try {
 			returnId = smt.executeUpdate(query);
@@ -108,8 +121,7 @@ public class DBEngineImpl {
 			rollback(con);
 			log.error("Exception"+ e);
 			e.printStackTrace();
-			throw new IfaceException("Sql exception in Query execution"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in Query execution",e);
 		} finally {
 			
 			connectionManager.closeConnection(con);
@@ -119,6 +131,12 @@ public class DBEngineImpl {
 
 	}
 	
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws IfaceException
+	 */
 	@Deprecated
 	public PreparedStatement getPreparedStatement(String query) throws IfaceException {
 		PreparedStatement statement = null;
@@ -127,20 +145,18 @@ public class DBEngineImpl {
 			con.setAutoCommit(false);
 		} catch (ClassNotFoundException e1) {
 			log.error("Exception"+ e1);
-			throw new IfaceException("Driver is not fount in connection"
-					+ e1.getStackTrace());
+			throw new IfaceException("Driver is not fount in connection",e1);
 
 		} catch (SQLException e1) {
 			log.error("Exception"+ e1);
 			e1.printStackTrace();
-			throw new IfaceException("Sql exception in connection"
-					+ e1.getStackTrace());
+			throw new IfaceException("Sql exception in connection",e1);
 		}
 		try {
 			statement = con.prepareStatement(query);
 		} catch (SQLException e) {
 			log.error("Exception"+ e);
-			throw new IfaceException("Statement Creation exception" + e.getStackTrace());
+			throw new IfaceException("Statement Creation exception" ,e);
 			
 		}finally {
 			//closePreparedStatement(statement);
@@ -150,6 +166,13 @@ public class DBEngineImpl {
 		return statement;
 	}
 	
+	/**
+	 * 
+	 * @param parameterMap
+	 * @param sqlCommand
+	 * @return
+	 * @throws IfaceException
+	 */
 	public ResultSet executeQuery(Map<Integer, Object> parameterMap, String sqlCommand) throws IfaceException {
 		res = null;
 		PreparedStatement statement = null;
@@ -157,12 +180,10 @@ public class DBEngineImpl {
 			con = getConnection();
 		} catch (ClassNotFoundException e) {
 			log.error("Exception"+ e);
-			throw new IfaceException("Driver is not fount in connection"
-					+ e.getStackTrace());
+			throw new IfaceException("Driver is not fount in connection",e);
 		} catch (SQLException e) {
 			log.error("Exception"+ e);
-			throw new IfaceException("Sql exception in connection"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in connection",e);
 		}
 		try {
 			log.info(sqlCommand);
@@ -174,8 +195,7 @@ public class DBEngineImpl {
 		} catch (SQLException e) {
 			rollback(con);
 			log.error("Exception"+  e);
-			throw new IfaceException("Sql exception in Query execution"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in Query execution",e);
 			
 		}finally {
 			//connectionManager.closeConnection(con);
@@ -186,6 +206,13 @@ public class DBEngineImpl {
 		return res;
 	}
 	
+	/**
+	 * 
+	 * @param parameterMap
+	 * @param sqlCommand
+	 * @return
+	 * @throws IfaceException
+	 */
 	public int executeUpdate( Map<Integer, Object> parameterMap, String sqlCommand) throws IfaceException {
 		
 		int returnId = -1;
@@ -194,12 +221,10 @@ public class DBEngineImpl {
 			con =getConnection();
 		} catch (ClassNotFoundException e) {
 			log.error("Exception"+ e);
-			throw new IfaceException("Driver is not fount in connection"
-					+ e.getStackTrace());
+			throw new IfaceException("Driver is not fount in connection",e);
 		} catch (SQLException e) {
 			log.error("Exception"+ e);
-			throw new IfaceException("Sql exception in connection"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in connection",e);
 		}
 		try {
 			statement = con.prepareStatement(sqlCommand);
@@ -209,8 +234,7 @@ public class DBEngineImpl {
 		} catch (SQLException e) {
 			rollback(con);
 			log.error("Exception"+ e);
-			throw new IfaceException("Sql exception in Query execution"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in Query execution",e);
 			
 		}finally {
 			connectionManager.closeConnection(con);
@@ -220,6 +244,13 @@ public class DBEngineImpl {
 		return returnId;
 	}
 	
+	/**
+	 * 
+	 * @param batchParameterList
+	 * @param sqlCommand
+	 * @return
+	 * @throws IfaceException
+	 */
 	public int[] executeBatch(List<Map<Integer, Object>> batchParameterList, String sqlCommand) throws IfaceException {
 		int returnId[] = null;
 		PreparedStatement statement = null;
@@ -227,11 +258,9 @@ public class DBEngineImpl {
 			con =getConnection();
 		} catch (ClassNotFoundException e) {
 			log.error("Exception"+ e);
-			throw new IfaceException("Driver is not fount in connection"
-					+ e.getStackTrace());
+			throw new IfaceException("Driver is not fount in connection",e);
 		} catch (SQLException e) {
-			throw new IfaceException("Sql exception in connection"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in connection",e);
 		}
 		try {
 			statement = con.prepareStatement(sqlCommand);
@@ -242,8 +271,7 @@ public class DBEngineImpl {
 		} catch (SQLException e) {
 			rollback(con);
 			log.error("Exception"+ e);
-			throw new IfaceException("Sql exception in Query execution"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in Query execution",e);
 			
 		}finally {
 			connectionManager.closeConnection(con);
@@ -253,6 +281,71 @@ public class DBEngineImpl {
 		return returnId; 
 	}
 	
+	/**
+	 * method to execute the script file
+	 * @param fileName
+	 * @throws IfaceException
+	 */
+	public void executeScript(String fileName) throws IfaceException {
+		try {
+			con = getConnection();
+			ScriptRunner runner = new ScriptRunner(con, true, true);
+			runner.runScript(new BufferedReader(new FileReader(fileName)));
+			
+		} catch (FileNotFoundException e) {
+			log.error("Exception"+ e);
+			throw new IfaceException("Script File no found",e);
+		} catch (IOException e) {
+			log.error("Exception"+ e);
+			throw new IfaceException("IO Exception",e);
+		} catch (ClassNotFoundException e) {
+			log.error("Exception"+ e);
+			throw new IfaceException("Class not found Exception",e);
+		} catch (SQLException e) {
+			log.error("Exception"+ e);
+			throw new IfaceException("Sql Exception",e);
+		} finally {
+			connectionManager.closeConnection(con);
+		}
+	}
+	
+	/**
+	 * 
+	 * @return all table names
+	 * @throws IfaceException
+	 */
+	public List<String> getAllTableNames() throws IfaceException {
+		List<String> tableName = new ArrayList<String>();
+		ResultSet res = null;
+		try {
+			con = getConnection();
+			DatabaseMetaData databaseMetaData = con.getMetaData();
+			res = databaseMetaData.getTables(null, null, null, new String[]{"TABLE"});
+			while(res.next()) {
+				tableName.add(res.getString("TABLE_NAME"));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			log.error("Exception"+ e);
+			throw new IfaceException("Class not found Exception",e);
+		} catch (SQLException e) {
+			log.error("Exception"+ e);
+			throw new IfaceException("Sql Exception",e);
+		} finally {
+			closeResultSet(res);
+			connectionManager.closeConnection(con);
+		}
+		
+		return tableName;
+	}
+	
+	/**
+	 * 
+	 * @param statement
+	 * @param parameterMap
+	 * @return
+	 * @throws IfaceException
+	 */
 	private PreparedStatement setPreparedStatement( PreparedStatement statement, Map<Integer, Object> parameterMap) throws IfaceException {
 		try{
 		Set<Map.Entry<Integer, Object>> parameterSet = parameterMap.entrySet();
@@ -277,13 +370,19 @@ public class DBEngineImpl {
 		}
 		}catch (Exception e) {
 			log.error("Exception"+ e);
-			throw new IfaceException("Sql exception in Query execution"
-					+ e.getStackTrace());
+			throw new IfaceException("Sql exception in Query execution",e);
 		}
 		return statement;
 		
 	}
 	
+	/**
+	 * 
+	 * @param statement
+	 * @param batchParameterList
+	 * @return
+	 * @throws IfaceException
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private PreparedStatement setBatchPreparedStatement( PreparedStatement statement, List<Map<Integer, Object>> batchParameterList) throws IfaceException {
 		for(Map parameterMap : batchParameterList ) {
@@ -292,14 +391,18 @@ public class DBEngineImpl {
 				statement.addBatch();
 			} catch (SQLException e) {
 				log.error("Exception"+ e);
-				throw new IfaceException("Sql exception in Query execution"
-						+ e.getStackTrace());
+				throw new IfaceException("Sql exception in Query execution",e);
 			}
 		}
 		return statement;
 		
 	}
 
+	/**
+	 * method to close the result set
+	 * @param res
+	 * @throws IfaceException
+	 */
 	public void closeResultSet(ResultSet res) throws IfaceException {
 		if (null != res) {
 			try {
@@ -308,11 +411,16 @@ public class DBEngineImpl {
 				closeConnection();
 			} catch (SQLException e) {
 				log.error("Exception"+ e);
-				e.printStackTrace();
+				throw new IfaceException("Sql Exception",e);
 			}
 		}
 	}
 	
+	/**
+	 * method to close statement
+	 * @param smt
+	 * @throws IfaceException
+	 */
 	public void closeStatement(Statement smt) throws IfaceException {
 		try {
 			if (null != smt && !smt.isClosed()) {
@@ -320,10 +428,16 @@ public class DBEngineImpl {
 			}
 		} catch (Exception e) {
 			log.error("Exception"+ e);
-			e.printStackTrace();
+			throw new IfaceException("Colse statement exception",
+					 e);
 		}
 	}
 	
+	/**
+	 * method to close prepared statement
+	 * @param smt
+	 * @throws IfaceException
+	 */
 	public void closePreparedStatement(PreparedStatement smt) throws IfaceException{
 		try {
 			if (null != smt && !smt.isClosed()) {
@@ -331,10 +445,16 @@ public class DBEngineImpl {
 			}
 		} catch (Exception e) {
 			log.error("Exception"+ e);
-			e.printStackTrace();
+			throw new IfaceException("Sql Exception",
+					e);
 		}
 	}
 	
+	/**
+	 * method to commit the transaction
+	 * @param con
+	 * @throws IfaceException
+	 */
 	public void commit(Connection con) throws IfaceException{
 		try {
 			if(con != null &&!con.isClosed()) {
@@ -343,10 +463,16 @@ public class DBEngineImpl {
 			}
 		}catch (Exception e) {
 			log.error("Exception"+ e);
-			e.printStackTrace();
+			throw new IfaceException("Sql Exception",
+					e);
 		}
 	}
 	
+	/**
+	 * roll back the transaction
+	 * @param con
+	 * @throws IfaceException
+	 */
 	public void rollback(Connection con) throws IfaceException {
 		try {
 			if(null != con && !con.isClosed()) {
@@ -359,6 +485,10 @@ public class DBEngineImpl {
 		}
 	}
 	
+	/**
+	 * method to close the connection
+	 * @throws IfaceException
+	 */
 	public void closeConnection() throws IfaceException {
 		try {
 			if(null != con && !con.isClosed()) {

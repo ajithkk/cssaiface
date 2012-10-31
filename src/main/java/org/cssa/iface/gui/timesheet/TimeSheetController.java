@@ -11,6 +11,7 @@ import java.util.List;
 import org.cssa.iface.bo.TimeSheet;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.report.timesheet.TimeSheetReport;
 import org.cssa.iface.transaction.TimeSheetTransaction;
 import org.cssa.iface.util.Util;
@@ -74,17 +75,15 @@ public class TimeSheetController implements ActionListener {
 	private void performPrintAction() {
 		List<TimeSheet> timeSheets = tableModel.getTimeSheets();
 		if(null != timeSheets) {
-		String FILE = Util.getReportHome()+"\\Timesheet_"+tableModel.getTimeSheets().get(0).getDate()+".pdf";
-		TimeSheetReport report = new TimeSheetReport(FILE, timeSheets);
-		try {
-			report.createReport();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			String FILE = Util.getReportHome()+"\\Timesheet_"+tableModel.getTimeSheets().get(0).getDate()+".pdf";
+			TimeSheetReport report = new TimeSheetReport(FILE, timeSheets);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				new ErrorDialog(e).setVisible(true);
+			} catch (DocumentException e) {
+				new ErrorDialog(e).setVisible(true);
+			}
 		}
 	}
 
@@ -97,8 +96,7 @@ public class TimeSheetController implements ActionListener {
 			timeSheetTransaction.delete(tableModel.getTimeSheets().get(selectedRow));
 			setTimeSheetVAlue();
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 		
 	}
@@ -112,8 +110,7 @@ public class TimeSheetController implements ActionListener {
 		try {
 			timeSheetTransaction.update(timeSheetList);
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			new ErrorDialog(e).setVisible(true);
 		}
 		
 		

@@ -60,7 +60,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 			resultId = dbEngineImpl.executeUpdate(parameterMap, sqlCommand);
 			dbEngineImpl.executeBatch(batchParameterList, sqlCommand2);
 		} catch (IfaceException e) {
-			// TODO: handle exception
+			throw e;
 		}
 
 		return resultId;
@@ -95,6 +95,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 			}
 			dbEngineImpl.closeResultSet(res);
 		} catch (Exception e) {
+			throw new IfaceException("Exception in load college", e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -154,7 +155,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 		try {
 			resultId = dbEngineImpl.executeUpdate(parameterMap, sqlCommand);
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			throw e;
 		}
 
 		return resultId;
@@ -172,7 +173,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 		try {
 			resultId = dbEngineImpl.executeUpdate(parameterMap, sqlCommand);
 		} catch (IfaceException e) {
-			// TODO: handle exception
+			throw e;
 		}
 
 		return resultId;
@@ -207,7 +208,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 			}
 			dbEngineImpl.closeResultSet(res);
 		} catch (Exception e) {
-			System.out.println(e);
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -243,6 +244,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 			}
 			dbEngineImpl.closeResultSet(res);
 		} catch (Exception e) {
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}

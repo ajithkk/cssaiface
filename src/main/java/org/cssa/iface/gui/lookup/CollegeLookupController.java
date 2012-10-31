@@ -14,6 +14,7 @@ import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeDetailsController;
 import org.cssa.iface.gui.formvalidator.CollegeLookupFormValidator;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.services.CollegeDetailsQueryEngine;
 import org.cssa.iface.services.CollegeLookupService;
 import org.cssa.iface.transaction.CollegeTransaction;
@@ -29,6 +30,7 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 	private CollegeLookupTableModel tableModel;
 	private CssaMDIForm mdiForm;
 	private CollegeTransaction transaction;
+	private boolean reportView;
 	
 	List<CollegeDetails> collegeDetails;
 	CollegeDetailsQueryEngine engine;
@@ -44,6 +46,12 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 		this.mdiForm = mdiForm;
 		transaction = new CollegeTransaction();
 		collegeLookupService = null;
+	}
+	
+	
+	public CollegeLookupController(CssaMDIForm mdiForm, boolean reportView) {
+		this(mdiForm);
+		this.reportView = reportView;
 	}
 	
 	
@@ -74,8 +82,7 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 					collegeDetails = transaction.loadAll();
 					tableModel.setCollegeList(collegeDetails);
 				} catch (IfaceException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					new ErrorDialog(e1).setVisible(true);
 				}
 			}
 			else {
@@ -86,7 +93,7 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 					collegeDetails = transaction.loadAll(collegeDetail);
 					tableModel.setCollegeList(collegeDetails);
 				} catch (IfaceException e1) {
-					e1.printStackTrace();
+					new ErrorDialog(e1).setVisible(true);
 				}
 			}
 		}
@@ -115,18 +122,25 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 	public void askCollegeLookupView() {
 		lookupView = new CollegeLookupView(this,tableModel,mdiForm);
 		lookupView.showCollegeLookupScreen();
+		if(reportView) {
+			lookupView.getBtnPrint().setVisible(true);
+		} else {
+			lookupView.getBtnPrint().setVisible(false);
+		}
 		
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int selectedRow =  lookupView.getTblCollegeDetails().getSelectedRow();
-	    CollegeDetails college = tableModel.getCollegeList().get(selectedRow);
-	    if(null == collegeLookupService) {
-	    	new CollegeDetailsController(mdiForm, college).askCollegeDetailsView();
-	    } else {
-			collegeLookupService.setSelectedCollege(college);
-			mdiForm.closeFrame();
+		if(!reportView) {
+			int selectedRow =  lookupView.getTblCollegeDetails().getSelectedRow();
+		    CollegeDetails college = tableModel.getCollegeList().get(selectedRow);
+		    if(null == collegeLookupService) {
+		    	new CollegeDetailsController(mdiForm, college).askCollegeDetailsView();
+		    } else {
+				collegeLookupService.setSelectedCollege(college);
+				mdiForm.closeFrame();
+			}
 		}
 		
 	}

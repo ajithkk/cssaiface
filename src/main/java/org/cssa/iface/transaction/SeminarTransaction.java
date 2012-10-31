@@ -60,7 +60,7 @@ public class SeminarTransaction implements Transaction<Seminar> {
 					seminar.setDutyCertificate(res.getBoolean(CSSAConstants.SEMINAR_DETAILS_DUTY_CERTIFICATE));
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new IfaceException(e);
 			}
 		}
 		return seminar;
@@ -88,7 +88,7 @@ public class SeminarTransaction implements Transaction<Seminar> {
 				seminarList.add(seminar);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		}
 		return seminarList;
 	}

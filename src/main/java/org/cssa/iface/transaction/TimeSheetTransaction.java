@@ -97,7 +97,7 @@ public class TimeSheetTransaction implements Transaction<TimeSheet> {
 				
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		}
 		return timeSheetsList;
 	}

@@ -13,6 +13,7 @@ import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.lookup.ParticipantLookupController;
 import org.cssa.iface.gui.lookup.StudentLookupController;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.services.LookupService;
 import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.EventsTransaction;
@@ -72,7 +73,7 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 				winnerTransaction.saveAll( insertResults);
 			} catch (IfaceException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new ErrorDialog(e).setVisible(true);
 			}
 		}
 		
@@ -109,8 +110,13 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 //		
 //	}
 	
+
 	public void setResultStatus() {
+		resultView.getCmbResultStatus().addItem("please select");
+		resultView.getCmbResultStatus().addItem("First");
+		resultView.getCmbResultStatus().addItem("Second");
 	}
+	
 	
 //	public void setEventId() {
 //		eventsTransaction = new EventsTransaction();
@@ -155,8 +161,7 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 			tableModel.setResultsTableBos(insertResults);
 			
 		} catch (IfaceException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			new ErrorDialog(e1).setVisible(true);
 		}
 		resultView.setTxtEventName(e.getEventName());
 		try {
@@ -164,8 +169,7 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 			tableModel.setResultsTableBos(insertResults);
 			
 		} catch (IfaceException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			new ErrorDialog(e1).setVisible(true);
 		}
 		
 	}

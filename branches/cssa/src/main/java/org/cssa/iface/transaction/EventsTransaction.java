@@ -52,7 +52,7 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 		try {
 			resultId = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.INSERT_EVENTS_TABLE);
 		} catch (IfaceException e) {
-			e.printStackTrace();
+			throw new IfaceException(e);
 		} 
 		return resultId;
 	}
@@ -74,7 +74,7 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 			}
 			dbEngineImpl.closeResultSet(res);
 		}catch (SQLException e) {
-			// TODO: handle exception
+			throw new IfaceException(e);
 		}finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -98,8 +98,7 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 			}
 			dbEngineImpl.closeResultSet(res);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IfaceException(e);
 		}finally {
 			dbEngineImpl.closeResultSet(res);
 		}
@@ -120,7 +119,7 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 		try {
 			resultId = dbEngineImpl.executeUpdate(parameterMap,CSSAQuery.UPDATE_EVENTS_TABLE);
 			} catch (IfaceException e) {
-				e.printStackTrace();
+				throw new IfaceException(e);
 			}
 		return resultId;
 	}
@@ -134,7 +133,7 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 		try {
 			dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.DELETE_EVENTS_TABLE);
 		}catch (IfaceException e) {
-			
+			throw new IfaceException(e);
 		}
 		return resultId;
 	}
@@ -155,7 +154,7 @@ public class EventsTransaction implements Transaction<org.cssa.iface.bo.Events> 
 			}
 			dbEngineImpl.closeResultSet(res);
 		}catch (SQLException e) {
-			// TODO: handle exception
+			throw new IfaceException(e);
 		}finally {
 			dbEngineImpl.closeResultSet(res);
 		}

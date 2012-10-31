@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:cssa xmlns:ns2=" org.cssa.iface.bo">
+    <table>
+        <tableName>Day1</tableName>
+        <scriptFile>10/19/2012</scriptFile>
+    </table>
+    <table>
+        <tableName>Day2</tableName>
+        <scriptFile>10/20/2012</scriptFile>
+    </table>
+    <table>
+        <tableName>Day3</tableName>
+        <scriptFile>10/21/2012</scriptFile>
+    </table>
+</ns2:cssa>

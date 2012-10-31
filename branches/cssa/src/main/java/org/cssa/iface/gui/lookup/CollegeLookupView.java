@@ -27,6 +27,7 @@ public class CollegeLookupView {
 	public static final String SEARCH = "Search";
 	public static final String CANCEL = "Cancel";
 	public static final String CLEAR = "Clear";
+	public static final String PRINT = "Print";
 	
 	private CLabel lblCollegeName;
 	private CLabel lblCollegeId;
@@ -37,6 +38,7 @@ public class CollegeLookupView {
 	private CButton btnSearch;
 	private CButton btnClear;
 	private CButton btnCancel;
+	private CButton btnPrint;
 	
 	private JTable tblCollegeDetails;
 	
@@ -147,6 +149,16 @@ public class CollegeLookupView {
 		constraints.gridy = 0;
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(collegeLookupController);
+		
+		constraints = new GridBagConstraints();
+		btnPrint = new CButton("Print");
+		btnPrint.setMnemonic('P');
+		btnPrint.setActionCommand(PRINT);
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 5;
+		constraints.gridy = 0;
+		panel.add(btnPrint, constraints);
+		btnPrint.addActionListener(collegeLookupController);
 		
 		return panel;
 	}
@@ -261,6 +273,20 @@ public class CollegeLookupView {
 	public void setTblCollegeDetails(JTable tblCollegeDetails) {
 		this.tblCollegeDetails = tblCollegeDetails;
 	}
+	/**
+	 * @return the btnPrint
+	 */
+	public CButton getBtnPrint() {
+		return btnPrint;
+	}
+	/**
+	 * @param btnPrint the btnPrint to set
+	 */
+	public void setBtnPrint(CButton btnPrint) {
+		this.btnPrint = btnPrint;
+	}
+	
+	
 	
 }
 	

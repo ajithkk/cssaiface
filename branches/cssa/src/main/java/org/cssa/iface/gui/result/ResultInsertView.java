@@ -100,7 +100,7 @@ public class ResultInsertView {
 		lblEventStage = new CLabel("Event Stage: ");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
-		constraints.gridy = 2;
+		constraints.gridy = 1;
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(5, 5, 0, 2);
 		panel.add(lblEventStage, constraints);
@@ -108,7 +108,7 @@ public class ResultInsertView {
 		cmbEventStage = new JComboBox();
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
-		constraints.gridy = 2;
+		constraints.gridy = 1;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		cmbEventStage.setPreferredSize(new Dimension(250, 23));
@@ -117,7 +117,7 @@ public class ResultInsertView {
 		lblCollegeId = new CLabel("College Id");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
-		constraints.gridy = 3;
+		constraints.gridy = 2;
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(5, 5, 0, 2);
 		panel.add(lblCollegeId, constraints);
@@ -125,7 +125,7 @@ public class ResultInsertView {
 		txtCollegeId = new CTextField();
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
-		constraints.gridy = 3;
+		constraints.gridy = 2;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(txtCollegeId, constraints);
@@ -136,7 +136,7 @@ public class ResultInsertView {
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 2;
-		constraints.gridy = 3;
+		constraints.gridy = 2;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(btnCollegeSearch, constraints);
 		btnCollegeSearch.addActionListener(controller);
@@ -146,7 +146,7 @@ public class ResultInsertView {
 		lblStudentId = new CLabel("Student Id");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
-		constraints.gridy = 4;
+		constraints.gridy = 3;
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(5, 5, 0, 2);
 		panel.add(lblStudentId, constraints);
@@ -154,7 +154,7 @@ public class ResultInsertView {
 		txtStudentId = new CTextField();
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
-		constraints.gridy = 4;
+		constraints.gridy = 3;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(txtStudentId, constraints);
@@ -166,7 +166,7 @@ public class ResultInsertView {
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 2;
-		constraints.gridy = 4;
+		constraints.gridy = 3;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(btnStudentSearch, constraints);
 		btnStudentSearch.addActionListener(controller);
@@ -189,7 +189,7 @@ public class ResultInsertView {
 		btnSearch.setActionCommand(SEARCH);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(0, 5, 0, 5);
-		constraints.gridx = 2;
+		constraints.gridx = 3;
 		constraints.gridy = 0;
 		panel.add(btnSearch, constraints);
 		btnSearch.addActionListener(controller);
@@ -200,7 +200,7 @@ public class ResultInsertView {
 		btnClear.setActionCommand(CLEAR);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(0, 5, 0, 5);
-		constraints.gridx = 3;
+		constraints.gridx = 4;
 		constraints.gridy = 0;
 		panel.add(btnClear, constraints);
 		btnClear.addActionListener(controller);
@@ -210,7 +210,7 @@ public class ResultInsertView {
 		btnCancel.setMnemonic('C');
 		btnCancel.setActionCommand(CANCEL);
 		constraints.insets = new Insets(0, 5, 0, 5);
-		constraints.gridx = 4;
+		constraints.gridx = 5;
 		constraints.gridy = 0;
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(controller);
@@ -300,7 +300,7 @@ public class ResultInsertView {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints;
 		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
+		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.insets = new Insets(10, 5, 0, 10);
 		constraints.gridx = 0;
 		constraints.gridy = 0;

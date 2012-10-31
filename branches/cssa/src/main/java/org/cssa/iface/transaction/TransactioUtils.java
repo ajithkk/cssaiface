@@ -89,7 +89,7 @@ public class TransactioUtils {
 					insertResultsTableBo.add(tableBo);
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new IfaceException(e);
 			}finally {
 				dbEngineImpl.closeResultSet(res);
 			}
@@ -133,6 +133,8 @@ public class TransactioUtils {
 					
 				}
 			} catch (Exception e) {
+				throw new IfaceException(e);
+			} finally {
 				dbEngineImpl.closeResultSet(res);
 			}
 			
@@ -181,6 +183,8 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 					
 				}
 			} catch (Exception e) {
+				throw new IfaceException(e);
+			} finally {
 				dbEngineImpl.closeResultSet(res);
 			}
 			
@@ -213,6 +217,8 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 				
 			}
 		} catch (Exception e) {
+			throw new IfaceException(e);
+		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}
 		

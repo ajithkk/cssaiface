@@ -130,7 +130,7 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 				eventDetails.add(eDetails);
 			}
 		}catch (Exception e) {
-			// TODO: handle exception
+			throw new IfaceException(e);
 		}
 		return eventDetails;
 		
@@ -154,7 +154,7 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 				eventDetails.add(eDetails);
 			}
 		}catch (Exception e) {
-			throw new IfaceException(e.toString());
+			throw new IfaceException(e);
 		}
 		return eventDetails;
 	}

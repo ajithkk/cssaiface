@@ -153,8 +153,8 @@ public class InsertResultView {
 		constraints.gridy = 3;
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(txtMark, constraints);
-	  /*  
-		lblEventStage = new CLabel("Event Stage: ");
+	    
+		lblEventStage = new CLabel("Result status ");
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 4;
@@ -162,14 +162,14 @@ public class InsertResultView {
 		constraints.insets = new Insets(5, 5, 0, 2);
 		panel.add(lblEventStage, constraints);
 		
-		cmbEventStage = new JComboBox();
+		cmbResultStatus = new JComboBox();
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
 		constraints.gridy = 4;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(5, 0, 5, 2);
-		cmbEventStage.setPreferredSize(new Dimension(250, 23));
-		panel.add(cmbEventStage, constraints);*/
+		cmbResultStatus.setPreferredSize(new Dimension(250, 23));
+		panel.add(cmbResultStatus, constraints);
 		
 		return panel;
 	}

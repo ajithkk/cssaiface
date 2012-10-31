@@ -8,14 +8,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.cssa.iface.infrastructure.CSSAConstants;
-import org.cssa.iface.util.EventStorageXML;
 import org.cssa.iface.util.Util;
 
 /**
@@ -100,8 +98,6 @@ public class CssaLauncher {
 	public static void main(String[] args) {
 		CssaLauncher launcher = new CssaLauncher();
 		launcher.logBasicSystemInfo();
-		
-		EventStorageXML xml = new EventStorageXML();
 		try{
 			launcher.showSplashScreen();
 			Thread.sleep(300);

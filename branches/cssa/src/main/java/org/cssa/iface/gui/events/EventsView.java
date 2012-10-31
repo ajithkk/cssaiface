@@ -352,4 +352,48 @@ public class EventsView {
 	public void setEventTable(JTable eventTable) {
 		this.eventTable = eventTable;
 	}
+
+	/**
+	 * @return the txtMaxParticipants
+	 */
+	public CTextField getTxtMaxParticipants() {
+		return txtMaxParticipants;
+	}
+
+	/**
+	 * @param txtMaxParticipants the txtMaxParticipants to set
+	 */
+	public void setTxtMaxParticipants(CTextField txtMaxParticipants) {
+		this.txtMaxParticipants = txtMaxParticipants;
+	}
+
+	/**
+	 * @return the txtPoints
+	 */
+	public CTextField getTxtPoints() {
+		return txtPoints;
+	}
+
+	/**
+	 * @param txtPoints the txtPoints to set
+	 */
+	public void setTxtPoints(CTextField txtPoints) {
+		this.txtPoints = txtPoints;
+	}
+
+	/**
+	 * @return the txtEventcode
+	 */
+	public CTextField getTxtEventcode() {
+		return txtEventcode;
+	}
+
+	/**
+	 * @param txtEventcode the txtEventcode to set
+	 */
+	public void setTxtEventcode(CTextField txtEventcode) {
+		this.txtEventcode = txtEventcode;
+	}
+	
+	
 }

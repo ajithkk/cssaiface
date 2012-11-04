@@ -32,6 +32,7 @@ import org.cssa.iface.util.EventStorageXML;
  */
 public class ResultInsertController implements ActionListener,CollegeLookupService<CollegeDetails>, LookupController, StudentLookupService<StudentDetails> {
 	
+	private boolean editMode;
 	
 	private CssaMDIForm mdiForm;
 	private ResultInsertView resultInsertView;
@@ -45,10 +46,19 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 	 * @param mdiForm
 	 */
 	public ResultInsertController(CssaMDIForm mdiForm) {
-		super();
+		this(mdiForm, false);
+	}
+	
+	/**
+	 * @param mdiForm
+	 */
+	public ResultInsertController(CssaMDIForm mdiForm , boolean editMode) {
+		
 		this.mdiForm = mdiForm;
 		tableModel = new ResultInsertTableModel();
+		this.editMode = editMode;
 	}
+	
 	
 	
 	@Override
@@ -82,10 +92,20 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 
 	private void performSaveAction() {
 		ResultsTransaction resultsTransaction = new ResultsTransaction();
-		try {
-			resultsTransaction.save(tableModel.getResultList(), resultInsertView.getCmbEventStage().getSelectedItem().toString());
-		} catch (IfaceException e) {
-			new ErrorDialog(e).setVisible(true);
+		if(!editMode) {
+			try {
+				resultsTransaction.save(tableModel.getResultList(), resultInsertView.getCmbEventStage().getSelectedItem().toString());
+			} catch (IfaceException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				resultsTransaction.update(tableModel.getResultList(), resultInsertView.getCmbEventStage().getSelectedItem().toString());
+			} catch (IfaceException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -119,14 +139,14 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 		}
 		if(resultInsertView.getCmbEventCode().getSelectedIndex() > 0) {
 			inResult.setEventName(resultInsertView.getCmbEventCode().getSelectedItem().toString());
-		}
+		} 
 		try {
-			List<InsertResult> participantList = transactioUtils.getParticipantsList(inResult);
+			List<InsertResult> participantList = transactioUtils.getParticipantsList(inResult,editMode);
 			tableModel.setResultList(participantList);
 		} catch (IfaceException e) {
 			new ErrorDialog(e).setVisible(true);
 		}
-		
+
 	}
 
 

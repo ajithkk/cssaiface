@@ -148,7 +148,58 @@ public class QueryServices {
 		
 	}
 	
+public static String getEditParticipationSingleSearch(InsertResult insertResult) throws IfaceException { 
+		
+		StringBuilder participationSearch = new StringBuilder();
+		participationSearch.append( "SELECT "
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID +" , "
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID +","
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_MARK +","
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_RESULT_STATUS +","
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_GROUP_ID +"  FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +CSSAConstants.RESULTS_TABLE 
+				+" WHERE STUDENTS_DETAILS.STUDENT_ID = RESULTS.STUDENT_ID ");
+		if(null != insertResult.getEventName()) {
+			if(!insertResult.getEventName().isEmpty()) {
+				participationSearch.append(" AND ");
+				participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID +"  = '"+insertResult.getEventName() +"'");
+			}
+		}
+		if(null!= insertResult.getCollegeId()) {
+			if(!insertResult.getCollegeId().isEmpty()) {
+				participationSearch.append(" AND ");
+				participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_COLLEGE_ID+"  = '"+ insertResult.getCollegeId() +"'");
+			}
+		}
+		
+		if(null != insertResult.getStudentId()) {
+			if(!insertResult.getStudentId().isEmpty()) {
+				participationSearch.append(" AND ");
+				participationSearch.append(CSSAConstants.RESULTS_TABLE +"."+ CSSAConstants.EVENT_DETAILS_STUDENT_ID + "= '" +insertResult.getStudentId() +"'");
+			}
+		}
+		if(null != insertResult.getEventStatus()) {
+			if(!insertResult.getEventStatus().isEmpty()) {
+				participationSearch.append(" AND ");
+				participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_RESULT_STATUS+"  = '"+ insertResult.getEventStatus() +"'");
+			}
+		}
+		
+		
+		return participationSearch.toString();
+		
+	}
 	
+	/**
+	 * 
+	 * @param insertResult
+	 * @return
+	 * @throws IfaceException
+	 */
 	public static String getParticipationGroupSearch(InsertResult insertResult) throws IfaceException { 
 		
 	    boolean andFlag = false;
@@ -208,6 +259,83 @@ public class QueryServices {
 		return participationSearch.toString();
 		
 	}
+	
+	
+	/**
+	 * 
+	 * @param insertResult
+	 * @return
+	 * @throws IfaceException
+	 */
+	public static String getEditParticipationGroupSearch(InsertResult insertResult) throws IfaceException { 
+		
+	    boolean andFlag = false;
+		StringBuilder participationSearch = new StringBuilder();
+		participationSearch.append( "SELECT "
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID +" , "
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
+				+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID +","
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_MARK +","
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_RESULT_STATUS +","
+				+CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_GROUP_ID +"  FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +CSSAConstants.RESULTS_TABLE 
+				+" WHERE STUDENTS_DETAILS.STUDENT_ID = RESULTS.STUDENT_ID ");
+		participationSearch.append(" AND ");
+		participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_GROUP_ID + " = ");
+		participationSearch.append("( SELECT ");
+		participationSearch.append(CSSAConstants.EVENT_DETAILS_GROUP_ID +" FROM "+ CSSAConstants.RESULTS_TABLE);
+		participationSearch.append(" WHERE ");
+		
+		if(null != insertResult.getStudentId()) {
+			if(!insertResult.getStudentId().isEmpty()) {
+				participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_STUDENT_ID +" = '"+ insertResult.getStudentId() +"' ");
+				andFlag = true;
+			}
+		} else {
+			participationSearch.append(" STUDENTS_DETAILS.STUDENT_ID = RESULTS.STUDENT_ID ");
+		}
+		
+		if(null != insertResult.getEventName()) {
+			if(!insertResult.getEventName().isEmpty()) {
+				if(andFlag) {
+					participationSearch.append(" AND ");
+					participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID+ " = '"+ insertResult.getEventName() +" ')");
+				} else {
+					participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID+ " = '"+ insertResult.getEventName() +" '");
+					participationSearch.append(" AND  STUDENTS_DETAILS.STUDENT_ID = RESULTS.STUDENT_ID )");
+				}
+			}
+		}
+		
+		//participationSearch.append(" AND  STUDENTS_DETAILS.STUDENT_ID = EVENT_DETAILS.STUDENT_ID ");
+		if(null != insertResult.getEventName()) {
+			if(!insertResult.getEventName().isEmpty()) {
+				participationSearch.append(" AND ");
+				participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID +"  = '"+insertResult.getEventName() +"'");
+			}
+		}
+		
+		if(null!= insertResult.getCollegeId()) {
+			if(!insertResult.getCollegeId().isEmpty()) {
+				participationSearch.append(" AND ");
+				participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_COLLEGE_ID+"  = '"+ insertResult.getCollegeId() +"'");
+			}
+		}
+		
+		if(null != insertResult.getEventStatus()) {
+			if(!insertResult.getEventStatus().isEmpty()) {
+				participationSearch.append(" AND ");
+				participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_RESULT_STATUS+"  = '"+ insertResult.getEventStatus() +"'");
+			}
+		}
+		
+		return participationSearch.toString();
+		
+	}
+	
 	
 	
 	/**

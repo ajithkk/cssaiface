@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,104 +18,94 @@ import javax.swing.JTable;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
-import org.cssa.iface.gui.controls.CTextField;
 
 /**
- * @author ajith
+ * @author admin
  *
  */
-public class CollegeLookupView {
-	
-	public static final String SEARCH = "Search";
+public class WinnerLookupView {
 	public static final String CANCEL = "Cancel";
 	public static final String CLEAR = "Clear";
+	public static final String SEARCH = "Search";
 	public static final String PRINT = "Print";
 	
-	private CLabel lblCollegeName;
-	private CLabel lblCollegeId;
-	
-	private CTextField txtCollegeName;
-	private CTextField txtCollegeId;
+	private CLabel lblEventId;
+	private CLabel lblWinnerPosition;
 	
 	private CButton btnSearch;
 	private CButton btnClear;
 	private CButton btnCancel;
 	private CButton btnPrint;
 	
-	private JTable tblCollegeDetails;
+	private JComboBox eventId;
+	private JComboBox winnerPosition;
 	
-	private CollegeLookupController collegeLookupController;
-	private CollegeLookupTableModel tableModel;
+	private JTable tblStudentDetails;
+	
+	private WinnerLookupController controller;
+	private WinnerLookupTableModel tableModel;
 	private CssaMDIForm mdiForm;
 	
+	
 	/**
-	 * @param collegeLookupController
+	 * @param controller
 	 * @param tableModel
+	 * @param mdiForm
 	 */
-	public CollegeLookupView(CollegeLookupController collegeLookupController,
-			CollegeLookupTableModel tableModel, CssaMDIForm mdiForm) {
+	public WinnerLookupView(WinnerLookupController controller,
+			WinnerLookupTableModel tableModel, CssaMDIForm mdiForm) {
 		super();
-		this.collegeLookupController = collegeLookupController;
+		this.controller = controller;
 		this.tableModel = tableModel;
 		this.mdiForm = mdiForm;
 	}
-	/**
-	 * default constructor
-	 */
-	public CollegeLookupView() {
-		this.tableModel = new CollegeLookupTableModel();
+	public void showWinnerLookup() {
+		JPanel panel = new JPanel();
+		panel.add(getStudentLookupDetailsBody(), BorderLayout.CENTER);
+		mdiForm.addChild(panel, "Winner Lookup Form");
 		
 	}
 	
-	/**
-	 * display college lookup screen
-	 */
-	public void showCollegeLookupScreen() {
-		JPanel panel = new JPanel();
-		panel.add(getEventDetailsBody(),BorderLayout.CENTER);
-		mdiForm.addChild(panel, "College Lookup Form");
-	}
-	
-	public JPanel getCollegeDetailsPanel() {
+	private JPanel getMianPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = null;
 		
-		lblCollegeId = new CLabel("College Id:");
+		lblEventId = new CLabel("Event Id:");
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(10, 5, 5, 5);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		panel.add(lblCollegeId,constraints);
+		panel.add(lblEventId,constraints);
 		
-		txtCollegeId = new CTextField();
+		eventId = new JComboBox();
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		panel.add(txtCollegeId, constraints);
+		panel.add(eventId, constraints);
 		
-		lblCollegeName = new CLabel("College Name:");
+		lblWinnerPosition = new CLabel("Winning Position");
 		constraints = new GridBagConstraints();
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		panel.add(lblCollegeName,constraints);
+		panel.add(lblWinnerPosition,constraints);
 		
-		txtCollegeName =  new CTextField();
+		winnerPosition =  new JComboBox();
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
 		constraints.gridy = 1;
-		panel.add(txtCollegeName, constraints);
+		panel.add(winnerPosition, constraints);
 		
 		return panel;
-		
 	}
 	
-	public JPanel getButtonPanel() {
+	
+	private  JPanel getButtonPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = null;
@@ -128,7 +119,7 @@ public class CollegeLookupView {
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		panel.add(btnSearch, constraints);
-		btnSearch.addActionListener(collegeLookupController);
+		btnSearch.addActionListener(controller);
 
 		constraints = new GridBagConstraints();
 		btnClear = new CButton("Clear");
@@ -139,7 +130,7 @@ public class CollegeLookupView {
 		constraints.gridx = 3;
 		constraints.gridy = 0;
 		panel.add(btnClear, constraints);
-		btnClear.addActionListener(collegeLookupController);
+		btnClear.addActionListener(controller);
 
 		constraints = new GridBagConstraints();
 		btnCancel = new CButton("Cancel");
@@ -149,7 +140,7 @@ public class CollegeLookupView {
 		constraints.gridx = 4;
 		constraints.gridy = 0;
 		panel.add(btnCancel, constraints);
-		btnCancel.addActionListener(collegeLookupController);
+		btnCancel.addActionListener(controller);
 		
 		constraints = new GridBagConstraints();
 		btnPrint = new CButton("Print");
@@ -159,30 +150,30 @@ public class CollegeLookupView {
 		constraints.gridx = 5;
 		constraints.gridy = 0;
 		panel.add(btnPrint, constraints);
-		btnPrint.addActionListener(collegeLookupController);
+		btnPrint.addActionListener(controller);
 		
 		return panel;
 	}
 	
-	public JPanel getTablePanel() {
+	private  JPanel getTablePanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		
-		tblCollegeDetails = new JTable(tableModel);
-		tblCollegeDetails.setRowHeight(20);
-		tblCollegeDetails.setFillsViewportHeight(true);
-		tblCollegeDetails.setAutoCreateRowSorter(true);
-		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
+		tblStudentDetails = new JTable(tableModel);
+		tblStudentDetails.setFillsViewportHeight(true);
+		tblStudentDetails.setRowHeight(20);
+		tblStudentDetails.setAutoCreateRowSorter(true);
+		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int w = d.width - 50;
-		scrollPane.setMinimumSize(new Dimension(w, 400));
-		scrollPane.setMaximumSize(new Dimension(w, 400));
-		scrollPane.setPreferredSize(new Dimension(w, 400));
+		int width = d.width - 50;
+		scrollPane.setMinimumSize(new Dimension(width, 400));
+		scrollPane.setMaximumSize(new Dimension(width, 400));
+		scrollPane.setPreferredSize(new Dimension(width, 400));
 		panel.add(scrollPane, BorderLayout.CENTER);
-		tblCollegeDetails.addMouseListener(collegeLookupController);
+		tblStudentDetails.addMouseListener(controller);
+
 		return panel;
 	}
-	
 	public JPanel getTopPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -192,12 +183,12 @@ public class CollegeLookupView {
 		constraints.gridx = 1;
 		constraints.gridy = 5;
 		constraints.anchor = GridBagConstraints.WEST;
-		panel.add(getCollegeDetailsPanel(), constraints);
+		panel.add(getMianPanel(), constraints);
 
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
 		constraints.gridy = 6;
-		constraints.insets = new Insets(10, 0, 10, 0);
+		constraints.insets = new Insets(10, 0,10, 0);
 		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(getButtonPanel(), constraints);
 		
@@ -224,74 +215,50 @@ public class CollegeLookupView {
 		return panel;
 	}
 	
-	public JPanel getEventDetailsBody() {
+	public JPanel getStudentLookupDetailsBody() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(getTopPanel(), BorderLayout.NORTH);
 		panel.add(getBottomPannel(), BorderLayout.CENTER);
+
 		return panel;
 	}
+	/**
+	 * @return the eventId
+	 */
+	public JComboBox getEventId() {
+		return eventId;
+	}
+	/**
+	 * @param eventId the eventId to set
+	 */
+	public void setEventId(JComboBox eventId) {
+		this.eventId = eventId;
+	}
+	/**
+	 * @return the winnerPosition
+	 */
+	public JComboBox getWinnerPosition() {
+		return winnerPosition;
+	}
+	/**
+	 * @param winnerPosition the winnerPosition to set
+	 */
+	public void setWinnerPosition(JComboBox winnerPosition) {
+		this.winnerPosition = winnerPosition;
+	}
+	/**
+	 * @return the tblStudentDetails
+	 */
+	public JTable getTblStudentDetails() {
+		return tblStudentDetails;
+	}
+	/**
+	 * @param tblStudentDetails the tblStudentDetails to set
+	 */
+	public void setTblStudentDetails(JTable tblStudentDetails) {
+		this.tblStudentDetails = tblStudentDetails;
+	}
+	
 
-	
-	/**
-	 * this method return college name
-	 * @return collegeName
-	 */
-	public String getCollegeName() {
-		return txtCollegeName.getText();
-	}
-	
-	/**
-	 * method to set the college name
-	 * @param collegeName
-	 */
-	public void setCollegeName(String collegeName) {
-		txtCollegeName.setText(collegeName);
-	}
-	
-	/**
-	 * method to get the college Id
-	 * @return collegeId
-	 */
-	public String getCollegeId() {
-		return txtCollegeId.getText();
-	}
-	
-	/**
-	 * method to set the college id
-	 * @param collegeId
-	 */
-	public void setCollegeId(String collegeId) {
-		txtCollegeId.setText(collegeId);
-	}
-	/**
-	 * @return the tblCollegeDetails
-	 */
-	public JTable getTblCollegeDetails() {
-		return tblCollegeDetails;
-	}
-	/**
-	 * @param tblCollegeDetails the tblCollegeDetails to set
-	 */
-	public void setTblCollegeDetails(JTable tblCollegeDetails) {
-		this.tblCollegeDetails = tblCollegeDetails;
-	}
-	/**
-	 * @return the btnPrint
-	 */
-	public CButton getBtnPrint() {
-		return btnPrint;
-	}
-	/**
-	 * @param btnPrint the btnPrint to set
-	 */
-	public void setBtnPrint(CButton btnPrint) {
-		this.btnPrint = btnPrint;
-	}
-	
-	
-	
 }
-	
-
-

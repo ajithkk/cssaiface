@@ -111,7 +111,9 @@ public class StudentLookupController implements ActionListener, MouseListener, C
 				studentDetails = transaction.loadAll(student);
 				tableModel.setStudents(studentDetails);
 			} catch (IfaceException e) {
+				
 				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
 			}
 			
 		/*}*/

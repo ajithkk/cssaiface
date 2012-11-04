@@ -136,6 +136,7 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 			tableModel.setResultsTableBos(winnersList);
 		} catch (IfaceException e) {
 			new ErrorDialog(e).setVisible(true);
+			e.printStackTrace();
 		}
 	}
 

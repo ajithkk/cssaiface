@@ -87,7 +87,7 @@ public class CSSAConstants {
 	public static final String WINNERS_STUDENT_ID = "STUDENT_ID";
 	public static final String WINNERS_EVENT_ID = "EVENT_ID";
 	public static final String WINNERS_EVENT_GROUP_ID = "GROUP_ID";
-	public static final String WINNERS_RESULT_STATUS = "RESULT_STATUS";
+	public static final String WINNERS_RESULT_STATUS = "WINNER_STATUS";
 	public static final String WINNERS_MARK = "MARK";
 	
 	public static final String SEMINAR_DETAILS_SNO = "SNO";
@@ -108,7 +108,7 @@ public class CSSAConstants {
 	public static final String TIMESHEET_DAY = "DAY";
 	
 	public static final String[] EVENT_DETAILS_COLUMN_NAMES = {"SNO", "EVENT CODE NAME", "EVENT NAME", "NO OF PARTICIPANTS", "POINTS" };
-	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS","STATUS"};
+	public static final String[] COLLEGE_DETAILS_COLUMN_NAMES = {"SNO","COLLEGE ID", "COLLEGE NAME", "ADDRESS", "PHONE NUMBER","NUMBER OF PARTICIPANTS","STATUS","POINTS"};
 	public static final String[] COLLEGE_INITIAL_DETAILS_COLUMN_NAMES = {"SNO","STUDENT ID", "STUDENT NAME", "EVENTS"};
 	public static final String[] STUDENT_LOOKUP_COLUMN_NAMES = {"SNO","COLLEGE ID","COLLEGE NAME","STUDENT ID","STUDENT NAME","PHONE NUMBER","POINT","ACCOMMODATION","ACTIVE"};
 	public static final String[] INSERT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};

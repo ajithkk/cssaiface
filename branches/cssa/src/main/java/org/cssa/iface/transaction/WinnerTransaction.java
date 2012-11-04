@@ -44,7 +44,7 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 		return 0;
 	}
 	
-	public int[] saveAll(List<InsertResult> insertResults) throws IfaceException {
+	public int[] saveAll(List<InsertResult> insertResults, String position) throws IfaceException {
 		
 		int[]  result;
 		double teamPoint = 0;
@@ -60,7 +60,7 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 			parameterMap.put(1, inResult.getCollegeId());
 			parameterMap.put(2, inResult.getStudentId());
 			parameterMap.put(3, inResult.getEventName());
-			parameterMap.put(4, inResult.getEventStatus());
+			parameterMap.put(4, position);
 			parameterMap.put(5, inResult.getGroupName());
 			parameterMap.put(6, inResult.getMark());
 			parameterList.add(parameterMap);
@@ -75,7 +75,7 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 		collegePointMap.put(1, collegePoint);
 		collegePointMap.put(2, insertResults.get(0).getCollegeId());
 		
-		dbEngineImpl.executeQuery(collegePointMap, CSSAQuery.INSERT_COLLEGE_POINTS);
+		dbEngineImpl.executeUpdate(collegePointMap, CSSAQuery.INSERT_COLLEGE_POINTS);
 		Map<Integer, Object> studentPoint;
 		List<Map<Integer, Object>> studentList = new ArrayList<Map<Integer,Object>>();
 		

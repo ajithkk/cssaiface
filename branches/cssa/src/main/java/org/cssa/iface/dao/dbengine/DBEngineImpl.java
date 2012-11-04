@@ -194,7 +194,7 @@ public class DBEngineImpl {
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
 			rollback(con);
-			log.error("Exception"+  e);
+			log.error("Exception "+  e.getMessage());
 			throw new IfaceException("Sql exception in Query execution",e);
 			
 		}finally {
@@ -253,6 +253,7 @@ public class DBEngineImpl {
 	 */
 	public int[] executeBatch(List<Map<Integer, Object>> batchParameterList, String sqlCommand) throws IfaceException {
 		int returnId[] = null;
+		log.info(sqlCommand);
 		PreparedStatement statement = null;
 		try {
 			con =getConnection();
@@ -260,6 +261,7 @@ public class DBEngineImpl {
 			log.error("Exception"+ e);
 			throw new IfaceException("Driver is not fount in connection",e);
 		} catch (SQLException e) {
+			log.error("Exception"+ e);
 			throw new IfaceException("Sql exception in connection",e);
 		}
 		try {
@@ -270,7 +272,7 @@ public class DBEngineImpl {
 			commit(con);
 		} catch (SQLException e) {
 			rollback(con);
-			log.error("Exception"+ e);
+			log.error(" Exception "+ e.getMessage());
 			throw new IfaceException("Sql exception in Query execution",e);
 			
 		}finally {

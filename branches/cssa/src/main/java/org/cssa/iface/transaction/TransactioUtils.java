@@ -98,7 +98,7 @@ public class TransactioUtils {
 		
 	}
 	
-	public List<InsertResult> getParticipantsList(InsertResult insertResult) throws IfaceException {
+	public List<InsertResult> getParticipantsList(InsertResult insertResult , boolean editMode) throws IfaceException {
 		
 		String query = "";
 		DBEngineImpl dbEngineImpl = new DBEngineImpl();
@@ -109,12 +109,24 @@ public class TransactioUtils {
 				EventsTransaction eventsTransaction = new EventsTransaction();
 				Events events = eventsTransaction.load(insertResult.getEventName());
 				if(events.getMaxNoOfParticipants() > 1) {
-					query = QueryServices.getParticipationGroupSearch(insertResult);
+					if(editMode){
+						query = QueryServices.getEditParticipationGroupSearch(insertResult);
+					}else {
+						query = QueryServices.getParticipationGroupSearch(insertResult);
+					}
 				} else {
-					 query = QueryServices.getParticipationSingleSearch(insertResult);
+					if(editMode) {
+					 query = QueryServices.getEditParticipationSingleSearch(insertResult);
+					} else {
+						query = QueryServices.getParticipationSingleSearch(insertResult);
+					}
 				}
 			} else {
-				query = QueryServices.getParticipationSingleSearch(insertResult);
+				if(editMode) {
+					query = QueryServices.getEditParticipationSingleSearch(insertResult);
+				}else {
+					query = QueryServices.getParticipationSingleSearch(insertResult);
+				}
 			}
 			
 			try { 
@@ -129,6 +141,10 @@ public class TransactioUtils {
 					participant.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
 					participant.setEventName(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
 					participant.setGroupName(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
+					if(editMode) {
+						participant.setEventStatus(res.getString(CSSAConstants.RESULTS_RESULT_STATUS));
+						participant.setMark(res.getFloat(CSSAConstants.RESULTS_MARK));
+					}
 					participantList.add(participant);
 					
 				}
@@ -172,7 +188,7 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 					participant.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
 					participant.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
 					participant.setEventStatus(res.getString(CSSAConstants.RESULTS_RESULT_STATUS));
-					participant.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
+					//participant.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
 					participant.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
 					participant.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
 					participant.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));

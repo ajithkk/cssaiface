@@ -105,7 +105,7 @@ public class CSSAQuery {
 	
 	
 	public static final String INSERT_COLLEGE_POINTS = "UPDATE "+CSSAConstants.COLLEGE_DETAILS_TABLE +" SET "
-			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS +"= ?,"
+			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS +"= ?"
 			 +" WHERE "
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"= ?";
 	
@@ -202,7 +202,7 @@ public class CSSAQuery {
 	
 	
 	public static final String INSERT_STTUDENT_POINTS = "UPDATE "+CSSAConstants.STUDENTS_DETAILS_TABLE +" SET "
-			+CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT +" = ? , "
+			+CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT +" = ?  "
 			+" WHERE "
 			+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" = ? ";
 	
@@ -309,9 +309,9 @@ public class CSSAQuery {
 			+CSSAConstants.RESULTS_MARK +" FROM "+CSSAConstants.RESULTS_TABLE +" WHERE "+
 			CSSAConstants.RESULTS_STUDENT_ID +" = ? AND "+ CSSAConstants.RESULTS_STUDENT_ID +" = ?"; 
 	
-	public static final String UPDATE_RESULT = "UPDATE "+CSSAConstants.RESULTS_TABLE +" SET" +
-			CSSAConstants.RESULTS_RESULT_STATUS +" = ?"+
-			CSSAConstants.RESULTS_MARK + "= ? WHERE "+ CSSAConstants.RESULTS_STUDENT_ID +" = ? AND "
+	public static final String UPDATE_RESULT = "UPDATE "+CSSAConstants.RESULTS_TABLE +" SET " +
+			CSSAConstants.RESULTS_RESULT_STATUS +" = ? , "+
+			CSSAConstants.RESULTS_MARK + " = ? WHERE "+ CSSAConstants.RESULTS_STUDENT_ID +" = ? AND "
 			+CSSAConstants.RESULTS_COLLEGE_ID +" = ?  AND "+ CSSAConstants.RESULTS_EVENT_ID +" = ? "; 
 	
 	

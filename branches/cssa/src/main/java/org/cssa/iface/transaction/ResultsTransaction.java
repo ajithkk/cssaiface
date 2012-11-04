@@ -120,4 +120,20 @@ public class ResultsTransaction implements Transaction<Results> {
 		int[] res = dbEngineImpl.executeBatch(batchParameterList, CSSAQuery.INSERT_RESULT);
 		return res;
 	}
+	public int[] update(List<InsertResult> result, String eventStatus) throws IfaceException {
+		dbEngineImpl = new DBEngineImpl();
+		List<Map<Integer, Object>> batchParameterList = new ArrayList<Map<Integer,Object>>();
+		for(InsertResult result2: result) {
+			Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+			parameterMap.put(4, result2.getCollegeId());
+			parameterMap.put(3, result2.getStudentId());
+			parameterMap.put(5, result2.getEventName());
+			parameterMap.put(1, eventStatus);
+			parameterMap.put(2, result2.getMark());
+			batchParameterList.add(parameterMap);
+		}
+		int[] res = dbEngineImpl.executeBatch(batchParameterList, CSSAQuery.UPDATE_RESULT);
+		return res;
+	}
+	
 }

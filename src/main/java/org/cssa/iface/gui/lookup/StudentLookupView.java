@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -211,9 +212,11 @@ public class StudentLookupView {
 		tblStudentDetails.setRowHeight(20);
 		tblStudentDetails.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
-		scrollPane.setMinimumSize(new Dimension(700, 400));
-		scrollPane.setMaximumSize(new Dimension(700, 400));
-		scrollPane.setPreferredSize(new Dimension(700, 400));
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = d.width - 50;
+		scrollPane.setMinimumSize(new Dimension(width, 400));
+		scrollPane.setMaximumSize(new Dimension(width, 400));
+		scrollPane.setPreferredSize(new Dimension(width, 400));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		tblStudentDetails.addMouseListener(studentLookupController);
 

@@ -5,10 +5,11 @@ package org.cssa.iface.gui.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeInitialViewController;
@@ -20,54 +21,19 @@ import org.cssa.iface.gui.result.InsertResultController;
 import org.cssa.iface.gui.result.ResultInsertController;
 import org.cssa.iface.gui.search.SearchTableController;
 import org.cssa.iface.gui.timesheet.SelectDateDialogController;
-import org.cssa.iface.gui.timesheet.TimeSheetController;
+import org.cssa.iface.services.MenuConstants;
+import org.cssa.iface.util.TableStoreXML;
 
 /**
  * @author ajith
  *
  */
-public class CssaMenuBar extends JMenuBar implements ActionListener {
+public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstants {
 	
-	public static final String MNU_FILE = "File";
-	public static final String MNU_FILE_NEWCOLLEGE = "New College";
-	public static final String MNU_FILE_NEWEVENT = "New Event";
-	public static final String MNU_FILE_TIME_SHEET = "TimeSheet";
-	public static final String MNU_FILE_EXIT = "Exit";
-	
-	public static final String MNU_MAINTAIN = "Maintain";
-	public static final String MNU_MAINTAIN_COLLEGE = "College";
-	public static final String MNU_MAINTAIN_STUDENT = "Student";
-	public static final String MNU_MAINTAIN_GROUP_EVENT = "Group";
-	public static final String MNU_MAINTAIN_RESULT = "Result";
-	public static final String MNU_MAINTAIN_WINNERS = "Winners";
-	
-	public static final String MNU_REPORT = "Report";
-	public static final String MNU_REPORT_COLLEGE = "College";
-	public static final String MNU_REPORT_STUDENT = "Participants";
-	public static final String MNU_REPORT_RESULT = "Result";
-	public static final String MNU_REPORT_WINNERS = "Winners";
-	public static final String MNU_REPORT_EVENT = "Event";
-	
-	public static final String ACT_MNU_MAINTAIN = "Maintain";
-	public static final String ACT_MNU_MAINTAIN_COLLEGE = "Maintain_College";
-	public static final String ACT_MNU_MAINTAIN_STUDENT = "Maintain_Participants";
-	public static final String ACT_MNU_MAINTAIN_GROUP_EVENT = "Maintain_Group";
-	public static final String ACT_MNU_MAINTAIN_RESULT = "Maintain_Result";
-	public static final String ACT_MNU_MAINTAIN_WINNERS = "Maintain_Winners";
-	
-	public static final String ACT_MNU_REPORT = "Report";
-	public static final String ACT_MNU_REPORT_COLLEGE = "Report_College";
-	public static final String ACT_MNU_REPORT_STUDENT = "Report_Participants";
-	public static final String ACT_MNU_REPORT_RESULT = "Report_Result";
-	public static final String ACT_MNU_REPORT_WINNERS = "Report_Winners";
-	public static final String ACT_MNU_REPORT_EVENT = "Report_Event";
-	
-	public static final String MNU_HELP = "Help";
-	public static final String MNU_HELP_CONTENT = "Help Content";
-	public static final String MNU_HELP_ABOUT = "About";
-	
-	private static final String SEPRATOR = "seprator";
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private CssaMDIForm cssaMDIForm = null;
 	private CssaMenuController controller = null;
 	
@@ -82,7 +48,6 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		CssaMenuItem mnuItemNewEvent = new CssaMenuItem(MNU_FILE_NEWEVENT);
 		CssaMenuItem mnuItemExit = new CssaMenuItem(MNU_FILE_EXIT);
 		CssaMenuItem mnuItemSeminar = new CssaMenuItem(MNU_FILE_TIME_SHEET);
-		JMenuItem mnuItemExit1 = new JMenuItem(MNU_FILE_EXIT);
 		
 		mnuItemNewCollege.addActionListener(this);
 		mnuItemNewCollege.setActionCommand(MNU_FILE_NEWCOLLEGE);
@@ -110,7 +75,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 	public CssaMenu getMaintainMenu() {
 		
 		Vector<Object> maintainMenu = new Vector<Object>();
-			CssaMenuItem mnuItemCollege = new CssaMenuItem(MNU_MAINTAIN_COLLEGE);
+		CssaMenuItem mnuItemCollege = new CssaMenuItem(MNU_MAINTAIN_COLLEGE);
 		mnuItemCollege.addActionListener(this);
 		mnuItemCollege.setActionCommand(MNU_MAINTAIN_COLLEGE);
 		
@@ -144,6 +109,25 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		mnuMaintain.addMenuItems();
 		return mnuMaintain;
 		
+	}
+	
+	public CssaMenu getDatabaseMenu() {
+		Vector<Object> databseMenu = new Vector<Object>();
+		TableStoreXML tableStoreXML = new TableStoreXML();
+		Map<String, String> tableMap = tableStoreXML.getTableStoreMap();
+		
+		Set<Map.Entry<String, String>> tableSet = tableMap.entrySet();
+		for(Map.Entry<String, String> set : tableSet) {
+			CssaMenuItem menuItem = new CssaMenuItem(set.getKey().toLowerCase());
+			menuItem.setActionCommand(set.getKey());
+			menuItem.addActionListener(this);
+			databseMenu.addElement(menuItem);
+		}
+		CssaMenu mnuDatabase = new CssaMenu("Database");
+		mnuDatabase.setChildren(databseMenu);
+		mnuDatabase.addMenuItems();
+		
+		return mnuDatabase;
 	}
 	
 	public CssaMenu getReportMenu() {
@@ -202,8 +186,10 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 	public CssaMenuBar() {
 		this.add(getFileMenu());
 		this.add(getMaintainMenu());
+		this.add(getDatabaseMenu());
 		this.add(getReportMenu());
 		this.add(getHelpMenu());
+		
 	}
 	
 	public CssaMenuBar(CssaMDIForm cssaMDIForm) {
@@ -254,9 +240,10 @@ public class CssaMenuBar extends JMenuBar implements ActionListener {
 		} else if (CssaMenuBar.MNU_MAINTAIN_STUDENT.equals(actionCommand)) {
 			new StudentLookupController(cssaMDIForm).askStudentLookupsereen();
 		} else if(CssaMenuBar.MNU_MAINTAIN_RESULT.equals(actionCommand)) {
-			new ResultInsertController(cssaMDIForm).askResultInsertView();
+			new ResultInsertController(cssaMDIForm, true).askResultInsertView();
 		} else if(CssaMenuBar.MNU_MAINTAIN_WINNERS.equals(actionCommand)) {
 			new InsertResultController(cssaMDIForm).askInsertResultView();
+			
 		} else if(CssaMenuBar.ACT_MNU_REPORT_COLLEGE.equals(actionCommand)) {
 			new CollegeLookupController(cssaMDIForm,true).askCollegeLookupView();
 		} else if(CssaMenuBar.ACT_MNU_REPORT_STUDENT.equals(actionCommand)) {

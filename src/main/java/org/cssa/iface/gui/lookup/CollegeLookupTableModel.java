@@ -75,6 +75,7 @@ public class CollegeLookupTableModel extends AbstractTableModel {
 			case 4 : return college.getCollegePhone();
 			case 5 : return college.getNoOfParticipants();
 			case 6 : return college.isStatus();
+			case 7 : return college.getCollegePoints();
 			default : return "";
 		}
 		

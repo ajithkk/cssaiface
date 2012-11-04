@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.beans.PropertyVetoException;
 import java.util.Stack;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -69,7 +70,7 @@ public class CssaMDIForm extends JFrame {
 		CssaMenuController controller = new CssaMenuController(this);
 		controller.getMenuBar();
 		
-		CssaToolBar toolBar = new CssaToolBar();
+		CssaToolBar toolBar = new CssaToolBar(this);
 		toolBar.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 		toolBarPanel.add(toolBar,BorderLayout.NORTH);
 	}
@@ -247,6 +248,26 @@ public class CssaMDIForm extends JFrame {
 		this.toolBarPanel = toolBarPanel;
 	}
 	
+	
+	public void addToolBar(CssaToolBar toolBar) {
+		toolBarPanel.add(toolBar);
+		toolBar.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+		toolBarPanel.revalidate();
+		
+	}
+	
+	public void removeToolBar(CssaToolBar toolBar) {
+		toolBarPanel.remove(toolBar);
+		toolBarPanel.revalidate();
+	}
+	
+	public void refreshToolBars(Vector<CssaToolBar> toolBars){
+        getToolBarPanel().removeAll();
+        getToolBarPanel().repaint();
+        for(int i=0;i<toolBars.size();i++){
+            addToolBar(toolBars.elementAt(i));
+        }
+    }
 	
 	
 }

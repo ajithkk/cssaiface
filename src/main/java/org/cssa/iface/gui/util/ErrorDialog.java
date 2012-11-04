@@ -148,7 +148,7 @@ public class ErrorDialog extends JDialog {
      * 
      */
     JComponent createErrorMessage(Throwable t) {
-        String txt = t.getLocalizedMessage();
+        String txt = t.getMessage();
         JEditorPane message = new JEditorPane();
         message.setContentType("text/plain");
         message.setEditable(false);

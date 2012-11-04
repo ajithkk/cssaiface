@@ -19,9 +19,16 @@ import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.TransactioUtils;
 import org.cssa.iface.transaction.WinnerTransaction;
+import org.cssa.iface.util.CssaMessage;
+/**
+ * 
+ * @author admin
+ *
+ */
 
 public class InsertResultController implements ActionListener, LookupService<InsertResult>{
 
+	private boolean editMode;
 	private Results results;
 	private List<Events> events;
 	private CssaMDIForm mdiForm;
@@ -36,8 +43,13 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 	private WinnerTransaction winnerTransaction;
 	
 	public InsertResultController(CssaMDIForm mdiForm) {
-		super();
+		this(mdiForm, false);
+		
+	}
+	
+	public InsertResultController(CssaMDIForm mdiForm, boolean editMode) {
 		this.mdiForm = mdiForm;
+		this.editMode = editMode;
 		tableModel = new InsertResultTableModel();
 		studentDetails = new StudentDetails();
 		transactioUtils = new TransactioUtils();
@@ -70,9 +82,13 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 	private void performSaveAction() {
 		if(null != insertResults) {
 			try {
-				winnerTransaction.saveAll( insertResults);
+				String winnerStatus  = resultView.getCmbResultStatus().getSelectedIndex() > 0 ?  resultView.getCmbResultStatus().getSelectedItem().toString() : null;
+				if(null == winnerStatus) {
+					CssaMessage.informationMessage(mdiForm, "Please select winner position");
+				} else      
+				winnerTransaction.saveAll( insertResults,winnerStatus );
 			} catch (IfaceException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 				new ErrorDialog(e).setVisible(true);
 			}
 		}
@@ -162,6 +178,7 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 			
 		} catch (IfaceException e1) {
 			new ErrorDialog(e1).setVisible(true);
+			e1.printStackTrace();
 		}
 		resultView.setTxtEventName(e.getEventName());
 		try {
@@ -170,6 +187,7 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 			
 		} catch (IfaceException e1) {
 			new ErrorDialog(e1).setVisible(true);
+			e1.printStackTrace();
 		}
 		
 	}

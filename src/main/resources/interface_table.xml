@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:cssa xmlns:ns2=" org.cssa.iface.bo">
     <table>
-        <tableName>Day1</tableName>
-        <scriptFile>10/19/2012</scriptFile>
+        <tableName>EVENTS</tableName>
+        <scriptFile></scriptFile>
     </table>
     <table>
-        <tableName>Day2</tableName>
-        <scriptFile>10/20/2012</scriptFile>
+        <tableName>EVENT_DETAILS</tableName>
+        <scriptFile></scriptFile>
     </table>
     <table>
-        <tableName>Day3</tableName>
-        <scriptFile>10/21/2012</scriptFile>
+        <tableName>COLLEGE_DETAILS</tableName>
+        <scriptFile></scriptFile>
+    </table>
+    <table>
+        <tableName>STUDENTS_DETAILS</tableName>
+        <scriptFile></scriptFile>
+    </table>
+    <table>
+        <tableName>RESULTS</tableName>
+        <scriptFile></scriptFile>
+    </table>
+    <table>
+        <tableName>WINNERS</tableName>
+        <scriptFile></scriptFile>
+    </table>
+    <table>
+        <tableName>TIMESHEET</tableName>
+        <scriptFile></scriptFile>
     </table>
 </ns2:cssa>

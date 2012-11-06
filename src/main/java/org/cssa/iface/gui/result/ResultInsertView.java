@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -215,6 +216,17 @@ public class ResultInsertView {
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(controller);
 		
+		constraints = new GridBagConstraints();
+		btnInsert = new CButton("Save");
+		btnInsert.setMnemonic('a');
+		btnInsert.setActionCommand(SAVE);
+		constraints.anchor = GridBagConstraints.WEST;
+		constraints.insets = new Insets(0, 5, 5, 5);
+		constraints.gridx =6;
+		constraints.gridy = 0;
+		panel.add(btnInsert, constraints);
+		btnInsert.addActionListener(controller);
+		
 		return panel;
 	}
 	
@@ -228,9 +240,11 @@ public class ResultInsertView {
 		tblParticipants.setDefaultEditor(Float.class, new FloatEditor(0.0, 500.0));
 		tblParticipants.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(tblParticipants);
-		scrollPane.setMinimumSize(new Dimension(700, 400));
-		scrollPane.setMaximumSize(new Dimension(700, 400));
-		scrollPane.setPreferredSize(new Dimension(700, 400));
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = d.width - 50;
+		scrollPane.setMinimumSize(new Dimension(w, 350));
+		scrollPane.setMaximumSize(new Dimension(w, 350));
+		scrollPane.setPreferredSize(new Dimension(w, 350));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		//tblParticipants.addMouseListener(controller);
 		return panel;
@@ -289,7 +303,7 @@ public class ResultInsertView {
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		constraints.insets = new Insets(10, 5, 0, 0);
-		panel.add(getSideButtonPanel(), constraints);
+		//panel.add(getSideButtonPanel(), constraints);
 
 		return panel;
 	}

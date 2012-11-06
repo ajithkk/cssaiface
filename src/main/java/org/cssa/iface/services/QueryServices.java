@@ -9,6 +9,7 @@ import java.util.Map;
 import org.cssa.iface.bo.CollegeDetails;
 import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.StudentDetails;
+import org.cssa.iface.bo.Winners;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
 
@@ -409,12 +410,12 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 			}
 		}
 		
-		if(null != results.getStudentId()) {
+		/*if(null != results.getStudentId()) {
 			if(!results.getStudentId().isEmpty()) {
 				winnersGroupSearch.append(" AND ");
-				winnersGroupSearch.append(CSSAConstants.EVENT_DETAILS_TABLE +"."+ CSSAConstants.EVENT_DETAILS_STUDENT_ID + "= '" +results.getStudentId() +"'");
+				winnersGroupSearch.append(CSSAConstants.RESULTS_TABLE +"."+ CSSAConstants.EVENT_DETAILS_STUDENT_ID + "= '" +results.getStudentId() +"'");
 			}
-		}
+		}*/
 		return winnersGroupSearch.toString();
 		
 	}
@@ -548,5 +549,37 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 		return eventSearch.toString();
 		
 	}
+	
+	public static String getSingleWinnersDetails(Winners winners) {
+		
+		StringBuilder winnersSingleSearch = new StringBuilder();	
+		winnersSingleSearch.append( "SELECT "
+			+CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_STUDENT_ID +" , "
+			+CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_COLLEGE_ID +" , "
+			+CSSAConstants.WINNERS_TABLE +"."+CSSAConstants.WINNERS_EVENT_ID +", "
+			+CSSAConstants.WINNERS_TABLE +"."+CSSAConstants.WINNERS_EVENT_GROUP_ID+","
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
+			+CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_MARK +","
+			+CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_RESULT_STATUS+"  FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +CSSAConstants.RESULTS_TABLE 
+			+" WHERE STUDENTS_DETAILS.STUDENT_ID = WINNERS.STUDENT_ID ");
+		if(null != winners.getEventId()) {
+			if(!winners.getEventId().isEmpty()) {
+				winnersSingleSearch.append(" AND ");
+				winnersSingleSearch.append(CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_EVENT_ID +"  = '"+ winners.getEventId() +"'");
+			}
+		}
+		if(null != winners.getWinnerStatus()) {
+			if(!winners.getWinnerStatus().isEmpty()) {
+				winnersSingleSearch.append(" AND ");
+				winnersSingleSearch.append(CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_RESULT_STATUS +"  = '"+ winners.getWinnerStatus() +"'");
+			}
+		}
+	
+		return winnersSingleSearch.toString();
+	}
+	
 	
 }

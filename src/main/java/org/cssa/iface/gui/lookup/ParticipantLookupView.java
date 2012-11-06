@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -207,9 +208,11 @@ public class ParticipantLookupView {
 		tblParticipants.setFillsViewportHeight(true);
 		tblParticipants.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblParticipants);
-		scrollPane.setMinimumSize(new Dimension(700, 400));
-		scrollPane.setMaximumSize(new Dimension(700, 400));
-		scrollPane.setPreferredSize(new Dimension(700, 400));
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = d.width - 50;
+		scrollPane.setMinimumSize(new Dimension(w, 400));
+		scrollPane.setMaximumSize(new Dimension(w, 400));
+		scrollPane.setPreferredSize(new Dimension(w, 400));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		//tblParticipants.addMouseListener(controller);
 		return panel;
@@ -242,7 +245,7 @@ public class ParticipantLookupView {
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints;
 		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
+		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.insets = new Insets(10, 5, 0, 10);
 		constraints.gridx = 0;
 		constraints.gridy = 0;

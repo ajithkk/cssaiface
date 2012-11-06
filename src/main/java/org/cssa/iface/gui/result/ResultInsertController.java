@@ -24,6 +24,7 @@ import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.ResultsTransaction;
 import org.cssa.iface.transaction.TransactioUtils;
+import org.cssa.iface.util.CssaMessage;
 import org.cssa.iface.util.EventStorageXML;
 
 /**
@@ -95,6 +96,7 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 		if(!editMode) {
 			try {
 				resultsTransaction.save(tableModel.getResultList(), resultInsertView.getCmbEventStage().getSelectedItem().toString());
+			     CssaMessage.informationMessage(mdiForm, "Successuflly insert the result" , "Insert Result");
 			} catch (IfaceException e) {
 				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
@@ -102,6 +104,7 @@ public class ResultInsertController implements ActionListener,CollegeLookupServi
 		} else {
 			try {
 				resultsTransaction.update(tableModel.getResultList(), resultInsertView.getCmbEventStage().getSelectedItem().toString());
+				CssaMessage.informationMessage(mdiForm, "Successuflly update the result" , "Update Result");
 			} catch (IfaceException e) {
 				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();

@@ -115,6 +115,8 @@ public class CSSAConstants {
 	public static final String[] INSERT_RESULT_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME","MARK","EVENT STAGE"};
 	public static final String[] EVENT_RESULT_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","COLLEGE NAME", "STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "EVENT STAGE"};
 	public static final String[] TIMESHEET_COLUMN_NAMES = {"TIME ID","DATE","EVENT NAME","START TIME", "END TIME","EVENT ROUND","VENUE"};
+	public static final String[] WINNERS_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "POSITION"};
+	
 	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
 
 	public static final String HELP_FILE = "HelpSet.cs";

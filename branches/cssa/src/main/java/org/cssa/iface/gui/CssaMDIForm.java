@@ -256,18 +256,18 @@ public class CssaMDIForm extends JFrame {
 		
 	}
 	
+	public void refreshToolBars(Vector toolBars){
+        getToolBarPanel().removeAll();
+        getToolBarPanel().repaint();
+        for(int i=0;i<toolBars.size();i++){
+            addToolBar((CssaToolBar) toolBars.elementAt(i));
+        }
+    }
+	
 	public void removeToolBar(CssaToolBar toolBar) {
 		toolBarPanel.remove(toolBar);
 		toolBarPanel.revalidate();
 	}
-	
-	public void refreshToolBars(Vector<CssaToolBar> toolBars){
-        getToolBarPanel().removeAll();
-        getToolBarPanel().repaint();
-        for(int i=0;i<toolBars.size();i++){
-            addToolBar(toolBars.elementAt(i));
-        }
-    }
 	
 	
 }

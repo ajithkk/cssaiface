@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.cssa.iface.bo.CollegeDetails;
@@ -16,9 +17,13 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.StudentLookupFormValidator;
 import org.cssa.iface.gui.student.StudentAndGroupEventController;
 import org.cssa.iface.gui.util.ErrorDialog;
+import org.cssa.iface.report.student.StudentDetailsReport;
 import org.cssa.iface.services.CollegeLookupService;
 import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.StudentTransaction;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author ajith
@@ -77,10 +82,29 @@ public class StudentLookupController implements ActionListener, MouseListener, C
 		} else if(StudentLookupView.SEARCH_COLLEGE_ID.equals(actionCommand)) {
 			CollegeLookupController collegeLookup = new CollegeLookupController(mdiForm, this);
 			collegeLookup.askCollegeLookupView();
+		} else if (StudentLookupView.PRINT.equals(actionCommand)) {
+			performPrintAction();
 		}
 		
 	}
 
+
+	private void performPrintAction() {
+		String FILE = Util.getReportHome()+"\\StudentDetailsReport.pdf";
+		List<StudentDetails> studentDetails = tableModel.getStudents();
+		if(null != studentDetails) {
+			StudentDetailsReport report = new StudentDetailsReport(FILE, studentDetails);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	private void clearActionPerformed() {
 		lookupView.setCollegeId("");

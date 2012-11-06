@@ -8,7 +8,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,6 +20,7 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
 import org.cssa.iface.gui.controls.CTextField;
+import org.cssa.iface.util.ImageUtil;
 
 /**
  * @author ajith
@@ -111,7 +114,8 @@ public class InsertResultView {
 		constraints.insets = new Insets(5, 0, 5, 2);
 		panel.add(txtStudentId, constraints);
 		
-		btnSearch = new CButton();
+		ImageIcon icon = new ImageIcon(new ImageUtil().getImage("search.gif"));
+		btnSearch = new CButton(icon);
 		btnSearch.setPreferredSize(new Dimension(40, 23));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -248,9 +252,11 @@ public class InsertResultView {
 		tblCollegeDetails.setRowHeight(20);
 		tblCollegeDetails.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
-		scrollPane.setMinimumSize(new Dimension(700, 300));
-		scrollPane.setMaximumSize(new Dimension(700, 300));
-		scrollPane.setPreferredSize(new Dimension(700, 300));
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = d.width - 50;
+		scrollPane.setMinimumSize(new Dimension(w, 360));
+		scrollPane.setMaximumSize(new Dimension(w, 360));
+		scrollPane.setPreferredSize(new Dimension(w, 360));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		//tblCollegeDetails.addMouseListener(controller);
 		return panel;

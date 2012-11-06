@@ -17,6 +17,7 @@ import org.cssa.iface.gui.events.EventsController;
 import org.cssa.iface.gui.lookup.CollegeLookupController;
 import org.cssa.iface.gui.lookup.ParticipantLookupController;
 import org.cssa.iface.gui.lookup.StudentLookupController;
+import org.cssa.iface.gui.lookup.WinnerLookupController;
 import org.cssa.iface.gui.result.InsertResultController;
 import org.cssa.iface.gui.result.ResultInsertController;
 import org.cssa.iface.gui.search.SearchTableController;
@@ -137,6 +138,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 		CssaMenuItem mnuItemStudents = new CssaMenuItem(MNU_REPORT_STUDENT);
 		CssaMenuItem mnuItemResult = new CssaMenuItem(MNU_REPORT_RESULT);
 		CssaMenuItem mnuItemEvent = new CssaMenuItem(MNU_REPORT_EVENT);
+		CssaMenuItem mnuItemWinners = new CssaMenuItem(MNU_REPORT_WINNERS);
 		
 		mnuItemCollege.addActionListener(this);
 		mnuItemCollege.setActionCommand(ACT_MNU_REPORT_COLLEGE);
@@ -146,6 +148,8 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 		mnuItemResult.setActionCommand(ACT_MNU_REPORT_RESULT);
 		mnuItemEvent.addActionListener(this);
 		mnuItemEvent.setActionCommand(ACT_MNU_REPORT_EVENT);
+		mnuItemWinners.addActionListener(this);
+		mnuItemWinners.setActionCommand(ACT_MNU_REPORT_WINNERS);
 		
 		reportMenu.addElement(mnuItemCollege);
 		reportMenu.addElement(mnuItemStudents);
@@ -153,7 +157,8 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 		reportMenu.addElement(mnuItemEvent);
 		reportMenu.addElement(SEPRATOR);
 		reportMenu.addElement(mnuItemResult);
-		
+		reportMenu.addElement(SEPRATOR);
+		reportMenu.addElement(mnuItemWinners);
 		
 		CssaMenu mnuReport = new CssaMenu(MNU_REPORT);
 		mnuReport.setChildren(reportMenu);
@@ -243,7 +248,6 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 			new ResultInsertController(cssaMDIForm).askResultInsertView();
 		} else if(CssaMenuBar.MNU_MAINTAIN_WINNERS.equals(actionCommand)) {
 			new InsertResultController(cssaMDIForm).askInsertResultView();
-			
 		} else if(CssaMenuBar.ACT_MNU_REPORT_COLLEGE.equals(actionCommand)) {
 			new CollegeLookupController(cssaMDIForm,true).askCollegeLookupView();
 		} else if(CssaMenuBar.ACT_MNU_REPORT_STUDENT.equals(actionCommand)) {
@@ -256,6 +260,8 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 			new SelectDateDialogController(cssaMDIForm).askDateDialog();
 		} else if (CssaMenuBar.MNU_MAINTAIN_GROUP_EVENT.equals(actionCommand)) {
 			new StudentLookupController(cssaMDIForm, true, false).askStudentLookupsereen();
+		} else if (ACT_MNU_REPORT_WINNERS.equals(actionCommand)) {
+			new WinnerLookupController(cssaMDIForm, true).askWinnerLookUp();
 		}
 			
 	}

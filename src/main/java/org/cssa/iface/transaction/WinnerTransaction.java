@@ -1,14 +1,19 @@
 package org.cssa.iface.transaction;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.cssa.iface.bo.InsertResult;
+import org.cssa.iface.bo.Winners;
 import org.cssa.iface.dao.dbengine.DBEngineImpl;
 import org.cssa.iface.exception.IfaceException;
+import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.infrastructure.CSSAQuery;
+import org.cssa.iface.services.QueryServices;
 
 public class WinnerTransaction implements Transaction<InsertResult>{
 	
@@ -40,8 +45,17 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 
 	@Override
 	public int delete(InsertResult object) throws IfaceException {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = -1;
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		if(null != object) {
+			Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+			parameterMap.put(1, object.getEventName());
+			parameterMap.put(2, object.getEventStatus());
+			parameterMap.put(3, object.getGroupName());
+			result = dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.DELETE_WINNER);
+			
+		}
+		return result;
 	}
 	
 	public int[] saveAll(List<InsertResult> insertResults, String position) throws IfaceException {
@@ -60,6 +74,9 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 			parameterMap.put(1, inResult.getCollegeId());
 			parameterMap.put(2, inResult.getStudentId());
 			parameterMap.put(3, inResult.getEventName());
+			if(null == position) {
+				position = inResult.getEventStatus();
+			}
 			parameterMap.put(4, position);
 			parameterMap.put(5, inResult.getGroupName());
 			parameterMap.put(6, inResult.getMark());
@@ -92,5 +109,36 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 		return result;
 		
 	}
+	
+	public List<InsertResult> load(Winners winner) throws IfaceException {
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		String sqlCammand = QueryServices.getSingleWinnersDetails(winner);
+		ResultSet res = dbEngineImpl.executeQuery(sqlCammand);
+		List<InsertResult> insertResults = new ArrayList<InsertResult>();
+		try {
+			while(res.next()) {
+				InsertResult insertResult = new InsertResult();
+				insertResult.setEventName(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+				insertResult.setStudentId(res.getString(CSSAConstants.WINNERS_STUDENT_ID));
+				insertResult.setCollegeId(res.getString(CSSAConstants.WINNERS_COLLEGE_ID));
+				insertResult.setGroupName(res.getString(CSSAConstants.WINNERS_EVENT_GROUP_ID));
+				insertResult.setMark(res.getFloat(CSSAConstants.WINNERS_MARK));
+				insertResult.setEventStatus(res.getString(CSSAConstants.WINNERS_RESULT_STATUS));
+				insertResult.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+				insertResult.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
+				insertResults.add(insertResult);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new IfaceException(e);
+		} finally { 
+			dbEngineImpl.closeResultSet(res);
+			
+		}
+		
+		return insertResults;
+	}
+	
 
 }

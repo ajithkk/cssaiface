@@ -25,17 +25,19 @@ import org.cssa.iface.gui.controls.CLabel;
  */
 public class WinnerLookupView {
 	public static final String CANCEL = "Cancel";
-	public static final String CLEAR = "Clear";
+	public static final String SAVE = "Save";
 	public static final String SEARCH = "Search";
 	public static final String PRINT = "Print";
+	public static final String DELETE = "Delete";
 	
 	private CLabel lblEventId;
 	private CLabel lblWinnerPosition;
 	
 	private CButton btnSearch;
-	private CButton btnClear;
+	private CButton btnSave;
 	private CButton btnCancel;
 	private CButton btnPrint;
+	private CButton btnDelete;
 	
 	private JComboBox eventId;
 	private JComboBox winnerPosition;
@@ -109,6 +111,17 @@ public class WinnerLookupView {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = null;
+		
+		constraints = new GridBagConstraints();
+		btnPrint = new CButton("Print");
+		btnPrint.setMnemonic('P');
+		btnPrint.setActionCommand(PRINT);
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 2;
+		constraints.gridy = 0;
+		panel.add(btnPrint, constraints);
+		btnPrint.addActionListener(controller);
+		
 
 		constraints = new GridBagConstraints();
 		btnSearch = new CButton("Search");
@@ -116,21 +129,12 @@ public class WinnerLookupView {
 		btnSearch.setActionCommand(SEARCH);
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(0, 5, 0, 5);
-		constraints.gridx = 2;
+		constraints.gridx = 3;
 		constraints.gridy = 0;
 		panel.add(btnSearch, constraints);
 		btnSearch.addActionListener(controller);
 
-		constraints = new GridBagConstraints();
-		btnClear = new CButton("Clear");
-		btnClear.setMnemonic('L');
-		btnClear.setActionCommand(CLEAR);
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(0, 5, 0, 5);
-		constraints.gridx = 3;
-		constraints.gridy = 0;
-		panel.add(btnClear, constraints);
-		btnClear.addActionListener(controller);
+		
 
 		constraints = new GridBagConstraints();
 		btnCancel = new CButton("Cancel");
@@ -143,17 +147,31 @@ public class WinnerLookupView {
 		btnCancel.addActionListener(controller);
 		
 		constraints = new GridBagConstraints();
-		btnPrint = new CButton("Print");
-		btnPrint.setMnemonic('P');
-		btnPrint.setActionCommand(PRINT);
+		btnSave = new CButton(SAVE);
+		btnSave.setMnemonic('L');
+		btnSave.setActionCommand(SAVE);
+		constraints.anchor = GridBagConstraints.WEST;
 		constraints.insets = new Insets(0, 5, 0, 5);
 		constraints.gridx = 5;
 		constraints.gridy = 0;
-		panel.add(btnPrint, constraints);
-		btnPrint.addActionListener(controller);
+		panel.add(btnSave, constraints);
+		btnSave.addActionListener(controller);
+		
+		
+		constraints = new GridBagConstraints();
+		btnDelete = new CButton(DELETE);
+		btnDelete.setMnemonic('X');
+		btnDelete.setActionCommand(DELETE);
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 6;
+		constraints.gridy = 0;
+		panel.add(btnDelete, constraints);
+		btnDelete.addActionListener(controller);
+		
 		
 		return panel;
 	}
+	
 	
 	private  JPanel getTablePanel() {
 		JPanel panel = new JPanel();
@@ -182,7 +200,7 @@ public class WinnerLookupView {
 		constraints.insets = new Insets(5, 0, 0, 0);
 		constraints.gridx = 1;
 		constraints.gridy = 5;
-		constraints.anchor = GridBagConstraints.WEST;
+		constraints.anchor = GridBagConstraints.CENTER;
 		panel.add(getMianPanel(), constraints);
 
 		constraints = new GridBagConstraints();
@@ -258,6 +276,43 @@ public class WinnerLookupView {
 	 */
 	public void setTblStudentDetails(JTable tblStudentDetails) {
 		this.tblStudentDetails = tblStudentDetails;
+	}
+	
+	/**
+	 * @return the btnClear
+	 */
+	public CButton getBtnSave() {
+		return btnSave;
+	}
+	/**
+	 * @param btnClear the btnClear to set
+	 */
+	public void setBtnSave(CButton btnSave) {
+		this.btnSave = btnSave;
+	}
+	/**
+	 * @return the btnPrint
+	 */
+	public CButton getBtnPrint() {
+		return btnPrint;
+	}
+	/**
+	 * @param btnPrint the btnPrint to set
+	 */
+	public void setBtnPrint(CButton btnPrint) {
+		this.btnPrint = btnPrint;
+	}
+	/**
+	 * @return the btnDelete
+	 */
+	public CButton getBtnDelete() {
+		return btnDelete;
+	}
+	/**
+	 * @param btnDelete the btnDelete to set
+	 */
+	public void setBtnDelete(CButton btnDelete) {
+		this.btnDelete = btnDelete;
 	}
 	
 

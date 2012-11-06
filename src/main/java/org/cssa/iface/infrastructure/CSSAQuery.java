@@ -363,13 +363,19 @@ public class CSSAQuery {
 			+CSSAConstants.WINNERS_STUDENT_ID +", "
 			+CSSAConstants.WINNERS_EVENT_ID +", "
 			+CSSAConstants.WINNERS_RESULT_STATUS+", "
+			+CSSAConstants.WINNERS_EVENT_GROUP_ID +", "
 			+CSSAConstants.WINNERS_MARK +" FROM "+CSSAConstants.WINNERS_TABLE +" WHERE "+
 			CSSAConstants.WINNERS_STUDENT_ID +" = ? AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ?"; 
 	
 	public static final String UPDATE_WINNERS = "UPDATE "+CSSAConstants.WINNERS_TABLE +" SET" +
 			CSSAConstants.WINNERS_RESULT_STATUS +" = ?"+
 			CSSAConstants.WINNERS_MARK + "= ? WHERE "+ CSSAConstants.WINNERS_STUDENT_ID +" = ? AND "
-			+CSSAConstants.WINNERS_STUDENT_ID +" = ?  AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ? "; 
+			+CSSAConstants.WINNERS_STUDENT_ID +" = ?  AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ? ";
+	
+	public static final String DELETE_WINNER = "DELETE FROM "+CSSAConstants.WINNERS_TABLE +" WHERE "
+			+CSSAConstants.WINNERS_EVENT_ID +" = ? , "
+			+CSSAConstants.WINNERS_RESULT_STATUS +" = ?, "
+			+CSSAConstants.WINNERS_EVENT_GROUP_ID +" = ? ";
 	
 	//Time Schedule table query started
 	

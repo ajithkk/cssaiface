@@ -11,6 +11,7 @@ import org.cssa.iface.gui.events.EventsController;
 import org.cssa.iface.gui.lookup.CollegeLookupController;
 import org.cssa.iface.gui.lookup.ParticipantLookupController;
 import org.cssa.iface.gui.lookup.StudentLookupController;
+import org.cssa.iface.gui.lookup.WinnerLookupController;
 import org.cssa.iface.gui.menu.CssaMenuBar;
 import org.cssa.iface.gui.result.InsertResultController;
 import org.cssa.iface.gui.result.ResultInsertController;
@@ -150,6 +151,8 @@ public class CssaToolBar extends JToolBar implements ActionListener, MenuConstan
 			new SelectDateDialogController(mdiForm).askDateDialog();
 		} else if (MNU_MAINTAIN_GROUP_EVENT.equals(actionCommand)) {
 			new StudentLookupController(mdiForm, true, false).askStudentLookupsereen();
+		}else if (MNU_MAINTAIN_EDIT_WINNERS.equals(actionCommand)) {
+			new WinnerLookupController(mdiForm).askWinnerLookUp();
 		}
 		
 	}

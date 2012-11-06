@@ -563,7 +563,7 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
 			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
 			+CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_MARK +","
-			+CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_RESULT_STATUS+"  FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +CSSAConstants.RESULTS_TABLE 
+			+CSSAConstants.WINNERS_TABLE+"."+CSSAConstants.WINNERS_RESULT_STATUS+"  FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +CSSAConstants.WINNERS_TABLE 
 			+" WHERE STUDENTS_DETAILS.STUDENT_ID = WINNERS.STUDENT_ID ");
 		if(null != winners.getEventId()) {
 			if(!winners.getEventId().isEmpty()) {

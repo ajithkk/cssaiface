@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.cssa.iface.bo.CollegeDetails;
@@ -15,9 +16,13 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeDetailsController;
 import org.cssa.iface.gui.formvalidator.CollegeLookupFormValidator;
 import org.cssa.iface.gui.util.ErrorDialog;
+import org.cssa.iface.report.college.CollegeLookupReport;
 import org.cssa.iface.services.CollegeDetailsQueryEngine;
 import org.cssa.iface.services.CollegeLookupService;
 import org.cssa.iface.transaction.CollegeTransaction;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author ajith
@@ -103,9 +108,32 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 		if(CollegeLookupView.CLEAR.equals(action)) {
 			clearCollegeLookupView();
 		}
+		if(CollegeLookupView.PRINT.equals(action)) {
+			performPrintAction();
+		}
 		
 		
 	}
+
+	private void performPrintAction() {
+		String FILE = Util.getReportHome()+"\\CollegeDetailsReport.pdf";
+		List<CollegeDetails> college = tableModel.getCollegeList();
+		if(null != college) {
+			CollegeLookupReport report = new CollegeLookupReport(FILE, college);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+
 
 	/**
 	 * clear the college look view

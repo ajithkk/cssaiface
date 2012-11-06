@@ -181,7 +181,6 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 			}
 			
 			try { 
-				System.out.println(query);
 				res = dbEngineImpl.executeQuery(query);
 				while(res.next()) {
 					InsertResult participant = new InsertResult();

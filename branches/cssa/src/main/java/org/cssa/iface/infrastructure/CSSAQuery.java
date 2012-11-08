@@ -104,7 +104,7 @@ public class CSSAQuery {
 			+CSSAConstants.COLLEGE_DETAILS_NO_OF_PARTICIPANTS +" ) VALUES ( ?,?,? ) ";
 	
 	
-	public static final String INSERT_COLLEGE_POINTS = "UPDATE "+CSSAConstants.COLLEGE_DETAILS_TABLE +" SET "
+	public static final String UPDATE_COLLEGE_POINTS = "UPDATE "+CSSAConstants.COLLEGE_DETAILS_TABLE +" SET "
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS +"= ?"
 			 +" WHERE "
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"= ?";
@@ -114,7 +114,10 @@ public class CSSAQuery {
 			 +" WHERE "
 			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +"= ?";
 	
-	
+	public static final String SELECT_COLLEGE_DETAILS_POINT = "SELECT "
+			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS
+			+" FROM "+CSSAConstants.COLLEGE_DETAILS_TABLE +" WHERE "
+			+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID +" =  ? ";
 	
 	
 	
@@ -201,10 +204,15 @@ public class CSSAQuery {
 			+CSSAConstants.STUDENTS_DETAILS_STATUS +" = TRUE  WHERE "+ CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" = ?";
 	
 	
-	public static final String INSERT_STTUDENT_POINTS = "UPDATE "+CSSAConstants.STUDENTS_DETAILS_TABLE +" SET "
+	public static final String UPDATE_STTUDENT_POINTS = "UPDATE "+CSSAConstants.STUDENTS_DETAILS_TABLE +" SET "
 			+CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT +" = ?  "
 			+" WHERE "
 			+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" = ? ";
+	
+	public static final String SELECT_STUDENT_DETAILS_POINT = "SELECT "
+			+CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT +" FROM "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE +" WHERE "
+			+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID +" = ? " ;
 	
 	// student Details query ended.
 	
@@ -357,6 +365,19 @@ public class CSSAQuery {
 			+CSSAConstants.WINNERS_EVENT_GROUP_ID + ", "
 			+CSSAConstants.WINNERS_MARK +") VALUES(?,?,?,?,?,?)";
 	
+	public static final String SELECT_ALL_WINNERS = "SELECT "+CSSAConstants.WINNERS_SNO+ " ,"
+			+CSSAConstants.WINNERS_COLLEGE_ID +", "
+			+CSSAConstants.WINNERS_STUDENT_ID +", "
+			+CSSAConstants.WINNERS_EVENT_ID +", "
+			+CSSAConstants.WINNERS_RESULT_STATUS+", "
+			+CSSAConstants.WINNERS_EVENT_GROUP_ID +", "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE +" , "
+			+CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STATUS +" , "
+			+CSSAConstants.WINNERS_MARK +" FROM  "+ CSSAConstants.STUDENTS_DETAILS_TABLE +" , " +CSSAConstants.WINNERS_TABLE 
+			+" WHERE STUDENTS_DETAILS.STUDENT_ID = WINNERS.STUDENT_ID ";
+	
 	
 	public static final String SELECT_WINNERS = "SELECT "+CSSAConstants.WINNERS_SNO+ " ,"
 			+CSSAConstants.WINNERS_COLLEGE_ID +", "
@@ -364,18 +385,21 @@ public class CSSAQuery {
 			+CSSAConstants.WINNERS_EVENT_ID +", "
 			+CSSAConstants.WINNERS_RESULT_STATUS+", "
 			+CSSAConstants.WINNERS_EVENT_GROUP_ID +", "
-			+CSSAConstants.WINNERS_MARK +" FROM "+CSSAConstants.WINNERS_TABLE +" WHERE "+
-			CSSAConstants.WINNERS_STUDENT_ID +" = ? AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ?"; 
+			+CSSAConstants.WINNERS_MARK +" FROM "+CSSAConstants.WINNERS_TABLE +" WHERE "
+			+CSSAConstants.WINNERS_RESULT_STATUS+" = ? AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ?"; 
 	
 	public static final String UPDATE_WINNERS = "UPDATE "+CSSAConstants.WINNERS_TABLE +" SET" +
 			CSSAConstants.WINNERS_RESULT_STATUS +" = ?"+
-			CSSAConstants.WINNERS_MARK + "= ? WHERE "+ CSSAConstants.WINNERS_STUDENT_ID +" = ? AND "
-			+CSSAConstants.WINNERS_STUDENT_ID +" = ?  AND "+ CSSAConstants.WINNERS_EVENT_ID +" = ? ";
+			CSSAConstants.WINNERS_MARK + "= ? WHERE "
+			+CSSAConstants.WINNERS_EVENT_ID +" = ? AND"
+			+CSSAConstants.WINNERS_RESULT_STATUS +" = ? AND "
+			+CSSAConstants.WINNERS_EVENT_GROUP_ID +" = ? ";
 	
 	public static final String DELETE_WINNER = "DELETE FROM "+CSSAConstants.WINNERS_TABLE +" WHERE "
-			+CSSAConstants.WINNERS_EVENT_ID +" = ? , "
-			+CSSAConstants.WINNERS_RESULT_STATUS +" = ?, "
+			+CSSAConstants.WINNERS_EVENT_ID +" = ?  AND "
+			+CSSAConstants.WINNERS_RESULT_STATUS +" = ? AND "
 			+CSSAConstants.WINNERS_EVENT_GROUP_ID +" = ? ";
+	
 	
 	//Time Schedule table query started
 	

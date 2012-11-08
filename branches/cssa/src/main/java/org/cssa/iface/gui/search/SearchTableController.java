@@ -40,7 +40,7 @@ public class SearchTableController implements ActionListener {
 	private SearchTable searchTable;
 	private EventsTransaction eventsTransaction;
 	private List<Events> events;
-	private List<String> columnList;
+	private List<Object> columnList;
 	
 	
 	private List<Object> selectedEvents;
@@ -58,7 +58,7 @@ public class SearchTableController implements ActionListener {
 		super();
 		this.mdiForm = mdiForm;
 		tableModel = new SearchTableModel();
-		columnList = new ArrayList<String>();
+		columnList = new ArrayList<Object>();
 		selectedEvents = new ArrayList<Object>();
 	}
 	
@@ -92,11 +92,11 @@ public class SearchTableController implements ActionListener {
 	private void searchActionPerformed() {
 		transactioUtils = new TransactioUtils();
 		try {
-		List<InsertResult> searchResult = 	transactioUtils.getParticipantsDetailsByEvents(tableModel.getSelectedEvent(), tableModel.getSearchKey());
-		if(null != searchResult) {
-			new SearchResultController(mdiForm, searchResult).askSearchResultView();
-
-		}
+			List<InsertResult> searchResult = 	transactioUtils.getParticipantsDetailsByEvents(tableModel.getSelectedEvent(), tableModel.getSearchKey());
+			if(null != searchResult) {
+				new SearchResultController(mdiForm, searchResult).askSearchResultView();
+	
+			}
 		
 		
 		} catch (IfaceException e) {
@@ -168,9 +168,12 @@ public class SearchTableController implements ActionListener {
 	public void setTableData() {
 		eventsTransaction = new EventsTransaction();
 		try {
-		    events = eventsTransaction.loadAll();
-		    int size = events.size();
+		    //events = eventsTransaction.loadAll();
+		   // int size = events.size();
 			for(int i = 0; i < 7; i++) {
+				if(i == 4) {
+					columnList.add(false);
+				}
 				columnList.add(" ");
 			}
 //			columnList.add("");

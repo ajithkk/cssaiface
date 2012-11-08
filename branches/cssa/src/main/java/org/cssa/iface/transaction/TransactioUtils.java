@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -212,24 +214,48 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 
 	public List<InsertResult> getParticipantsDetailsByEvents(List<String> eventList, Map<Integer, String> searcKeys) throws IfaceException {
 		
-		String query = QueryServices.getParticipantsDetailsByEventsQuery(eventList, searcKeys);
+		String query = null;
+		String tableName = null;
+		Map<String, String> queryMap = QueryServices.getParticipantsDetailsByEventsQuery(eventList, searcKeys);
+		Set<Entry<String, String>> parameterSet = queryMap.entrySet();
+		for(Entry<String, String> set : parameterSet ){
+			tableName = set.getKey();
+			query = set.getValue();
+		}
 		List<InsertResult> participantList = new ArrayList<InsertResult>();
 		DBEngineImpl dbEngineImpl = new DBEngineImpl();
 		try { 
 			res = dbEngineImpl.executeQuery(query);
-			while(res.next()) {
-				InsertResult participant = new InsertResult();
-				participant.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
-				participant.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
-				participant.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
-				participant.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
-				participant.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
-				participant.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
-				participant.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
-				participant.setEventName(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
-				participant.setGroupName(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
-				participantList.add(participant);
-				
+			if(searcKeys.get(4) == null) {
+				while(res.next()) {
+					InsertResult participant = new InsertResult();
+					participant.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+					participant.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
+					participant.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+					participant.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+					participant.setStudentGender(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_GENDER));
+					participant.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
+					participant.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+					participant.setEventName(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+					participant.setGroupName(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
+					if(CSSAConstants.RESULTS_TABLE.equals(tableName)) {
+						participant.setEventStatus(res.getString(CSSAConstants.RESULTS_RESULT_STATUS));
+					}
+					participantList.add(participant);
+					
+				}
+			}else {
+				while(res.next()) {
+					InsertResult participant = new InsertResult();
+					participant.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+					participant.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+					participant.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+					if(CSSAConstants.RESULTS_TABLE.equals(tableName)) {
+						participant.setEventStatus(res.getString(CSSAConstants.RESULTS_RESULT_STATUS));
+					}
+					participantList.add(participant);
+					
+				}
 			}
 		} catch (Exception e) {
 			throw new IfaceException(e);
@@ -240,6 +266,76 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 		return participantList;
 		
 	}
+	
+	public int insertStudentPoint(float StdPoint,List<InsertResult> result, boolean deleteFlag) throws IfaceException {
+		float StudentPint = 0;
+		
+		if(null != result) {
+			DBEngineImpl dbEngineImpl = new DBEngineImpl();
+			Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+			parameterMap.put(1, result.get(0).getStudentId());
+			res = dbEngineImpl.executeQuery(parameterMap, CSSAQuery.SELECT_STUDENT_DETAILS_POINT);
+			try {
+				while(res.next()) {
+					StudentPint = res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT);
+				}
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			} finally {
+				dbEngineImpl.closeResultSet(res);
+			}
+			if(deleteFlag) {
+				StudentPint -= StdPoint;
+			}else {
+				StudentPint += StdPoint;
+			}
+			
+			List<Map<Integer, Object>> studentList = new ArrayList<Map<Integer,Object>>();
+			
+			for(InsertResult result2 : result) {
+				Map<Integer, Object>studentPoint = new HashMap<Integer, Object>();
+				studentPoint.put(1, StudentPint);
+				studentPoint.put(2, result2.getStudentId());
+				studentList.add(studentPoint);
+			}
+			
+		dbEngineImpl.executeBatch(studentList, CSSAQuery.UPDATE_STTUDENT_POINTS);
+			
+		}
+		
+		return 0;
+		
+	}
+	
+	public int insertCollegePoint(float clgPoint, InsertResult result, boolean deleteFlag) throws IfaceException {
+		float collegePoint = 0;
+		Map<Integer, Object> parameterMap = new HashMap<Integer, Object>();
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		parameterMap.put(1, result.getCollegeId());
+		res = dbEngineImpl.executeQuery(parameterMap, CSSAQuery.SELECT_COLLEGE_DETAILS_POINT);
+		try {
+			while(res.next()) {
+				collegePoint = res.getFloat(CSSAConstants.COLLEGE_DETAILS_COLLEGE_POINTS);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbEngineImpl.closeResultSet(res);
+		}
+		if(deleteFlag) {
+			collegePoint -= clgPoint;
+		}else {
+			collegePoint += clgPoint;
+		}
+		parameterMap = new HashMap<Integer, Object>();
+		parameterMap.put(1, collegePoint);
+		parameterMap.put(2, result.getCollegeId());
+		dbEngineImpl.executeUpdate(parameterMap, CSSAQuery.UPDATE_COLLEGE_POINTS);
+		return 0;
+		
+	}
+
 
 
 }

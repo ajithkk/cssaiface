@@ -310,9 +310,9 @@ public class StudentDetailsView {
 		studentTable.setRowHeight(20);
 		studentTable.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(studentTable);
-		scrollPane.setMinimumSize(new Dimension(600, 200));
-		scrollPane.setMaximumSize(new Dimension(600, 200));
-		scrollPane.setPreferredSize(new Dimension(600, 200));
+		scrollPane.setMinimumSize(new Dimension(900, 200));
+		scrollPane.setMaximumSize(new Dimension(900, 200));
+		scrollPane.setPreferredSize(new Dimension(900, 200));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		studentTable.addMouseListener(controller);
 		return panel;

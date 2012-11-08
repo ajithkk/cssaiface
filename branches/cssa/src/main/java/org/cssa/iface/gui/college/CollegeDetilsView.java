@@ -98,6 +98,7 @@ public class CollegeDetilsView {
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 3;
 		constraints.gridy = 0;
+		txtNoOfParticipants.setEditable(false);
 		panel.add(txtNoOfParticipants, constraints);
 		
 		constraints = new GridBagConstraints();

@@ -78,6 +78,7 @@ public class WinnerLookupController implements ActionListener, MouseListener {
 		InsertResult result = tableModel.getWinnerList().get(selectedIndex);
 		try {
 			transaction.delete(result);
+			tableModel.setWinnerList(transaction.loadAll());
 		} catch (IfaceException e) {
 			new ErrorDialog(e);
 			e.printStackTrace();
@@ -89,9 +90,11 @@ public class WinnerLookupController implements ActionListener, MouseListener {
 	}
 
 	private void performSaveAction() {
-		List<InsertResult> insertResults = tableModel.getWinnerList();
+		int selectedIndex = lookupView.getTblStudentDetails().getSelectedRow();
+		InsertResult result = tableModel.getWinnerList().get(selectedIndex);
+		
 		try {
-			transaction.saveAll(insertResults,null);
+			transaction.update(result);
 		} catch (IfaceException e) {
 			new ErrorDialog(e);
 			e.printStackTrace();
@@ -153,11 +156,11 @@ public class WinnerLookupController implements ActionListener, MouseListener {
 		setWinnerPosition();
 		if(printEnable) {
 			lookupView.getBtnDelete().setVisible(false);
-			lookupView.getBtnSave().setVisible(false);
+			//lookupView.getBtnSave().setVisible(false);
 			lookupView.getBtnPrint().setVisible(true);
 		} else {
 			lookupView.getBtnDelete().setVisible(true);
-			lookupView.getBtnSave().setVisible(true);
+			//lookupView.getBtnSave().setVisible(true);
 			lookupView.getBtnPrint().setVisible(false);
 		}
 	}

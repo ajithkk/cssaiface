@@ -3,6 +3,7 @@
  */
 package org.cssa.iface.services;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -469,8 +470,9 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 		
 	}
 	
-	public static  String getParticipantsDetailsByEventsQuery(List<String> eventList, Map<Integer, String> searcKeys) {
+	public static  Map<String, String>  getParticipantsDetailsByEventsQuery(List<String> eventList, Map<Integer, String> searcKeys) {
 		
+		Map<String, String> queryMap = new HashMap<String, String>();
 		String table;
 		String round = searcKeys.get(0);
 		String roundQuery = null;
@@ -491,6 +493,10 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 			eventSearch.append( "SELECT ");
 
 		}
+		if(searcKeys.get(4).equals("true") && eventList.size() > 1) {
+			return getCommonParticipants(table,searcKeys, eventList);
+		}
+		
 		
 			eventSearch.append(table+"."+CSSAConstants.RESULTS_COLLEGE_ID +" , "
 			+table+"."+CSSAConstants.RESULTS_STUDENT_ID +" , "
@@ -544,9 +550,9 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 				eventSearch.append("'"+studentIdReplace +"'");
 			}
 		}
+		queryMap.put(table, eventSearch.toString());
 		
-		
-		return eventSearch.toString();
+		return queryMap;
 		
 	}
 	
@@ -579,6 +585,32 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 		}
 	
 		return winnersSingleSearch.toString();
+	}
+	
+	public static Map<String, String> getCommonParticipants(String tableName,Map<Integer, String> searcKeys,List<String> eventList ) {
+		StringBuilder eventSearch = new StringBuilder();
+		
+		for(int i = 0; i < eventList.size(); i++) {
+			eventSearch.append("SELECT "+ tableName+"."+ CSSAConstants.STUDENTS_DETAILS_STUDENT_ID+ " , ");
+			eventSearch.append(tableName+"."+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID+" , ");
+			eventSearch.append(CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME);
+			if(tableName.equals(CSSAConstants.RESULTS_TABLE)); {
+				eventSearch.append(" , "+tableName+"."+CSSAConstants.RESULTS_RESULT_STATUS);
+			}
+			eventSearch.append(" FROM "+CSSAConstants.STUDENTS_DETAILS_TABLE +", "+ tableName);
+			eventSearch.append(" WHERE "+ tableName+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID + " = '"+eventList.get(i) +"'");
+			if(tableName.equals(CSSAConstants.RESULTS_TABLE)); {
+				eventSearch.append(" AND "+tableName+"."+CSSAConstants.RESULTS_RESULT_STATUS +" = '"+searcKeys.get(0)+"'");
+			}
+			eventSearch.append("and STUDENTS_DETAILS.STUDENT_ID = ");
+			eventSearch.append(tableName+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_ID);
+			if(i < eventList.size()-1) {
+				eventSearch.append(" INTERSECT ");
+			}
+		}
+		Map<String, String> query = new HashMap<String, String>();
+		query.put(tableName, eventSearch.toString());
+		return query;
 	}
 	
 	

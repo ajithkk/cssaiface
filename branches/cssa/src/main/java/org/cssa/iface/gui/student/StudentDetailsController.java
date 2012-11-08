@@ -115,8 +115,10 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 	private void performDeleteAction() {
 	
 		int selectedRow = studentDetailsView.getStudentTable().getSelectedRow();
+		StudentDetails details = tableModel.getStudentDetails().get(selectedRow);
 		try {
 			transaction.delete(tableModel.getStudentDetails().get(selectedRow));
+			tableModel.setStudentDetails(transaction.loadAll(details.getCollegeId()));
 		} catch (IfaceException e) {
 			new ErrorDialog(e).setVisible(true);
 		}
@@ -124,7 +126,8 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 	}
 
 	private void performEditActiion() {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 

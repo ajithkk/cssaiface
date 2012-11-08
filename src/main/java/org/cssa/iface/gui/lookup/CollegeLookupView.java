@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import org.apache.derby.tools.sysinfo;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.controls.CButton;
 import org.cssa.iface.gui.controls.CLabel;
@@ -72,6 +73,7 @@ public class CollegeLookupView {
 	public void showCollegeLookupScreen() {
 		JPanel panel = new JPanel();
 		panel.add(getEventDetailsBody(),BorderLayout.CENTER);
+		Dimension h = getCollegeDetailsPanel().getSize();
 		mdiForm.addChild(panel, "College Lookup Form");
 	}
 	
@@ -109,7 +111,6 @@ public class CollegeLookupView {
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		panel.add(txtCollegeName, constraints);
-		
 		return panel;
 		
 	}
@@ -160,7 +161,6 @@ public class CollegeLookupView {
 		constraints.gridy = 0;
 		panel.add(btnPrint, constraints);
 		btnPrint.addActionListener(collegeLookupController);
-		
 		return panel;
 	}
 	
@@ -175,9 +175,11 @@ public class CollegeLookupView {
 		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int w = d.width - 50;
-		scrollPane.setMinimumSize(new Dimension(w, 400));
-		scrollPane.setMaximumSize(new Dimension(w, 400));
-		scrollPane.setPreferredSize(new Dimension(w, 400));
+		Dimension hh = mdiForm.getContentPane().getSize();
+		int he = hh.height - 168;
+		scrollPane.setMinimumSize(new Dimension(w, he));
+		scrollPane.setMaximumSize(new Dimension(w, he));
+		scrollPane.setPreferredSize(new Dimension(w, he));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		tblCollegeDetails.addMouseListener(collegeLookupController);
 		return panel;

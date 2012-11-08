@@ -67,7 +67,7 @@ public class ParticipantLookupView {
 	public void showLookupView() {
 		JPanel tabbedPane = new JPanel();
 		tabbedPane.add(getResultDetailsBody(), BorderLayout.CENTER);
-		mdiForm.addChild(tabbedPane, "Inser Result");
+		mdiForm.addChild(tabbedPane, " Result Lookup");
 	}
 	public JPanel eventPanel() {
 		JPanel panel = new JPanel();
@@ -210,9 +210,11 @@ public class ParticipantLookupView {
 		JScrollPane scrollPane = new JScrollPane(tblParticipants);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int w = d.width - 50;
-		scrollPane.setMinimumSize(new Dimension(w, 400));
-		scrollPane.setMaximumSize(new Dimension(w, 400));
-		scrollPane.setPreferredSize(new Dimension(w, 400));
+		Dimension hh = mdiForm.getContentPane().getSize();
+		int he = hh.height - 260;
+		scrollPane.setMinimumSize(new Dimension(w, he));
+		scrollPane.setMaximumSize(new Dimension(w, he));
+		scrollPane.setPreferredSize(new Dimension(w, he));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		//tblParticipants.addMouseListener(controller);
 		return panel;

@@ -12,6 +12,7 @@ import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.transaction.CollegeTransaction;
+import org.cssa.iface.util.CssaMessage;
 
 /**
  * @author ajith
@@ -99,6 +100,7 @@ public class CollegeDetailsController implements ActionListener{
 		
 		try {
 			transaction.update(details);
+			CssaMessage.informationMessage(mdiForm, "Successfully saved", "Information");
 		} catch (IfaceException e) {
 			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();

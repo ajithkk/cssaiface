@@ -254,9 +254,11 @@ public class InsertResultView {
 		JScrollPane scrollPane = new JScrollPane(tblCollegeDetails);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int w = d.width - 50;
-		scrollPane.setMinimumSize(new Dimension(w, 360));
-		scrollPane.setMaximumSize(new Dimension(w, 360));
-		scrollPane.setPreferredSize(new Dimension(w, 360));
+		Dimension hh = mdiForm.getContentPane().getSize();
+		int he = hh.height - 260;
+		scrollPane.setMinimumSize(new Dimension(w, he));
+		scrollPane.setMaximumSize(new Dimension(w, he));
+		scrollPane.setPreferredSize(new Dimension(w, he));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		//tblCollegeDetails.addMouseListener(controller);
 		return panel;

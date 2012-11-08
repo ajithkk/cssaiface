@@ -214,9 +214,11 @@ public class StudentLookupView {
 		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = d.width - 50;
-		scrollPane.setMinimumSize(new Dimension(width, 400));
-		scrollPane.setMaximumSize(new Dimension(width, 400));
-		scrollPane.setPreferredSize(new Dimension(width, 400));
+		Dimension hh = mdiForm.getContentPane().getSize();
+		int he = hh.height - 203;
+		scrollPane.setMinimumSize(new Dimension(width, he));
+		scrollPane.setMaximumSize(new Dimension(width, he));
+		scrollPane.setPreferredSize(new Dimension(width, he));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		tblStudentDetails.addMouseListener(studentLookupController);
 

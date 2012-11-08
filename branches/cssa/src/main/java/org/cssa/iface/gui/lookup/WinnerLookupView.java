@@ -82,6 +82,9 @@ public class WinnerLookupView {
 		panel.add(lblEventId,constraints);
 		
 		eventId = new JComboBox();
+		eventId.setMaximumSize(new Dimension(250, 24));
+		eventId.setMinimumSize(new Dimension(250, 24));
+		eventId.setPreferredSize(new Dimension(250, 24));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
@@ -97,6 +100,9 @@ public class WinnerLookupView {
 		panel.add(lblWinnerPosition,constraints);
 		
 		winnerPosition =  new JComboBox();
+		winnerPosition.setMaximumSize(new Dimension(250, 24));
+		winnerPosition.setMinimumSize(new Dimension(250, 24));
+		winnerPosition.setPreferredSize(new Dimension(250, 24));
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.gridx = 1;
@@ -146,7 +152,7 @@ public class WinnerLookupView {
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(controller);
 		
-		constraints = new GridBagConstraints();
+		/*constraints = new GridBagConstraints();
 		btnSave = new CButton(SAVE);
 		btnSave.setMnemonic('L');
 		btnSave.setActionCommand(SAVE);
@@ -155,7 +161,7 @@ public class WinnerLookupView {
 		constraints.gridx = 5;
 		constraints.gridy = 0;
 		panel.add(btnSave, constraints);
-		btnSave.addActionListener(controller);
+		btnSave.addActionListener(controller);*/
 		
 		
 		constraints = new GridBagConstraints();
@@ -163,7 +169,7 @@ public class WinnerLookupView {
 		btnDelete.setMnemonic('X');
 		btnDelete.setActionCommand(DELETE);
 		constraints.insets = new Insets(0, 5, 0, 5);
-		constraints.gridx = 6;
+		constraints.gridx = 5;
 		constraints.gridy = 0;
 		panel.add(btnDelete, constraints);
 		btnDelete.addActionListener(controller);
@@ -184,9 +190,11 @@ public class WinnerLookupView {
 		JScrollPane scrollPane = new JScrollPane(tblStudentDetails);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = d.width - 50;
-		scrollPane.setMinimumSize(new Dimension(width, 400));
-		scrollPane.setMaximumSize(new Dimension(width, 400));
-		scrollPane.setPreferredSize(new Dimension(width, 400));
+		Dimension hh = mdiForm.getContentPane().getSize();
+		int he = hh.height - 168;
+		scrollPane.setMinimumSize(new Dimension(width, he));
+		scrollPane.setMaximumSize(new Dimension(width, he));
+		scrollPane.setPreferredSize(new Dimension(width, he));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		tblStudentDetails.addMouseListener(controller);
 

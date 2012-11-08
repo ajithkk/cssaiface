@@ -85,8 +85,10 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 				String winnerStatus  = resultView.getCmbResultStatus().getSelectedIndex() > 0 ?  resultView.getCmbResultStatus().getSelectedItem().toString() : null;
 				if(null == winnerStatus) {
 					CssaMessage.informationMessage(mdiForm, "Please select winner position");
-				} else      
-				winnerTransaction.saveAll( insertResults,winnerStatus );
+				} else {     
+					winnerTransaction.saveAll( insertResults,winnerStatus );
+					CssaMessage.informationMessage(mdiForm, "Successfully Inserted");
+				}
 			} catch (IfaceException e) {
 				e.printStackTrace();
 				new ErrorDialog(e).setVisible(true);

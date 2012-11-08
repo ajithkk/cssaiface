@@ -21,26 +21,24 @@ public class SearchTableModel extends AbstractTableModel{
 	
 	private EventsTransaction eventsTransaction;
 	private int columnLength;
-	private List<String> eventList;
+	private List<Object> eventList;
 	private Map<Integer, String> searchKey;
 	private List<String> selectedEvent;
 	
 	public SearchTableModel() {
 		eventsTransaction = new EventsTransaction();
-		eventList = new ArrayList<String>();
+		eventList = new ArrayList<Object>();
 		searchKey = new HashMap<Integer, String>();
 		selectedEvent = new  ArrayList<String>();
 		try {
-			columnLength = 5;
+			columnLength = 6;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
@@ -66,6 +64,9 @@ public class SearchTableModel extends AbstractTableModel{
 			return "College Id";
 		case 3: 
 			return "Student Id";
+		case 4:
+			return "Common";
+					
 		default:
 			return "Column "+ (col);
 		}
@@ -73,7 +74,9 @@ public class SearchTableModel extends AbstractTableModel{
 	
 	@Override
 	public Class getColumnClass(int c) {
-        return getValueAt(0, c).getClass();
+		if(c == 4) return Boolean.class;
+		 return getValueAt(0, c).getClass();
+        
     }
 	
 	@Override
@@ -95,6 +98,11 @@ public class SearchTableModel extends AbstractTableModel{
 			eventList.add(col, value.toString());
 			selectedEvent.add(value.toString());
 			break;
+		case 4:
+			eventList.remove(col);
+			eventList.add(col, value);
+			searchKey.put(col, value.toString());
+			break;
 		default:
 			eventList.remove(col);
 			eventList.add(col, value.toString());
@@ -108,14 +116,14 @@ public class SearchTableModel extends AbstractTableModel{
 	/**
 	 * @return the eventList
 	 */
-	public List<String> getEventList() {
+	public List<Object> getEventList() {
 		return eventList;
 	}
 
 	/**
 	 * @param eventList the eventList to set
 	 */
-	public void setEventList(List<String> eventList) {
+	public void setEventList(List<Object> eventList) {
 		this.eventList = eventList;
 		fireTableDataChanged();
 	}

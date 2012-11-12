@@ -615,17 +615,17 @@ public class QueryServices {
 	 */
 	public static Map<String, String> getCommonParticipants(String tableName,Map<Integer, String> searcKeys,List<String> eventList ) {
 		StringBuilder eventSearch = new StringBuilder();
-		
+		System.out.println(tableName);
 		for(int i = 0; i < eventList.size(); i++) {
 			eventSearch.append("SELECT "+ tableName+"."+ CSSAConstants.STUDENTS_DETAILS_STUDENT_ID+ " , ");
 			eventSearch.append(tableName+"."+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID+" , ");
 			eventSearch.append(CSSAConstants.STUDENTS_DETAILS_TABLE+"."+CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME);
-			if(tableName.equals(CSSAConstants.RESULTS_TABLE)); {
+			if(tableName.equals(CSSAConstants.RESULTS_TABLE)) {
 				eventSearch.append(" , "+tableName+"."+CSSAConstants.RESULTS_RESULT_STATUS);
 			}
 			eventSearch.append(" FROM "+CSSAConstants.STUDENTS_DETAILS_TABLE +", "+ tableName);
 			eventSearch.append(" WHERE "+ tableName+"."+CSSAConstants.EVENT_DETAILS_EVENT_ID + " = '"+eventList.get(i) +"'");
-			if(tableName.equals(CSSAConstants.RESULTS_TABLE)); {
+			if(tableName.equals(CSSAConstants.RESULTS_TABLE)) {
 				eventSearch.append(" AND "+tableName+"."+CSSAConstants.RESULTS_RESULT_STATUS +" = '"+searcKeys.get(0)+"'");
 			}
 			eventSearch.append("and STUDENTS_DETAILS.STUDENT_ID = ");

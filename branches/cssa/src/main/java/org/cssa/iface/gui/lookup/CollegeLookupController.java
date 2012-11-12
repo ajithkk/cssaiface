@@ -123,10 +123,10 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 			try {
 				report.createReport();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
+				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			}
 		}

@@ -46,8 +46,24 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 
 	@Override
 	public List<EventDetails> loadAll() throws IfaceException {
+		List<EventDetails> eventDetails = new ArrayList<EventDetails>();
+		dbEngineImpl = new DBEngineImpl();
 		
-		return null;
+		try{
+			res = dbEngineImpl.executeQuery(CSSAQuery.SELECT_ALL_PARTICIPANTS_DETAILS);
+			while(res.next()) {
+				EventDetails eDetails = new EventDetails();
+				eDetails.setSno(res.getInt(CSSAConstants.EVENT_DETAILS_SNO));
+				eDetails.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+				eDetails.setEventId(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+				eDetails.setGroupId(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
+				eDetails.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+				eventDetails.add(eDetails);
+			}
+		}catch (Exception e) {
+			throw new IfaceException(e);
+		}
+		return eventDetails;
 	}
 
 	@Override

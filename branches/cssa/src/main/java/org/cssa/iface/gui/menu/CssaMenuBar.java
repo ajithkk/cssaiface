@@ -255,7 +255,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 		} else if (CssaMenuBar.ACT_MNU_REPORT_EVENT.equals(actionCommand)) {
 			new SearchTableController(cssaMDIForm).askSearachTable();
 		} else if(CssaMenuBar.ACT_MNU_REPORT_RESULT.equals(actionCommand)) {
-			new ParticipantLookupController(cssaMDIForm).askParticipantsLookupView();
+			new ParticipantLookupController(cssaMDIForm,true).askParticipantsLookupView();
 		} else if (CssaMenuBar.MNU_FILE_TIME_SHEET.equals(actionCommand)) {
 			new SelectDateDialogController(cssaMDIForm).askDateDialog();
 		} else if (CssaMenuBar.MNU_MAINTAIN_GROUP_EVENT.equals(actionCommand)) {

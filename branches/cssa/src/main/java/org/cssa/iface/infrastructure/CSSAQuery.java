@@ -252,7 +252,11 @@ public class CSSAQuery {
 			+" WHERE "+CSSAConstants.EVENT_DETAILS_STUDENT_ID +"= ? ";
 	
 	
-	public static final String SELECT_ALL_PARTICIPANTS_DETAILS = "";
+	public static final String SELECT_ALL_PARTICIPANTS_DETAILS = "SELECT "+CSSAConstants.EVENT_DETAILS_SNO +", "
+	+CSSAConstants.EVENT_DETAILS_COLLEGE_ID +", " 
+			+CSSAConstants.EVENT_DETAILS_STUDENT_ID +", "
+			+CSSAConstants.EVENT_DETAILS_EVENT_ID +", "
+			+CSSAConstants.EVENT_DETAILS_GROUP_ID +" FROM "+ CSSAConstants.EVENT_DETAILS_TABLE;
 	
 	
 /*	
@@ -316,6 +320,14 @@ public class CSSAQuery {
 			+CSSAConstants.RESULTS_RESULT_STATUS+", "
 			+CSSAConstants.RESULTS_MARK +" FROM "+CSSAConstants.RESULTS_TABLE +" WHERE "+
 			CSSAConstants.RESULTS_STUDENT_ID +" = ? AND "+ CSSAConstants.RESULTS_STUDENT_ID +" = ?"; 
+	
+	public static final String SELECT_RESULT_TABLE = "SELECT "+CSSAConstants.RESULTS_SNO+ " , "
+			+CSSAConstants.RESULTS_COLLEGE_ID +", "
+			+CSSAConstants.RESULTS_STUDENT_ID +", "
+			+CSSAConstants.RESULTS_EVENT_ID +", "
+			+CSSAConstants.RESULTS_RESULT_STATUS+", "
+			+CSSAConstants.RESULTS_EVENT_GROUP_ID+", "
+			+CSSAConstants.RESULTS_MARK +" FROM "+CSSAConstants.RESULTS_TABLE;
 	
 	public static final String UPDATE_RESULT = "UPDATE "+CSSAConstants.RESULTS_TABLE +" SET " +
 			CSSAConstants.RESULTS_RESULT_STATUS +" = ? , "+

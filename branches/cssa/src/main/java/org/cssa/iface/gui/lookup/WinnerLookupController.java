@@ -7,9 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.cssa.iface.bo.Events;
 import org.cssa.iface.bo.InsertResult;
@@ -17,10 +16,13 @@ import org.cssa.iface.bo.Winners;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.util.ErrorDialog;
-import org.cssa.iface.services.QueryServices;
+import org.cssa.iface.report.ReportService;
+import org.cssa.iface.report.winners.WinnersReport;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.WinnerTransaction;
-import org.cssa.iface.util.EventStorageXML;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author admin
@@ -80,12 +82,27 @@ public class WinnerLookupController implements ActionListener, MouseListener {
 			transaction.delete(result);
 			tableModel.setWinnerList(transaction.loadAll());
 		} catch (IfaceException e) {
-			new ErrorDialog(e);
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 	}
 
 	private void performPrintAction() {
+		
+		List<InsertResult> list = tableModel.getWinnerList();
+		String FILE = Util.getReportHome()+"\\ResultDetails.pdf";
+		if(null != list) {
+			ReportService report = new WinnersReport(FILE, list);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
@@ -96,7 +113,7 @@ public class WinnerLookupController implements ActionListener, MouseListener {
 		try {
 			transaction.update(result);
 		} catch (IfaceException e) {
-			new ErrorDialog(e);
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		
@@ -113,7 +130,7 @@ public class WinnerLookupController implements ActionListener, MouseListener {
 			List<InsertResult> winnerList = transaction.load(winners);
 			tableModel.setWinnerList(winnerList);
 		} catch (IfaceException e) {
-			new ErrorDialog(e);
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		

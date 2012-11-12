@@ -150,7 +150,13 @@ public class QueryServices {
 		
 	}
 	
-public static String getEditParticipationSingleSearch(InsertResult insertResult) throws IfaceException { 
+	/**
+	 * 
+	 * @param insertResult
+	 * @return participation search query
+	 * @throws IfaceException
+	 */
+	public static String getEditParticipationSingleSearch(InsertResult insertResult) throws IfaceException { 
 		
 		StringBuilder participationSearch = new StringBuilder();
 		participationSearch.append( "SELECT "
@@ -470,6 +476,12 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 		
 	}
 	
+	/**
+	 * 
+	 * @param eventList
+	 * @param searcKeys
+	 * @return
+	 */
 	public static  Map<String, String>  getParticipantsDetailsByEventsQuery(List<String> eventList, Map<Integer, String> searcKeys) {
 		
 		Map<String, String> queryMap = new HashMap<String, String>();
@@ -493,8 +505,10 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 			eventSearch.append( "SELECT ");
 
 		}
-		if(searcKeys.get(4).equals("true") && eventList.size() > 1) {
-			return getCommonParticipants(table,searcKeys, eventList);
+		if(null != searcKeys.get(4) ) {
+			if(searcKeys.get(4).equals("true") && eventList.size() > 1) {
+				return getCommonParticipants(table,searcKeys, eventList);
+			}
 		}
 		
 		
@@ -556,6 +570,11 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 		
 	}
 	
+	/**
+	 * 
+	 * @param winners
+	 * @return
+	 */
 	public static String getSingleWinnersDetails(Winners winners) {
 		
 		StringBuilder winnersSingleSearch = new StringBuilder();	
@@ -587,6 +606,13 @@ public static String getEditParticipationSingleSearch(InsertResult insertResult)
 		return winnersSingleSearch.toString();
 	}
 	
+	/**
+	 * 
+	 * @param tableName
+	 * @param searcKeys
+	 * @param eventList
+	 * @return
+	 */
 	public static Map<String, String> getCommonParticipants(String tableName,Map<Integer, String> searcKeys,List<String> eventList ) {
 		StringBuilder eventSearch = new StringBuilder();
 		

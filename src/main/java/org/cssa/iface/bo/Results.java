@@ -13,6 +13,7 @@ public class Results {
 	private String eventId;
 	private String eventStatus;
 	private float mark;
+	private String groupId;
 	
 	/**
 	 * @return the sno
@@ -87,5 +88,18 @@ public class Results {
 	public void setMark(float mark) {
 		this.mark = mark;
 	}
+	/**
+	 * @return the groupId
+	 */
+	public String getGroupId() {
+		return groupId;
+	}
+	/**
+	 * @param groupId the groupId to set
+	 */
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+	
 	
 }

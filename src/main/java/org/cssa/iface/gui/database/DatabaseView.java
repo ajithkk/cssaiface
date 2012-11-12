@@ -60,7 +60,7 @@ public class DatabaseView {
 		
 		
 		panel.add(searchPannel(),BorderLayout.EAST);
-		mdiForm.addChild(panel, "Event Based search");
+		mdiForm.addChild(panel, "Table View");
 	}
 	
 	public JPanel getButtonPanel() {

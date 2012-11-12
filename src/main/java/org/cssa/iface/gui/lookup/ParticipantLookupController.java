@@ -7,23 +7,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.cssa.iface.bo.Events;
 import org.cssa.iface.bo.InsertResult;
-import org.cssa.iface.bo.InsertResultsTableBo;
 import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.util.ErrorDialog;
+import org.cssa.iface.report.result.ResultReport;
 import org.cssa.iface.services.LookupController;
 import org.cssa.iface.services.LookupService;
 import org.cssa.iface.services.StudentLookupService;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.TransactioUtils;
 import org.cssa.iface.util.EventStorageXML;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author Ajith
@@ -35,10 +39,9 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 	private EventsTransaction eventsTransaction;
 	private ParticipantLookupTableModel tableModel;
 	private ParticipantLookupView lookupView;
-	private List<InsertResultsTableBo> resultsTableBos;
 	private LookupService<InsertResult> insertResult;
-	private InsertResultsTableBo tableBo;
 	private List<Events> events;
+	private boolean printEnabled;
 	
 	
 	/**
@@ -46,12 +49,23 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 	 * @param mdiForm
 	 */
 	public ParticipantLookupController(CssaMDIForm mdiForm) {
-		this.mdiForm = mdiForm;
-		tableModel = new ParticipantLookupTableModel();
-		insertResult = null;
+		this(mdiForm, false);
 	}
 	
 	
+	
+	
+
+	/**
+	 * @param mdiForm
+	 * @param printEnabled
+	 */
+	public ParticipantLookupController(CssaMDIForm mdiForm, boolean printEnabled) {
+		this.mdiForm = mdiForm;
+		this.printEnabled = printEnabled;
+		tableModel = new ParticipantLookupTableModel();
+		insertResult = null;
+	}
 
 	/**
 	 * @param mdiForm
@@ -62,6 +76,7 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 		super();
 		this.mdiForm = mdiForm;
 		this.insertResult = insertResult;
+		printEnabled = false;
 		tableModel = new ParticipantLookupTableModel();
 	}
 
@@ -69,14 +84,14 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		int selectedRow = lookupView.getTblParticipants().getSelectedRow();
-		InsertResult selectedResult = tableModel.getResultsTableBos().get(selectedRow);
-		if(null != insertResult) {
-			mdiForm.closeFrame();
-			insertResult.setResult(selectedResult);
+		if(!printEnabled) {
+			int selectedRow = lookupView.getTblParticipants().getSelectedRow();
+			InsertResult selectedResult = tableModel.getResultsTableBos().get(selectedRow);
+			if(null != insertResult) {
+				mdiForm.closeFrame();
+				insertResult.setResult(selectedResult);
+			}
 		}
-		
 		
 	}
 
@@ -114,8 +129,32 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 		} else if (ParticipantLookupView.STUDENT_SEARCH.equals(actionCommand)) {
 			StudentLookupController studentLookupController = new StudentLookupController(mdiForm, this);
 			studentLookupController.askStudentLookupsereen();
+		}  else if(ParticipantLookupView.PRINT.equals(actionCommand)) {
+			performPrintAction();
 		}
 	}
+
+
+	private void performPrintAction() {
+		List<InsertResult> list = tableModel.getResultsTableBos();
+		String FILE = Util.getReportHome()+"\\ResultDetails.pdf";
+		if(null != list) {
+			ResultReport report = new ResultReport(FILE, list);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+
+
 
 
 	@Override
@@ -160,6 +199,11 @@ public class ParticipantLookupController implements ActionListener, MouseListene
 		lookupView.showLookupView();
 		setEventId();
 		setEventState();
+		if(printEnabled) {
+			lookupView.getBtnPrint().setVisible(true);
+		} else {
+			lookupView.getBtnPrint().setVisible(false);
+		}
 		
 	}
 	

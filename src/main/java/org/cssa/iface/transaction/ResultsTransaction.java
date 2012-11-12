@@ -3,17 +3,20 @@
  */
 package org.cssa.iface.transaction;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cssa.iface.bo.EventDetails;
 import org.cssa.iface.bo.Events;
 import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.InsertResultsTableBo;
 import org.cssa.iface.bo.Results;
 import org.cssa.iface.dao.dbengine.DBEngineImpl;
 import org.cssa.iface.exception.IfaceException;
+import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.infrastructure.CSSAQuery;
 
 /**
@@ -82,8 +85,28 @@ public class ResultsTransaction implements Transaction<Results> {
 
 	@Override
 	public List<Results> loadAll() throws IfaceException {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet res;
+		List<Results> results = new ArrayList<Results>();
+		dbEngineImpl = new DBEngineImpl();
+		
+		try{
+			res = dbEngineImpl.executeQuery(CSSAQuery.SELECT_RESULT_TABLE);
+			while(res.next()) {
+				Results eDetails = new Results();
+				eDetails.setSno(res.getInt(CSSAConstants.EVENT_DETAILS_SNO));
+				eDetails.setCollegeId(res.getString(CSSAConstants.EVENT_DETAILS_COLLEGE_ID));
+				eDetails.setEventId(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
+				eDetails.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+				eDetails.setEventStatus(res.getString(CSSAConstants.RESULTS_RESULT_STATUS));
+				eDetails.setMark(res.getFloat(CSSAConstants.RESULTS_MARK));
+				eDetails.setGroupId(res.getString(CSSAConstants.RESULTS_EVENT_GROUP_ID));
+				
+				results.add(eDetails);
+			}
+		}catch (Exception e) {
+			throw new IfaceException(e);
+		}
+		return results;
 	}
 	
 
@@ -101,7 +124,6 @@ public class ResultsTransaction implements Transaction<Results> {
 
 	public List<Results> loadAll(Results object) throws IfaceException {
 		return null;
-		
 	}
 	
 	public int[] save(List<InsertResult> result, String eventStatus) throws IfaceException {

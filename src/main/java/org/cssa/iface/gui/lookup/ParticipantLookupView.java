@@ -32,6 +32,7 @@ public class ParticipantLookupView {
 	public static final String SEARCH = "Search";
 	public static final String SAVE = "Save";
 	public static final String STUDENT_SEARCH = "student_search";
+	public static final String PRINT = "Print";
 	
 	private CLabel lblEventCode;
 	private CLabel lblEventStage;
@@ -41,6 +42,7 @@ public class ParticipantLookupView {
 	private CButton btnSearch;
 	private CButton btnClear;
 	private CButton btnCancel;
+	private CButton btnPrint;
 	
 	private JComboBox cmbEventCode;
 	private JComboBox cmbEventStage;
@@ -194,6 +196,17 @@ public class ParticipantLookupView {
 		panel.add(btnCancel, constraints);
 		btnCancel.addActionListener(controller);
 		
+		constraints = new GridBagConstraints();
+		btnPrint = new CButton("Print");
+		btnPrint.setMnemonic('P');
+		btnPrint.setActionCommand(PRINT);
+		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.gridx = 5;
+		constraints.gridy = 0;
+		panel.add(btnPrint, constraints);
+		btnPrint.addActionListener(controller);
+		
+		
 		return panel;
 	}
 	
@@ -322,6 +335,18 @@ public class ParticipantLookupView {
 	 */
 	public void setTblParticipants(JTable tblParticipants) {
 		this.tblParticipants = tblParticipants;
+	}
+	/**
+	 * @return the btnPrint
+	 */
+	public CButton getBtnPrint() {
+		return btnPrint;
+	}
+	/**
+	 * @param btnPrint the btnPrint to set
+	 */
+	public void setBtnPrint(CButton btnPrint) {
+		this.btnPrint = btnPrint;
 	}
 	
 	

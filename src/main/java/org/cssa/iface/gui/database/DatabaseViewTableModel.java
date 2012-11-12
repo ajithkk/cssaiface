@@ -5,19 +5,22 @@ package org.cssa.iface.gui.database;
 
 
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-
+import javax.swing.table.AbstractTableModel;
 
 /**
  * @author ajith
- * @param <T>
  *
  */
-public  class DatabaseViewTableModel implements TableModel {
+public  class DatabaseViewTableModel  extends AbstractTableModel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

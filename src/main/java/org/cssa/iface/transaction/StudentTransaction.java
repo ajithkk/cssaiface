@@ -88,7 +88,6 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 				StudentDetails student = new StudentDetails();
 				student.setSno(res.getInt(CSSAConstants.STUDENTS_DETAILS_SNO));
 				student .setCollegeId(res.getString(CSSAConstants.STUDENTS_DETAILS_COLLEGE_ID));
-				student.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
 				student.setStudentId(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_ID));
 				student.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
 				student.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));

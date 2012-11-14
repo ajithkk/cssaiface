@@ -86,8 +86,8 @@ public class ResultReport {
 	
 	private void addTable () {
 		
-		PdfPTable dataTable  = new PdfPTable(8);
-		int headerwidths[] = { 5, 12, 10, 10, 8,6,5,5};
+		PdfPTable dataTable  = new PdfPTable(7);
+		int headerwidths[] = { 5, 12, 10, 10, 8,6,5};
 		try {
 			dataTable.setWidthPercentage(288 / 2.75f);
 			dataTable.setWidths(headerwidths);
@@ -101,10 +101,6 @@ public class ResultReport {
 		
 		cell1 = new PdfPCell( new Phrase("College Id"));
 		cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-		dataTable.addCell(cell1);
-		
-		cell1 = new PdfPCell( new Phrase("College Name"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		
 		cell1 = new PdfPCell( new Phrase("Student Id"));
@@ -128,7 +124,6 @@ public class ResultReport {
 		for(InsertResult student : studentDetails) {
 			dataTable.addCell(""+student.getSno());
 			dataTable.addCell(student.getCollegeId());
-			dataTable.addCell(student.getCollegeName());
 			dataTable.addCell(""+student.getStudentId());
 			dataTable.addCell(""+student.getStudentName());
 			dataTable.addCell(""+student.getEventName());

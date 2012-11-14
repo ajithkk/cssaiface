@@ -89,7 +89,7 @@ public class LoadProperties {
 			String configFilePath = System.getProperty("user.home") +"\\" +CSSAConstants.CONFIG_XML_FILE;
 			FileInputStream is =  new FileInputStream(configFilePath);
 			if(null != is) {
-		    	log.info("System in network model");
+		    	log.info("System is in network model");
 				properties.loadFromXML(is);
 		        for (Object s : properties.keySet()) {
 		            if (DBConstants.DB_SERVER.equalsIgnoreCase((String) s)) {
@@ -114,7 +114,7 @@ public class LoadProperties {
 			}
 		}catch ( FileNotFoundException fileNotFoundException) {
 			try {
-				log.info("System in embedded model");
+				log.info("System is in embedded model");
 				ClassLoader loader = this.getClass().getClassLoader();
 				URL  iconUrl = loader.getResource("datebase");
 				
@@ -129,6 +129,7 @@ public class LoadProperties {
 				strUsername = properties.getProperty(DBConstants.DB_USERNAME);
 				strPassword = properties.getProperty(DBConstants.DB_PASSWORD);
 			}catch (Exception e) {
+				log.error(e);
 				e.printStackTrace();
 			}
 		} catch (InvalidPropertiesFormatException e) {

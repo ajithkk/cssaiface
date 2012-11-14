@@ -12,13 +12,15 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import org.apache.log4j.Logger;
+
 /**
  * Class to load images
  * @author ajith
  *
  */
 public class ImageUtil {
-	
+	private static final Logger log = Util.getLogger(ImageUtil.class);
 	public ImageUtil() {
 		// TODO Auto-generated constructor stub
 	}
@@ -39,7 +41,7 @@ public class ImageUtil {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error(e);
 		}
 		return image;
 	}
@@ -53,7 +55,7 @@ public class ImageUtil {
 				image = Toolkit.getDefaultToolkit().getImage(url);
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error(e);
 		}
 		return image;
 	}
@@ -70,7 +72,7 @@ public class ImageUtil {
 				return "Null";
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error(e);
 		}
 		return url.toString();
 	}
@@ -87,7 +89,7 @@ public class ImageUtil {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error(e);
 		}
 		return image;
 	}

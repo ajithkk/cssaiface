@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.util.Util;
 
@@ -45,6 +46,7 @@ public class CssaLauncher {
 
 					});
 				} catch (Exception e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 			}
@@ -61,7 +63,7 @@ public class CssaLauncher {
 			properties.load(iconUrl.openStream());
 			PropertyConfigurator.configure(properties);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 	}
@@ -102,7 +104,7 @@ public class CssaLauncher {
 			launcher.showSplashScreen();
 			Thread.sleep(300);
 		}catch (Exception e) {
-			// TODO: handle exception
+			new ErrorDialog(e).setVisible(true);
 		}
 		EventQueue.invokeLater(new SplashScreenCloser());
 		launcher.showMainWindow();

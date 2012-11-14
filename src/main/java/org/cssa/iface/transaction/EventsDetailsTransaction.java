@@ -147,6 +147,8 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 			}
 		}catch (Exception e) {
 			throw new IfaceException(e);
+		} finally {
+			dbEngineImpl.closeResultSet(res);
 		}
 		return eventDetails;
 		
@@ -171,6 +173,8 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 			}
 		}catch (Exception e) {
 			throw new IfaceException(e);
+		} finally {
+			dbEngineImpl.closeResultSet(res);
 		}
 		return eventDetails;
 	}

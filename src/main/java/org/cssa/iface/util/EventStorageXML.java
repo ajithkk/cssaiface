@@ -8,7 +8,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.log4j.Logger;
 import org.cssa.iface.bo.EventStageStore;
+import org.cssa.iface.dao.dbengine.DBEngineImpl;
 
 /**
  * 
@@ -17,7 +19,7 @@ import org.cssa.iface.bo.EventStageStore;
  */
 
 public class EventStorageXML {
-
+	private static final Logger log = Util.getLogger(EventStorageXML.class);
 	private static final String EVENT_STAGE_XML = "event_stages.xml";
 
 	private EventStageStore eventStageStore;
@@ -27,7 +29,7 @@ public class EventStorageXML {
 		init();
 	}
 
-	private void init() {
+	private void init()  {
 		try {
 			eventStageMap = new HashMap<String, String>();
 			JAXBContext context = JAXBContext
@@ -42,6 +44,7 @@ public class EventStorageXML {
 			}
 			
 		} catch (JAXBException e) {
+			log.error(e);
 			e.printStackTrace();
 		}
 	}

@@ -61,6 +61,8 @@ public class SeminarTransaction implements Transaction<Seminar> {
 				}
 			} catch (SQLException e) {
 				throw new IfaceException(e);
+			}finally {
+				dbEngineImpl.closeResultSet(res);
 			}
 		}
 		return seminar;
@@ -89,6 +91,8 @@ public class SeminarTransaction implements Transaction<Seminar> {
 			}
 		} catch (SQLException e) {
 			throw new IfaceException(e);
+		}finally {
+			dbEngineImpl.closeResultSet(res);
 		}
 		return seminarList;
 	}

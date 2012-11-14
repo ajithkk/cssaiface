@@ -134,8 +134,7 @@ public class WinnerTransaction implements Transaction<InsertResult>{
 				throw new IfaceException("Result of "+position+ "is already inserted");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}

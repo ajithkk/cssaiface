@@ -67,7 +67,7 @@ public class ConnectionManager {
 				con.close();
 			}
 		} catch (Exception e) {
-			log.error("Exception"+ e);
+			log.error( e);
 			e.printStackTrace();
 		}
 	}
@@ -78,7 +78,7 @@ public class ConnectionManager {
 				smt.close();
 			}
 		} catch (Exception e) {
-			log.error("Exception"+ e);
+			log.error(e);
 			e.printStackTrace();
 		}
 	}
@@ -89,7 +89,7 @@ public class ConnectionManager {
 				res.close();
 			}
 		} catch (Exception e) {
-			log.error("Exception"+ e);
+			log.error(e);
 			e.printStackTrace();
 		}
 	}

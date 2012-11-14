@@ -21,6 +21,7 @@ import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.ValidateUtil;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.gui.util.MessageUtil;
 import org.cssa.iface.report.ReportLauncher;
 import org.cssa.iface.report.bo.StudentRegisterDocument;
@@ -87,10 +88,10 @@ public class CollegeInitialViewController extends AbstractAction {
 			try {
 				report.createReport();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
+				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			}
 		}
@@ -115,6 +116,7 @@ public class CollegeInitialViewController extends AbstractAction {
 			try {
 				transaction.save(collegeDetails);
 			} catch (IfaceException e) {
+				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			}
 			setStudentIdInTable(); 
@@ -138,10 +140,10 @@ public class CollegeInitialViewController extends AbstractAction {
 			}
 			tableModel.setStudentRegisterNumbers(studentDetails);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		
@@ -170,6 +172,7 @@ public class CollegeInitialViewController extends AbstractAction {
 		try {
 			collegeInitialView.setCollegeId(transactioUtils.getCollegeId());
 		} catch (IfaceException e) {
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		

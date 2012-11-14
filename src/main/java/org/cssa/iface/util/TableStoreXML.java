@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.log4j.Logger;
 import org.cssa.iface.bo.TableStore;
 
 /**
@@ -18,7 +19,7 @@ import org.cssa.iface.bo.TableStore;
  *
  */
 public class TableStoreXML {
-	
+	private static final Logger log = Util.getLogger(TableStoreXML.class);
 	private static final String TABLE_DETAILS_XML = "interface_table.xml";
 	private TableStore tableStore;
 	private Map<String, String> tableStoreMap;
@@ -40,7 +41,7 @@ public class TableStoreXML {
 				tableStoreMap.put(tableStore.getTableDetailsList().get(i).getTableName(), tableStore.getTableDetailsList().get(i).getScriptFile());
 			}
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 

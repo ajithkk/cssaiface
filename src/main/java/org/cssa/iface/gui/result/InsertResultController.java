@@ -29,8 +29,6 @@ import org.cssa.iface.util.CssaMessage;
 public class InsertResultController implements ActionListener, LookupService<InsertResult>{
 
 	private boolean editMode;
-	private Results results;
-	private List<Events> events;
 	private CssaMDIForm mdiForm;
 	private InsertResultView resultView;
 	private InsertResultTableModel tableModel;
@@ -39,7 +37,6 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 	
 	
 	private TransactioUtils transactioUtils;
-	private EventsTransaction eventsTransaction;
 	private WinnerTransaction winnerTransaction;
 	
 	public InsertResultController(CssaMDIForm mdiForm) {

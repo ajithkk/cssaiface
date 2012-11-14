@@ -213,6 +213,7 @@ public class DatabaseViewController implements ActionListener {
 				try {
 					eventList = new EventsTransaction().loadAll();
 				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 				eventTableModel.setEventList(eventList);
@@ -225,6 +226,7 @@ public class DatabaseViewController implements ActionListener {
 					studentDetails = new StudentTransaction().loadAll();
 					
 				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 				tableModel.setStudents(studentDetails);
@@ -238,6 +240,7 @@ public class DatabaseViewController implements ActionListener {
 					collegeDetails = new CollegeTransaction().loadAll();
 					
 				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 				tableModel.setCollegeList(collegeDetails);
@@ -251,6 +254,7 @@ public class DatabaseViewController implements ActionListener {
 					eventDetails = new EventsDetailsTransaction().loadAll();
 					
 				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 				tableModel.setEventDetails(eventDetails);
@@ -264,6 +268,7 @@ public class DatabaseViewController implements ActionListener {
 					resultsDetails = new ResultsTransaction().loadAll();
 					
 				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 				tableModel.setResultList(resultsDetails);
@@ -278,6 +283,7 @@ public class DatabaseViewController implements ActionListener {
 				try {
 					results = new WinnerTransaction().loadAll();
 				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 				tableModel.setWinnerList(results);
@@ -291,6 +297,7 @@ public class DatabaseViewController implements ActionListener {
 					timeSheet = new TimeSheetTransaction().loadAll();
 					
 				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
 				tableModel.setTimeSheets(timeSheet);
@@ -298,7 +305,7 @@ public class DatabaseViewController implements ActionListener {
 				databaseView.showSearchResultScreen();
 				
 			} else if (CSSAConstants.SEMINAR_DETAILS_TABLE.equals(tableName)) {
-				
+				//Coming next version 
 			}
 			
 		}

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
 
 
@@ -42,14 +43,14 @@ public class Util {
 		return gen;
 	}
 	
-	public static Date convertDate(String date) {
+	public static Date convertDate(String date) throws IfaceException {
 		Date soure = null;
 		SimpleDateFormat dateFormat = new SimpleDateFormat(CSSAConstants.DATE_FORMAT);
 		try {
 			 soure = dateFormat.parse(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			new IfaceException(e);
 		}
 		return soure;
 	}

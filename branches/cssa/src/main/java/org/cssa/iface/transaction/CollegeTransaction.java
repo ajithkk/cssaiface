@@ -131,6 +131,7 @@ public class CollegeTransaction implements Transaction<CollegeDetails> {
 			}
 			dbEngineImpl.closeResultSet(res);
 		} catch (Exception e) {
+			throw new IfaceException(e);
 		} finally {
 			dbEngineImpl.closeResultSet(res);
 		}

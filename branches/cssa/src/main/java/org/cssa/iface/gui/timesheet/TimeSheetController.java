@@ -121,12 +121,17 @@ public class TimeSheetController implements ActionListener {
 
 	private void performAddAction() {
 		TimeSheet timeSheet = new TimeSheet();
-		timeSheet.setDate(Util.convertDate(selectedDate));
+		try {
+			timeSheet.setDate(Util.convertDate(selectedDate));
+		} catch (IfaceException e1) {
+			new ErrorDialog(e1).setVisible(true);
+			e1.printStackTrace();
+		}
 		try {
 			timeSheetTransaction.save(timeSheet);
 			setTimeSheetVAlue();
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		
@@ -145,11 +150,16 @@ public class TimeSheetController implements ActionListener {
 	
 	public void setTimeSheetVAlue() {
 		TimeSheet timeSheet = new TimeSheet();
-		timeSheet.setDate(Util.convertDate(selectedDate));
+		try {
+			timeSheet.setDate(Util.convertDate(selectedDate));
+		} catch (IfaceException e1) {
+			new ErrorDialog(e1).setVisible(true);
+			e1.printStackTrace();
+		}
 		try {
 			tableModel.setTimeSheets(timeSheetTransaction.loadAll(timeSheet));
 		} catch (IfaceException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 	}

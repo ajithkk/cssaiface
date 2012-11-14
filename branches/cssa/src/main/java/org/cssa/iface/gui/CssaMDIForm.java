@@ -24,6 +24,7 @@ import javax.swing.event.InternalFrameEvent;
 import org.cssa.iface.gui.menu.CssaMenuController;
 import org.cssa.iface.gui.toolbar.CssaToolBar;
 import org.cssa.iface.gui.util.CssaLookAndFeel;
+import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.gui.util.SwingHelper;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.util.ImageUtil;
@@ -90,6 +91,7 @@ public class CssaMDIForm extends JFrame {
 		try {
 			frame.setSelected(true);
 		} catch (PropertyVetoException e) {
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 	}
@@ -110,6 +112,7 @@ public class CssaMDIForm extends JFrame {
 		try {
 			frame.setSelected(true);
 		} catch (PropertyVetoException e) {
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		
@@ -130,6 +133,7 @@ public class CssaMDIForm extends JFrame {
 		try {
 			frame.setSelected(true);
 		} catch (PropertyVetoException e) {
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		
@@ -150,6 +154,7 @@ public class CssaMDIForm extends JFrame {
 		try {
 			frame.setSelected(true);
 		} catch (PropertyVetoException e) {
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 		
@@ -186,16 +191,16 @@ public class CssaMDIForm extends JFrame {
 		try {
 			UIManager.setLookAndFeel(new CssaLookAndFeel(lookAndFeel).getLookAndFeel());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
+			new ErrorDialog(e).setVisible(true);
 			e.printStackTrace();
 		}
 	}

@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.log4j.Logger;
 import org.cssa.iface.bo.TimeScheduleStore;
 
 /**
@@ -18,7 +19,7 @@ import org.cssa.iface.bo.TimeScheduleStore;
  *
  */
 public class TimeScheduleStoreXML {
-	
+	private static final Logger log = Util.getLogger(TimeScheduleStoreXML.class);
 	private static final String TIME_SCHEDULE_STORE_XML = "interface_date.xml";
 	
 	private TimeScheduleStore timeScheduleStore;
@@ -43,6 +44,7 @@ public class TimeScheduleStoreXML {
 				timeScheduleMap.put(timeScheduleStore.getTimeScheduleList().get(i).getScheduleDay(), timeScheduleStore.getTimeScheduleList().get(i).getScheduleDate());
 			}
 		}catch (JAXBException e) {
+			log.error(e);
 			e.printStackTrace();
 		}
 	}

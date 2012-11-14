@@ -1,4 +1,7 @@
-package org.cssa.iface.report.search;
+/**
+ * 
+ */
+package org.cssa.iface.report.database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,7 +9,7 @@ import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.List;
 
-import org.cssa.iface.bo.InsertResult;
+import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.report.ReportLauncher;
 
 import com.itextpdf.text.BaseColor;
@@ -23,24 +26,28 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
-public class SearchResultReport {
+/**
+ * @author ajith
+ *
+ */
+public class StudentDetailsTableReport {
 	
 	private String fileName;
-	private List<InsertResult> studentDetails;
+	private List<StudentDetails> studentDetails;
 	private Document document;
 	/**
 	 * @param fileName
 	 * @param studentDetails
 	 */
-	public SearchResultReport(String fileName,
-			List<InsertResult> studentDetails) {
+	public StudentDetailsTableReport(String fileName,
+			List<StudentDetails> studentDetails) {
 		this.fileName = fileName;
 		this.studentDetails = studentDetails;
 	}
 	
 	
 	private void addMetaData() {
-		document.addTitle("Search Details");
+		document.addTitle("Student Details Table");
 		document.addAuthor(System.getProperty("user.name"));
 		document.addCreationDate();
 		document.addCreator(System.getProperty("user.name"));
@@ -67,7 +74,7 @@ public class SearchResultReport {
 		Paragraph header = new Paragraph();
 		header.setAlignment(Element.ALIGN_CENTER);
 		addEmptyLine(header, 1);
-		header.add(new Paragraph("Event Participation", new Font(FontFamily.HELVETICA, Font.DEFAULTSIZE, Font.BOLD)));
+		header.add(new Paragraph("Student Details", new Font(FontFamily.HELVETICA, Font.DEFAULTSIZE, Font.BOLD)));
 		addEmptyLine(header, 1);
 		try {
 			document.add(header);
@@ -80,8 +87,8 @@ public class SearchResultReport {
 	
 	private void addTable () {
 		
-		PdfPTable dataTable  = new PdfPTable(8);
-		int headerwidths[] = { 5, 12, 10, 10, 8,6,5,5};
+		PdfPTable dataTable  = new PdfPTable(9);
+		int headerwidths[] = { 5, 12, 10, 10, 8,6,5,5,5};
 		try {
 			dataTable.setWidthPercentage(288 / 2.75f);
 			dataTable.setWidths(headerwidths);
@@ -97,10 +104,6 @@ public class SearchResultReport {
 		cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		dataTable.addCell(cell1);
 		
-		cell1 = new PdfPCell( new Phrase("College Name"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
-		dataTable.addCell(cell1);
-		
 		cell1 = new PdfPCell( new Phrase("Student Id"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
@@ -109,25 +112,35 @@ public class SearchResultReport {
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		
-		cell1 = new PdfPCell( new Phrase("Event id"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
-		dataTable.addCell(cell1);
-		cell1 = new PdfPCell( new Phrase("Group"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
-		dataTable.addCell(cell1);
-		cell1 = new PdfPCell( new Phrase("Stage"));
+		cell1 = new PdfPCell( new Phrase("Gender"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		
-		for(InsertResult student : studentDetails) {
+		cell1 = new PdfPCell( new Phrase("Phone"));
+		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+		dataTable.addCell(cell1);
+		
+		cell1 = new PdfPCell( new Phrase("#Points"));
+		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+		dataTable.addCell(cell1);
+		
+		cell1 = new PdfPCell( new Phrase("Acco"));
+		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+		dataTable.addCell(cell1);
+		cell1 = new PdfPCell( new Phrase("Status"));
+		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+		dataTable.addCell(cell1);
+		
+		for(StudentDetails student : studentDetails) {
 			dataTable.addCell(""+student.getSno());
 			dataTable.addCell(student.getCollegeId());
-			dataTable.addCell(student.getCollegeName());
 			dataTable.addCell(""+student.getStudentId());
 			dataTable.addCell(""+student.getStudentName());
-			dataTable.addCell(""+student.getEventName());
-			dataTable.addCell(""+student.getGroupName());
-			dataTable.addCell(""+student.getEventStatus());
+			dataTable.addCell(""+student.getStudentGender());
+			dataTable.addCell(""+student.getStudentPhone());
+			dataTable.addCell(""+student.getStudentPoint());
+			dataTable.addCell(""+student.isAccommodation());
+			dataTable.addCell(""+student.isStatus());
 			
 		}
 		try {
@@ -162,5 +175,6 @@ public class SearchResultReport {
 			paragraph.add(new Paragraph(""));
 		}
 	}
+	
 
 }

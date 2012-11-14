@@ -51,9 +51,6 @@ public class ResultTableModel extends AbstractTableModel {
 	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		if(6 == columnIndex) {
-			return Double.class;
-		}
 		return String.class;
 	}
 	
@@ -78,9 +75,9 @@ public class ResultTableModel extends AbstractTableModel {
 		case 1: return insert.getCollegeId();
 		case 2: return insert.getStudentId();
 		case 3: return insert.getEventId();
-		case 4: return insert.getGroupId();
-		case 5: return insert.getMark();
-		case 6: return insert.getEventStatus();
+		case 4: return insert.getEventStatus();
+		case 5: return insert.getGroupId();
+		case 6: return insert.getMark();
 		default:
 			break;
 		}

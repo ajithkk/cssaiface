@@ -1,4 +1,4 @@
-package org.cssa.iface.report.search;
+package org.cssa.iface.report.database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,8 +6,9 @@ import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.List;
 
-import org.cssa.iface.bo.InsertResult;
+import org.cssa.iface.bo.EventDetails;
 import org.cssa.iface.report.ReportLauncher;
+import org.cssa.iface.report.ReportService;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -23,23 +24,23 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
-public class SearchResultReport {
-	
+public class EventDetailsTableReport implements ReportService {
+
 	private String fileName;
-	private List<InsertResult> studentDetails;
+	private List<EventDetails> studentDetails;
 	private Document document;
 	/**
 	 * @param fileName
 	 * @param studentDetails
 	 */
-	public SearchResultReport(String fileName,
-			List<InsertResult> studentDetails) {
+	public EventDetailsTableReport(String fileName,
+			List<EventDetails> studentDetails) {
 		this.fileName = fileName;
 		this.studentDetails = studentDetails;
 	}
 	
 	
-	private void addMetaData() {
+	public void addMetaData() {
 		document.addTitle("Search Details");
 		document.addAuthor(System.getProperty("user.name"));
 		document.addCreationDate();
@@ -47,7 +48,7 @@ public class SearchResultReport {
 		document.addKeywords("Java,Itext,pdf");
 	}
 	
-	private void addHeader() {
+	public void addHeader() {
 		Paragraph header = new Paragraph();
 		header.setAlignment(Element.ALIGN_CENTER);
 		addEmptyLine(header, 1);
@@ -62,7 +63,7 @@ public class SearchResultReport {
 		}
 	}
 	
-	private void addTitle() {
+	public void addTitle() {
 		
 		Paragraph header = new Paragraph();
 		header.setAlignment(Element.ALIGN_CENTER);
@@ -78,10 +79,10 @@ public class SearchResultReport {
 		
 	}
 	
-	private void addTable () {
+	public void addTable() {
 		
-		PdfPTable dataTable  = new PdfPTable(8);
-		int headerwidths[] = { 5, 12, 10, 10, 8,6,5,5};
+		PdfPTable dataTable  = new PdfPTable(5);
+		int headerwidths[] = { 5, 12, 10, 10, 8};
 		try {
 			dataTable.setWidthPercentage(288 / 2.75f);
 			dataTable.setWidths(headerwidths);
@@ -97,15 +98,7 @@ public class SearchResultReport {
 		cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		dataTable.addCell(cell1);
 		
-		cell1 = new PdfPCell( new Phrase("College Name"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
-		dataTable.addCell(cell1);
-		
 		cell1 = new PdfPCell( new Phrase("Student Id"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
-		dataTable.addCell(cell1);
-		
-		cell1 = new PdfPCell( new Phrase("Name"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		
@@ -115,19 +108,13 @@ public class SearchResultReport {
 		cell1 = new PdfPCell( new Phrase("Group"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
-		cell1 = new PdfPCell( new Phrase("Stage"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
-		dataTable.addCell(cell1);
 		
-		for(InsertResult student : studentDetails) {
+		for(EventDetails student : studentDetails) {
 			dataTable.addCell(""+student.getSno());
 			dataTable.addCell(student.getCollegeId());
-			dataTable.addCell(student.getCollegeName());
 			dataTable.addCell(""+student.getStudentId());
-			dataTable.addCell(""+student.getStudentName());
-			dataTable.addCell(""+student.getEventName());
-			dataTable.addCell(""+student.getGroupName());
-			dataTable.addCell(""+student.getEventStatus());
+			dataTable.addCell(""+student.getEventId());
+			dataTable.addCell(""+student.getGroupId());
 			
 		}
 		try {
@@ -162,5 +149,6 @@ public class SearchResultReport {
 			paragraph.add(new Paragraph(""));
 		}
 	}
+
 
 }

@@ -24,6 +24,7 @@ import javax.swing.event.InternalFrameEvent;
 import org.cssa.iface.gui.menu.CssaMenuController;
 import org.cssa.iface.gui.toolbar.CssaToolBar;
 import org.cssa.iface.gui.util.CssaLookAndFeel;
+import org.cssa.iface.gui.util.SwingHelper;
 import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.util.ImageUtil;
 

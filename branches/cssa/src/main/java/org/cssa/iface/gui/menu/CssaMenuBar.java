@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeInitialViewController;
+import org.cssa.iface.gui.database.DatabaseViewController;
 import org.cssa.iface.gui.events.EventsController;
 import org.cssa.iface.gui.lookup.CollegeLookupController;
 import org.cssa.iface.gui.lookup.ParticipantLookupController;
@@ -119,9 +120,16 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 		
 		Set<Map.Entry<String, String>> tableSet = tableMap.entrySet();
 		for(Map.Entry<String, String> set : tableSet) {
+			final String tableName = set.getKey();
 			CssaMenuItem menuItem = new CssaMenuItem(set.getKey().toLowerCase());
 			menuItem.setActionCommand(set.getKey());
-			menuItem.addActionListener(this);
+			menuItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new DatabaseViewController(tableName, cssaMDIForm).showDatabaseView();
+				}
+			});
 			databseMenu.addElement(menuItem);
 		}
 		CssaMenu mnuDatabase = new CssaMenu("Database");

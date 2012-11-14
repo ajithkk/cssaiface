@@ -434,6 +434,14 @@ public class CSSAQuery {
 			+ CSSAConstants.TIMESHEET_VENUE +" FROM "+ CSSAConstants.TIMESHEET_TABLE +" WHERE "
 			+ CSSAConstants.TIMESHEET_DAY +" =  ? ";
 	
+	public static final String SELECT_TIMESHEET = " SELECT "+CSSAConstants.TIMESHEET_SNO +" , "
+			+ CSSAConstants.TIMESHEET_DAY +", "
+			+ CSSAConstants.TIMESHEET_START_TIME +", "
+			+ CSSAConstants.TIMESHEET_END_TIME +", "
+			+ CSSAConstants.TIMESHEET_EVENT_ID +", "
+			+ CSSAConstants.TIMESHEET_EVENT_STAGE +", "
+			+ CSSAConstants.TIMESHEET_VENUE +" FROM "+ CSSAConstants.TIMESHEET_TABLE;
+	
 	public static final String UPDATE_TIMESHEET_BY_DATE  = " UPDATE "+CSSAConstants.TIMESHEET_TABLE +" SET "
 			+CSSAConstants.TIMESHEET_START_TIME +" = ?, "
 			+ CSSAConstants.TIMESHEET_END_TIME +" = ?,  "

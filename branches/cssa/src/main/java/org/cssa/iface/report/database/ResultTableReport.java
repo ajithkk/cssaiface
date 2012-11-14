@@ -1,4 +1,7 @@
-package org.cssa.iface.report.search;
+/**
+ * 
+ */
+package org.cssa.iface.report.database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.cssa.iface.bo.InsertResult;
+import org.cssa.iface.bo.Results;
 import org.cssa.iface.report.ReportLauncher;
 
 import com.itextpdf.text.BaseColor;
@@ -23,17 +27,20 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
-public class SearchResultReport {
-	
+/**
+ * @author ajith
+ *
+ */
+public class ResultTableReport {
 	private String fileName;
-	private List<InsertResult> studentDetails;
+	private List<Results> studentDetails;
 	private Document document;
 	/**
 	 * @param fileName
 	 * @param studentDetails
 	 */
-	public SearchResultReport(String fileName,
-			List<InsertResult> studentDetails) {
+	public ResultTableReport(String fileName,
+			List<Results> studentDetails) {
 		this.fileName = fileName;
 		this.studentDetails = studentDetails;
 	}
@@ -80,8 +87,8 @@ public class SearchResultReport {
 	
 	private void addTable () {
 		
-		PdfPTable dataTable  = new PdfPTable(8);
-		int headerwidths[] = { 5, 12, 10, 10, 8,6,5,5};
+		PdfPTable dataTable  = new PdfPTable(7);
+		int headerwidths[] = { 5, 12, 10, 10, 8,6,5};
 		try {
 			dataTable.setWidthPercentage(288 / 2.75f);
 			dataTable.setWidths(headerwidths);
@@ -97,37 +104,32 @@ public class SearchResultReport {
 		cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		dataTable.addCell(cell1);
 		
-		cell1 = new PdfPCell( new Phrase("College Name"));
-		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
-		dataTable.addCell(cell1);
-		
 		cell1 = new PdfPCell( new Phrase("Student Id"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		
-		cell1 = new PdfPCell( new Phrase("Name"));
+		cell1 = new PdfPCell( new Phrase("Event Id"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		
-		cell1 = new PdfPCell( new Phrase("Event id"));
+		cell1 = new PdfPCell( new Phrase("Status"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		cell1 = new PdfPCell( new Phrase("Group"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
-		cell1 = new PdfPCell( new Phrase("Stage"));
+		cell1 = new PdfPCell( new Phrase("Mark"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
 		
-		for(InsertResult student : studentDetails) {
+		for(Results student : studentDetails) {
 			dataTable.addCell(""+student.getSno());
 			dataTable.addCell(student.getCollegeId());
-			dataTable.addCell(student.getCollegeName());
 			dataTable.addCell(""+student.getStudentId());
-			dataTable.addCell(""+student.getStudentName());
-			dataTable.addCell(""+student.getEventName());
-			dataTable.addCell(""+student.getGroupName());
+			dataTable.addCell(""+student.getEventId());
 			dataTable.addCell(""+student.getEventStatus());
+			dataTable.addCell(""+student.getGroupId());
+			dataTable.addCell(""+student.getMark());
 			
 		}
 		try {

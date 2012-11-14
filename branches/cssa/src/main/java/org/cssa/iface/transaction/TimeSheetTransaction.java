@@ -50,7 +50,29 @@ public class TimeSheetTransaction implements Transaction<TimeSheet> {
 	@Override
 	public List<TimeSheet> loadAll() throws IfaceException {
 		
-		return null;
+		List<TimeSheet> timeSheetsList = new ArrayList<TimeSheet>();
+		
+		res = dbEngineImpl.executeQuery(CSSAQuery.SELECT_TIMESHEET);
+		
+		try {
+			while (res.next()) {
+				TimeSheet time = new TimeSheet();
+				time.setSno(res.getInt(CSSAConstants.TIMESHEET_SNO));
+				time.setDate(res.getDate(CSSAConstants.TIMESHEET_DAY));
+				time.setEndTime(res.getString(CSSAConstants.TIMESHEET_END_TIME));
+				time.setStartTime(res.getString(CSSAConstants.TIMESHEET_START_TIME));
+				time.setEventId(res.getString(CSSAConstants.TIMESHEET_EVENT_ID));
+				time.setEventStage(res.getString(CSSAConstants.TIMESHEET_EVENT_STAGE));
+				time.setVenue(res.getString(CSSAConstants.TIMESHEET_VENUE));
+				timeSheetsList.add(time);
+				
+			}
+		} catch (SQLException e) {
+			throw new IfaceException(e);
+		} finally {
+			dbEngineImpl.closeResultSet(res);
+		}
+		return timeSheetsList;
 	}
 
 	@Override
@@ -98,6 +120,8 @@ public class TimeSheetTransaction implements Transaction<TimeSheet> {
 			}
 		} catch (SQLException e) {
 			throw new IfaceException(e);
+		} finally {
+			dbEngineImpl.closeResultSet(res);
 		}
 		return timeSheetsList;
 	}

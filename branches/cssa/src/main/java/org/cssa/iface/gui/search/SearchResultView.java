@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -110,9 +111,13 @@ public class SearchResultView {
 		tblSearchResult.setFillsViewportHeight(true);
 		tblSearchResult.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblSearchResult);
-		scrollPane.setMinimumSize(new Dimension(1170, 550));
-		scrollPane.setMaximumSize(new Dimension(1170, 550));
-		scrollPane.setPreferredSize(new Dimension(1170, 550));
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		int w = d.width - 175;
+		Dimension hh = mdiForm.getContentPane().getSize();
+		int he = hh.height - 60;
+		scrollPane.setMinimumSize(new Dimension(w, he));
+		scrollPane.setMaximumSize(new Dimension(w, he));
+		scrollPane.setPreferredSize(new Dimension(w, he));
 		
 		panel.add(scrollPane, BorderLayout.WEST);
 		return panel;

@@ -31,7 +31,7 @@ public class TimeSheetTableModel  extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
+		
 		return timeSheets.size();
 	}
 

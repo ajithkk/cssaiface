@@ -120,7 +120,7 @@ public class CSSAConstants {
 	public static final String[] EVENT_DETAILS_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","EVENT ID","GROUP NAME"};
 	public static final String[] RESULT_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","EVENT ID","RESULT STATUS","GROUP NAME","MARK"};
 	
-	public static final String SPLASH_IMAGE = "StocksMonitor.gif";
+	public static final String SPLASH_IMAGE = "crazy-turtle-cartoon-comic.png";
 
 	public static final String HELP_FILE = "HelpSet.cs";
 	

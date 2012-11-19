@@ -118,9 +118,9 @@ public class SearchResultReport {
 		cell1 = new PdfPCell( new Phrase("Stage"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
-		
+		int i = 1;
 		for(InsertResult student : studentDetails) {
-			dataTable.addCell(""+student.getSno());
+			dataTable.addCell(""+(i++));
 			dataTable.addCell(student.getCollegeId());
 			dataTable.addCell(student.getCollegeName());
 			dataTable.addCell(""+student.getStudentId());

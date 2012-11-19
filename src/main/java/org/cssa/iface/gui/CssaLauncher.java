@@ -28,7 +28,7 @@ public class CssaLauncher {
 	
 	private static void showSplashScreen() {
 		cssaLogger.info("Showing the splash screen");
-		splashScreen = new CssaSplashScreen("crazy-turtle-cartoon-comic.png");
+		splashScreen = new CssaSplashScreen(CSSAConstants.SPLASH_IMAGE);
 		splashScreen.splash();
 	}
 	

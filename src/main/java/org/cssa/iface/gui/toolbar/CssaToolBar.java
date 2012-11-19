@@ -100,7 +100,7 @@ public class CssaToolBar extends JToolBar implements ActionListener, MenuConstan
 		
 		reportCollege = new CssaToolbarButton(imageUtil.loadImage("J2EEApplicationClient24.gif"), "Report College", "Report College");
 		reportCollege.addActionListener(this);
-		reportCollege.setActionCommand(MNU_REPORT_COLLEGE);
+		reportCollege.setActionCommand(ACT_MNU_REPORT_COLLEGE);
 		this.add(reportCollege);
 		
 		reportStudent = new CssaToolbarButton(imageUtil.loadImage("J2EEServer24.gif"), "Report Student", "Report Student");
@@ -141,9 +141,9 @@ public class CssaToolBar extends JToolBar implements ActionListener, MenuConstan
 			new InsertResultController(mdiForm).askInsertResultView();
 		} else if(ACT_MNU_REPORT_COLLEGE.equals(actionCommand)) {
 			new CollegeLookupController(mdiForm,true).askCollegeLookupView();
-		} else if(ACT_MNU_REPORT_STUDENT.equals(actionCommand)) {
+		} else if(MNU_REPORT_STUDENT.equals(actionCommand)) {
 			new StudentLookupController(mdiForm, false, true).askStudentLookupsereen();
-		} else if (ACT_MNU_REPORT_EVENT.equals(actionCommand)) {
+		} else if (MNU_REPORT_EVENT.equals(actionCommand)) {
 			new SearchTableController(mdiForm).askSearachTable();
 		} else if(ACT_MNU_REPORT_RESULT.equals(actionCommand)) {
 			new ParticipantLookupController(mdiForm).askParticipantsLookupView();

@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.college.CollegeInitialViewController;
+import org.cssa.iface.gui.database.DatabaseAdministrationController;
 import org.cssa.iface.gui.database.DatabaseViewController;
 import org.cssa.iface.gui.events.EventsController;
 import org.cssa.iface.gui.lookup.CollegeLookupController;
@@ -50,6 +51,7 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 		CssaMenuItem mnuItemNewEvent = new CssaMenuItem(MNU_FILE_NEWEVENT);
 		CssaMenuItem mnuItemExit = new CssaMenuItem(MNU_FILE_EXIT);
 		CssaMenuItem mnuItemSeminar = new CssaMenuItem(MNU_FILE_TIME_SHEET);
+		CssaMenuItem mnuItemAdmin = new CssaMenuItem(ADMIN);
 		
 		mnuItemNewCollege.addActionListener(this);
 		mnuItemNewCollege.setActionCommand(MNU_FILE_NEWCOLLEGE);
@@ -59,11 +61,15 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 		mnuItemSeminar.setActionCommand(MNU_FILE_TIME_SHEET);
 		mnuItemExit.addActionListener(this);
 		mnuItemExit.setActionCommand(MNU_FILE_EXIT);
+		mnuItemAdmin.addActionListener(this);
+		mnuItemAdmin.setActionCommand(ADMIN);
 		
 		fileMenu.addElement(mnuItemNewCollege);
 		fileMenu.addElement(mnuItemNewEvent);
 		fileMenu.addElement(SEPRATOR);
 		fileMenu.addElement(mnuItemSeminar);
+		fileMenu.addElement(SEPRATOR);
+		fileMenu.addElement(mnuItemAdmin);
 		fileMenu.addElement(SEPRATOR);
 		fileMenu.addElement(mnuItemExit);
 		
@@ -270,6 +276,8 @@ public class CssaMenuBar extends JMenuBar implements ActionListener, MenuConstan
 			new StudentLookupController(cssaMDIForm, true, false).askStudentLookupsereen();
 		} else if (ACT_MNU_REPORT_WINNERS.equals(actionCommand)) {
 			new WinnerLookupController(cssaMDIForm, true).askWinnerLookUp();
+		} else if (ADMIN.equals(actionCommand)) {
+			new DatabaseAdministrationController(cssaMDIForm).showAdministrationView();
 		}
 			
 	}

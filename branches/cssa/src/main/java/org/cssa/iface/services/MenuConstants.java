@@ -50,5 +50,6 @@ public interface MenuConstants {
 	public static final String MNU_HELP_ABOUT = "About";
 	
 	public static final String SEPRATOR = "seprator";
+	public static final String ADMIN = "Admin";
 
 }

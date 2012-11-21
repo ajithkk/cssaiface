@@ -450,4 +450,14 @@ public class CSSAQuery {
 			+ CSSAConstants.TIMESHEET_VENUE +"=  ?  WHERE "+ CSSAConstants.TIMESHEET_SNO+" = ?";
 			
 	public static final String DELETE_TIMESHEET = "DELETE FROM  "+CSSAConstants.TIMESHEET_TABLE +"  WHERE "+ CSSAConstants.TIMESHEET_SNO+" = ?";
+	
+	public static final String CLEAR_TIMESHEET_TABLE = "DELETE FROM "+CSSAConstants.TIMESHEET_TABLE;
+	public static final String CLEAR_STUDENT_DETAILS_TABLE = "DELETE FROM "+CSSAConstants.STUDENTS_DETAILS_TABLE;
+	public static final String CLEAR_COLLEGE_DETAILS_TABLE = "DELETE FROM "+CSSAConstants.COLLEGE_DETAILS_TABLE;
+	public static final String CLEAR_EVENT_DETAILS_TABLE = "DELETE FROM "+CSSAConstants.EVENT_DETAILS_TABLE;
+	public static final String CLEAR_EVENTS_TABLE = "DELETE FROM "+CSSAConstants.EVENTS_TABLE;
+	public static final String CLEAR_RESULTS_TABLE = "DELETE FROM "+CSSAConstants.RESULTS_TABLE;
+	public static final String CLEAR_SEMINAR_DETAILS_TABLE = "DELETE FROM "+CSSAConstants.SEMINAR_DETAILS_TABLE;
+	public static final String CLEAR_WINNERS_TABLE = "DELETE FROM "+CSSAConstants.WINNERS_TABLE;
+	
 }

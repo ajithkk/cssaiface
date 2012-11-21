@@ -1,5 +1,8 @@
 package org.cssa.iface.util;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,5 +66,21 @@ public class Util {
 	    Date now = new Date();
 	    String strDate = sdfDate.format(now);
 	    return strDate;
+	}
+	
+	public  String getScriptFile(String name) {
+		URL url = null;
+		String fileName = null;
+		try {
+			ClassLoader loader = this.getClass().getClassLoader();
+		    url = loader.getResource("sql" +"/"+ name.trim()); 
+			if(null != url) {
+				fileName = url.getPath().substring(1);
+				
+			}
+		} catch (Exception e) {
+			
+		}
+		return fileName;
 	}
 }

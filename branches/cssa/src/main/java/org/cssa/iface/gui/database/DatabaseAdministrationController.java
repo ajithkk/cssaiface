@@ -269,7 +269,7 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
     }
 	
 	public void checkTableExistsOrNot(String table) {
-		if(null == tableNames || null == tableXMLMap) {
+		if(null == tableNames || null == tableXMLMap ||tableNames.size() == 0 || tableXMLMap.size() == 0) {
 			try {
 				tableNames = transactioUtils.getAllTableNames();
 				TableStoreXML xml = new TableStoreXML();
@@ -332,7 +332,8 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
     		   
     	   } else if (node.getTitle().equals(CSSAConstants.EVENTS_TABLE)) {
     		   tableName = CSSAConstants.EVENTS_TABLE;
-    		   EventTableModel eventTableModel = new EventTableModel();
+    		   checkTableExistsOrNot(tableName);
+    		   	EventTableModel eventTableModel = new EventTableModel();
 				List<Events> eventList = null;
 				try {
 					eventList = new EventsTransaction().loadAll();
@@ -344,6 +345,7 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 				}
     	   } else if (node.getTitle().equals(CSSAConstants.STUDENTS_DETAILS_TABLE)) {
     		   tableName = CSSAConstants.STUDENTS_DETAILS_TABLE;
+    		   checkTableExistsOrNot(tableName);
     		   StudentDetailsTableModel tableModel = new StudentDetailsTableModel();
 				List<StudentDetails> studentDetails = null;
 				try {
@@ -356,6 +358,7 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 				}
     	   } else if (node.getTitle().equals(CSSAConstants.COLLEGE_DETAILS_TABLE)) {
     		   tableName = CSSAConstants.COLLEGE_DETAILS_TABLE;
+    		   checkTableExistsOrNot(tableName);
     		   CollegeLookupTableModel tableModel = new CollegeLookupTableModel();
 				List<CollegeDetails> collegeDetails = null;
 				try {
@@ -370,6 +373,7 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 			
     	   } else if (node.getTitle().equals(CSSAConstants.EVENT_DETAILS_TABLE)) {
     		   tableName = CSSAConstants.EVENT_DETAILS_TABLE;
+    		   checkTableExistsOrNot(tableName);
     		   EventDetailsTableModel tableModel = new EventDetailsTableModel();
 				List<EventDetails> eventDetails = null;
 				try {
@@ -383,6 +387,7 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 				
 		} else if (node.getTitle().equals(CSSAConstants.RESULTS_TABLE)) {
 			tableName = CSSAConstants.RESULTS_TABLE;
+			checkTableExistsOrNot(tableName);
 			ResultTableModel tableModel = new ResultTableModel();
 			List<Results> resultsDetails = null;
 			try {
@@ -396,6 +401,7 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 			
 		} else if (node.getTitle().equals(CSSAConstants.WINNERS_TABLE)) {
 			tableName = CSSAConstants.WINNERS_TABLE;
+			checkTableExistsOrNot(tableName);
 			WinnerLookupTableModel tableModel = new WinnerLookupTableModel();
 			List<InsertResult> results = null;
 			try {

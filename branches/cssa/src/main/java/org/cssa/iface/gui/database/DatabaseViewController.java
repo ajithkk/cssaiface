@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 
@@ -40,6 +41,7 @@ import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.ResultsTransaction;
 import org.cssa.iface.transaction.StudentTransaction;
 import org.cssa.iface.transaction.TimeSheetTransaction;
+import org.cssa.iface.transaction.TransactioUtils;
 import org.cssa.iface.transaction.WinnerTransaction;
 import org.cssa.iface.util.Util;
 
@@ -82,8 +84,21 @@ public class DatabaseViewController implements ActionListener {
 	}
 	
 	private void performClearAction() {
-		// TODO Auto-generated method stub
-		
+		TransactioUtils utils = new TransactioUtils();
+		if(null != tableName) {
+			try {
+				int response = JOptionPane.showConfirmDialog(null, "Do you want to clear "+tableName, "Confirm",
+				        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if(response == JOptionPane.YES_OPTION) {
+					utils.clearTables(tableName);
+				}
+			} catch (IfaceException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			}
+			showDatabaseView();
+			
+		}
 	}
 
 

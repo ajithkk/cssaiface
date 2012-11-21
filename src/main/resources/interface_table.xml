@@ -2,30 +2,30 @@
 <ns2:cssa xmlns:ns2=" org.cssa.iface.bo">
     <table>
         <tableName>EVENTS</tableName>
-        <scriptFile></scriptFile>
+        <scriptFile>Events_table.sql</scriptFile>
     </table>
     <table>
         <tableName>EVENT_DETAILS</tableName>
-        <scriptFile></scriptFile>
+        <scriptFile>Event_Details_table.sql</scriptFile>
     </table>
     <table>
         <tableName>COLLEGE_DETAILS</tableName>
-        <scriptFile></scriptFile>
+        <scriptFile>College_Details_table.sql</scriptFile>
     </table>
     <table>
         <tableName>STUDENTS_DETAILS</tableName>
-        <scriptFile></scriptFile>
+        <scriptFile>Student_Details_table.sql</scriptFile>
     </table>
     <table>
         <tableName>RESULTS</tableName>
-        <scriptFile></scriptFile>
+        <scriptFile>Results_table.sql</scriptFile>
     </table>
     <table>
         <tableName>WINNERS</tableName>
-        <scriptFile></scriptFile>
+        <scriptFile>Winners_table.sql</scriptFile>
     </table>
     <table>
         <tableName>TIMESHEET</tableName>
-        <scriptFile></scriptFile>
+        <scriptFile>TimeSheet_table.sql</scriptFile>
     </table>
 </ns2:cssa>

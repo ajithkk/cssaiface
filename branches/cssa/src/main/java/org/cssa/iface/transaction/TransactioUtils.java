@@ -341,18 +341,25 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 		DBEngineImpl dbEngineImpl = new DBEngineImpl();
 		if(null != tableName) {
 			if(CSSAConstants.EVENTS_TABLE.equals(tableName)) {
+				dbEngineImpl.executeUpdate(CSSAQuery.RESET_EVENTS_SNO);
 				result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_EVENTS_TABLE);
 			} else if (CSSAConstants.STUDENTS_DETAILS_TABLE.equals(tableName)) {
+				dbEngineImpl.executeUpdate(CSSAQuery.RESET_STUDENT_DETAILS_SNO);
 				result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_STUDENT_DETAILS_TABLE);
 			} else if (CSSAConstants.COLLEGE_DETAILS_TABLE.equals(tableName)) {
+				dbEngineImpl.executeUpdate(CSSAQuery.RESET_COLLEGE_DETAILS_SNO);
 				result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_COLLEGE_DETAILS_TABLE);
 			} else if (CSSAConstants.EVENT_DETAILS_TABLE.equals(tableName)) {
+				dbEngineImpl.executeUpdate(CSSAQuery.RESET_EVENT_DETAILS_SNO);
 				result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_EVENT_DETAILS_TABLE);
 			} else if (CSSAConstants.RESULTS_TABLE.equals(tableName)) {
+				dbEngineImpl.executeUpdate(CSSAQuery.RESET_RESULTS_SNO);
 				result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_RESULTS_TABLE);
 			} else if (CSSAConstants.WINNERS_TABLE.equals(tableName)) {
+				dbEngineImpl.executeUpdate(CSSAQuery.RESET_WINNERS_SNO);
 				result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_WINNERS_TABLE);
 			} else if (CSSAConstants.TIMESHEET_TABLE.equals(tableName)) {
+				dbEngineImpl.executeUpdate(CSSAQuery.RESET_TIMESHEET_SNO);
 				result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_TIMESHEET_TABLE);
 			} else if (CSSAConstants.SEMINAR_DETAILS_TABLE.equals(tableName)) {
 				//Coming next version 
@@ -370,6 +377,38 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 	
 	public void runScript(String fileName) throws IfaceException {
 		new DBEngineImpl().executeScript(fileName);
+	}
+	
+	public int deleteTable(String tableName) throws IfaceException {
+		int result = -1;
+		
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		if(null != tableName) {
+			if(clearTables(tableName) != -1){
+				if(CSSAConstants.EVENTS_TABLE.equals(tableName)) {
+					result = dbEngineImpl.executeUpdate(CSSAQuery.DROP_EVENTS_TABLE);
+				} else if (CSSAConstants.STUDENTS_DETAILS_TABLE.equals(tableName)) {
+					result = dbEngineImpl.executeUpdate(CSSAQuery.DROP_STUDENT_DETAILS_TABLE);
+				} else if (CSSAConstants.COLLEGE_DETAILS_TABLE.equals(tableName)) {
+					result = dbEngineImpl.executeUpdate(CSSAQuery.DROP_COLLEGE_DETAILS_TABLE);
+				} else if (CSSAConstants.EVENT_DETAILS_TABLE.equals(tableName)) {
+					result = dbEngineImpl.executeUpdate(CSSAQuery.DROP_EVENT_DETAILS_TABLE);
+				} else if (CSSAConstants.RESULTS_TABLE.equals(tableName)) {
+					result = dbEngineImpl.executeUpdate(CSSAQuery.DROP_RESULTS_TABLE);
+				} else if (CSSAConstants.WINNERS_TABLE.equals(tableName)) {
+					result = dbEngineImpl.executeUpdate(CSSAQuery.DROP_WINNERS_TABLE);
+				} else if (CSSAConstants.TIMESHEET_TABLE.equals(tableName)) {
+					result = dbEngineImpl.executeUpdate(CSSAQuery.DROP_TIMESHEET_TABLE);
+				} else if (CSSAConstants.SEMINAR_DETAILS_TABLE.equals(tableName)) {
+					//Coming next version 
+					//result = dbEngineImpl.executeUpdate(CSSAQuery.CLEAR_SEMINAR_DETAILS_TABLE);
+				}
+			}
+			
+		}
+		
+		return result;
+	
 	}
 	
 

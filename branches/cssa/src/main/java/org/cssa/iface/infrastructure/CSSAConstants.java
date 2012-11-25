@@ -25,8 +25,8 @@ public class CSSAConstants {
 	public static final String MAX_TEAM_MEMBERS = "MAX_TEAM_MEMBERS";
 	
 	public static final int FAIL = -1;
-	public static final char MALE = 'M';
-	public static final char FEMALE = 'F';
+	public static final String MALE = "M";
+	public static final String FEMALE = "F";
 	
 	public static final String COLLEGE_ID_PRE_STRING = "IT";
 	public static final String COLLEGE_ID_PRE_ZERO = "0";

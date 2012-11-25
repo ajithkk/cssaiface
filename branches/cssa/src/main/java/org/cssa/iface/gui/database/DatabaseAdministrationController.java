@@ -37,6 +37,7 @@ import org.cssa.iface.transaction.TimeSheetTransaction;
 import org.cssa.iface.transaction.TransactioUtils;
 import org.cssa.iface.transaction.WinnerTransaction;
 import org.cssa.iface.util.CssaMessage;
+import org.cssa.iface.util.TableScriptXML;
 import org.cssa.iface.util.TableStoreXML;
 import org.cssa.iface.util.Util;
 
@@ -95,7 +96,8 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 				int response = JOptionPane.showConfirmDialog(null, "There is no tables in database do you want to create tables ?", "Confirm",
 				        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if(response == JOptionPane.YES_OPTION) {
-						transactioUtils.runScript(util.getScriptFile("Tablescript_ForDerby.sql"));
+						TableScriptXML xml = new TableScriptXML();
+						transactioUtils.runScript(xml.getTableStore());
 						CssaMessage.informationMessage(mdiForm, "Tables Created");
 					}
 				}
@@ -171,114 +173,19 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		setTables();
-		/*TableItemNode node = (TableItemNode) view.getjTree().getLastSelectedPathComponent();
-        if (node != null) {
-    	   if(node.getTitle().equals("Tables")) {
-    		   performTreeExpansion();
-    	   } else if(node.getTitle().equals(CSSAConstants.TIMESHEET_TABLE)) {
-    		   tableName = CSSAConstants.TIMESHEET_TABLE;
-    		   checkTableExistsOrNot(tableName);
-    		   TimeSheetTableModel timeTableModel = new TimeSheetTableModel();
-    		   try {
-				timeTableModel.setTimeSheets(new TimeSheetTransaction().loadAll());
-				view.getTblSearchResult().setModel(timeTableModel);
-			} catch (IfaceException e1) {
-				new ErrorDialog(e1).setVisible(true);
-			}
-    		   
-    	   } else if (node.getTitle().equals(CSSAConstants.EVENTS_TABLE)) {
-    		   tableName = CSSAConstants.EVENTS_TABLE;
-    		   EventTableModel eventTableModel = new EventTableModel();
-				List<Events> eventList = null;
-				try {
-					eventList = new EventsTransaction().loadAll();
-					eventTableModel.setEventList(eventList);
-					view.getTblSearchResult().setModel(eventTableModel);
-				} catch (IfaceException e1) {
-					new ErrorDialog(e1).setVisible(true);
-					e1.printStackTrace();
-				}
-    	   } else if (node.getTitle().equals(CSSAConstants.STUDENTS_DETAILS_TABLE)) {
-    		   tableName = CSSAConstants.STUDENTS_DETAILS_TABLE;
-    		   StudentDetailsTableModel tableModel = new StudentDetailsTableModel();
-				List<StudentDetails> studentDetails = null;
-				try {
-					studentDetails = new StudentTransaction().loadAll();
-					tableModel.setStudents(studentDetails);
-					view.getTblSearchResult().setModel(tableModel);
-				} catch (IfaceException e1) {
-					new ErrorDialog(e1).setVisible(true);
-					e1.printStackTrace();
-				}
-    	   } else if (node.getTitle().equals(CSSAConstants.COLLEGE_DETAILS_TABLE)) {
-    		   tableName = CSSAConstants.COLLEGE_DETAILS_TABLE;
-    		   CollegeLookupTableModel tableModel = new CollegeLookupTableModel();
-				List<CollegeDetails> collegeDetails = null;
-				try {
-					collegeDetails = new CollegeTransaction().loadAll();
-					tableModel.setCollegeList(collegeDetails);
-					view.getTblSearchResult().setModel(tableModel);
-				} catch (IfaceException e1) {
-					new ErrorDialog(e1).setVisible(true);
-					e1.printStackTrace();
-				}
-				 
-			
-    	   } else if (node.getTitle().equals(CSSAConstants.EVENT_DETAILS_TABLE)) {
-    		   tableName = CSSAConstants.EVENT_DETAILS_TABLE;
-    		   EventDetailsTableModel tableModel = new EventDetailsTableModel();
-				List<EventDetails> eventDetails = null;
-				try {
-					eventDetails = new EventsDetailsTransaction().loadAll();
-					tableModel.setEventDetails(eventDetails);
-					view.getTblSearchResult().setModel(tableModel);
-				} catch (IfaceException e1) {
-					new ErrorDialog(e1).setVisible(true);
-					e1.printStackTrace();
-				}
-				
-		} else if (node.getTitle().equals(CSSAConstants.RESULTS_TABLE)) {
-			tableName = CSSAConstants.RESULTS_TABLE;
-			ResultTableModel tableModel = new ResultTableModel();
-			List<Results> resultsDetails = null;
-			try {
-				resultsDetails = new ResultsTransaction().loadAll();
-				tableModel.setResultList(resultsDetails);
-				view.getTblSearchResult().setModel(tableModel);
-			} catch (IfaceException e1) {
-				new ErrorDialog(e1).setVisible(true);
-				e1.printStackTrace();
-			}
-			
-		} else if (node.getTitle().equals(CSSAConstants.WINNERS_TABLE)) {
-			tableName = CSSAConstants.WINNERS_TABLE;
-			WinnerLookupTableModel tableModel = new WinnerLookupTableModel();
-			List<InsertResult> results = null;
-			try {
-				results = new WinnerTransaction().loadAll();
-				tableModel.setWinnerList(results);
-				view.getTblSearchResult().setModel(tableModel);
-			} catch (IfaceException e1) {
-				new ErrorDialog(e1).setVisible(true);
-				e1.printStackTrace();
-			}
-			
-		}
-			
-        }*/
     }
 	
-	public void checkTableExistsOrNot(String table) {
-		if(null == tableNames || null == tableXMLMap ||tableNames.size() == 0 || tableXMLMap.size() == 0) {
+	public boolean checkTableExistsOrNot(String table) {
+		
 			try {
 				tableNames = transactioUtils.getAllTableNames();
-				TableStoreXML xml = new TableStoreXML();
+				TableScriptXML xml = new TableScriptXML();
 				tableXMLMap = xml.getTableStoreMap();
 			} catch (IfaceException e) {
 				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			}
-		}
+		
 		int ind = tableNames.indexOf(table);
 		if(ind == -1) {
 			int response = JOptionPane.showConfirmDialog(null, "This   tables not in database do you want to create tables ?", "Confirm",
@@ -286,21 +193,24 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 			if(response == JOptionPane.YES_OPTION) {
 				String tableScript = tableXMLMap.get(table);
 				try {
-					transactioUtils.runScript(util.getScriptFile(tableScript));
+					transactioUtils.runScript(tableScript);
 					CssaMessage.informationMessage(mdiForm, "Table Created");
 				} catch (Exception e) {
 					new ErrorDialog(e).setVisible(true);
 					e.printStackTrace();
 				}
+			} else {
+				return false;
 			}
 		}
+		return true;
 	}
 	
 	
 	public void showAdministrationView() {
 		try {
 			tableNames = transactioUtils.getAllTableNames();
-			TableStoreXML xml = new TableStoreXML();
+			TableScriptXML xml = new TableScriptXML();
 			tableXMLMap = xml.getTableStoreMap();
 		} catch (IfaceException e) {
 			new ErrorDialog(e).setVisible(true);
@@ -321,18 +231,19 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
     		   performTreeExpansion();
     	   } else if(node.getTitle().equals(CSSAConstants.TIMESHEET_TABLE)) {
     		   tableName = CSSAConstants.TIMESHEET_TABLE;
-    		   checkTableExistsOrNot(tableName);
-    		   TimeSheetTableModel timeTableModel = new TimeSheetTableModel();
-    		   try {
-				timeTableModel.setTimeSheets(new TimeSheetTransaction().loadAll());
-				view.getTblSearchResult().setModel(timeTableModel);
-			} catch (IfaceException e1) {
-				new ErrorDialog(e1).setVisible(true);
-			}
+    		  if( checkTableExistsOrNot(tableName)) {
+	    		   TimeSheetTableModel timeTableModel = new TimeSheetTableModel();
+	    		   try {
+					timeTableModel.setTimeSheets(new TimeSheetTransaction().loadAll());
+					view.getTblSearchResult().setModel(timeTableModel);
+					} catch (IfaceException e1) {
+						new ErrorDialog(e1).setVisible(true);
+					}
+    		  }
     		   
     	   } else if (node.getTitle().equals(CSSAConstants.EVENTS_TABLE)) {
     		   tableName = CSSAConstants.EVENTS_TABLE;
-    		   checkTableExistsOrNot(tableName);
+    		    if(checkTableExistsOrNot(tableName)) {
     		   	EventTableModel eventTableModel = new EventTableModel();
 				List<Events> eventList = null;
 				try {
@@ -343,9 +254,10 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 					new ErrorDialog(e1).setVisible(true);
 					e1.printStackTrace();
 				}
+    		    }
     	   } else if (node.getTitle().equals(CSSAConstants.STUDENTS_DETAILS_TABLE)) {
     		   tableName = CSSAConstants.STUDENTS_DETAILS_TABLE;
-    		   checkTableExistsOrNot(tableName);
+    		   if( checkTableExistsOrNot(tableName)) {
     		   StudentDetailsTableModel tableModel = new StudentDetailsTableModel();
 				List<StudentDetails> studentDetails = null;
 				try {
@@ -356,9 +268,10 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 					new ErrorDialog(e1).setVisible(true);
 					e1.printStackTrace();
 				}
+    		   }
     	   } else if (node.getTitle().equals(CSSAConstants.COLLEGE_DETAILS_TABLE)) {
     		   tableName = CSSAConstants.COLLEGE_DETAILS_TABLE;
-    		   checkTableExistsOrNot(tableName);
+    		   if(checkTableExistsOrNot(tableName)) {
     		   CollegeLookupTableModel tableModel = new CollegeLookupTableModel();
 				List<CollegeDetails> collegeDetails = null;
 				try {
@@ -369,11 +282,12 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 					new ErrorDialog(e1).setVisible(true);
 					e1.printStackTrace();
 				}
+    		   }
 				 
 			
     	   } else if (node.getTitle().equals(CSSAConstants.EVENT_DETAILS_TABLE)) {
     		   tableName = CSSAConstants.EVENT_DETAILS_TABLE;
-    		   checkTableExistsOrNot(tableName);
+    		   if(checkTableExistsOrNot(tableName)) {
     		   EventDetailsTableModel tableModel = new EventDetailsTableModel();
 				List<EventDetails> eventDetails = null;
 				try {
@@ -384,10 +298,11 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 					new ErrorDialog(e1).setVisible(true);
 					e1.printStackTrace();
 				}
+    		   }
 				
 		} else if (node.getTitle().equals(CSSAConstants.RESULTS_TABLE)) {
 			tableName = CSSAConstants.RESULTS_TABLE;
-			checkTableExistsOrNot(tableName);
+			if(checkTableExistsOrNot(tableName)) {
 			ResultTableModel tableModel = new ResultTableModel();
 			List<Results> resultsDetails = null;
 			try {
@@ -398,10 +313,11 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 				new ErrorDialog(e1).setVisible(true);
 				e1.printStackTrace();
 			}
+			}
 			
 		} else if (node.getTitle().equals(CSSAConstants.WINNERS_TABLE)) {
 			tableName = CSSAConstants.WINNERS_TABLE;
-			checkTableExistsOrNot(tableName);
+			if(checkTableExistsOrNot(tableName)) {
 			WinnerLookupTableModel tableModel = new WinnerLookupTableModel();
 			List<InsertResult> results = null;
 			try {
@@ -411,6 +327,7 @@ public class DatabaseAdministrationController implements ActionListener, TreeExp
 			} catch (IfaceException e1) {
 				new ErrorDialog(e1).setVisible(true);
 				e1.printStackTrace();
+			}
 			}
 			
 		}

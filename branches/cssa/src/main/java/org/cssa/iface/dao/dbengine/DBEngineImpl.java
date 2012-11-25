@@ -297,6 +297,50 @@ public class DBEngineImpl {
 	}
 	
 	/**
+	 * method to execute query
+	 * @param query
+	 * @return true or false
+	 * @throws IfaceException
+	 */
+	public boolean execute(String query) throws IfaceException {
+		boolean returnId = false;
+		try {
+			con = getConnection();
+		} catch (ClassNotFoundException e) {
+			log.error(e);
+			throw new IfaceException(e);
+		} catch (SQLException e) {
+			log.error(e);
+			e.printStackTrace();
+			throw new IfaceException(e);
+		}
+
+		try {
+			smt = con.createStatement();
+		} catch (SQLException e1) {
+			log.error(e1);
+			e1.printStackTrace();
+			throw new IfaceException(e1);
+		}
+		try {
+			log.info(query);
+			returnId = smt.execute(query);
+		} catch (SQLException e) {
+			rollback(con);
+			log.error(e);
+			e.printStackTrace();
+			throw new IfaceException(e);
+		} finally {
+			
+			connectionManager.closeConnection(con);
+			connectionManager.closeStatement(smt);
+		}
+		return returnId;
+
+		
+	}
+	
+	/**
 	 * method to execute the script file
 	 * @param fileName
 	 * @throws IfaceException

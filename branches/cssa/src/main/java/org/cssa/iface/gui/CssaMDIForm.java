@@ -60,9 +60,11 @@ public class CssaMDIForm extends JFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(inset, inset, screenSize.width - inset*2, screenSize.height-50-inset*2);
 		setIconImage(imageUtil.getImage("cssa.jpg"));;
+		this.setTitle("Interface Administration");
 		
 		toolBarPanel.setLayout(new BoxLayout(toolBarPanel, BoxLayout.Y_AXIS));
 		this.getContentPane().add(BorderLayout.NORTH, toolBarPanel);
+		
 		
 		desktopPane.setBackground(Color.gray);
 		desktopPane.putClientProperty("JDesktopPane.dragMode", "outline");

@@ -2,12 +2,14 @@ package org.cssa.iface.util;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.cssa.iface.dao.dbengine.DBEngineImpl;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
 
@@ -27,7 +29,6 @@ public class Util {
 	  * <P>Logger names appearing in the <tt>logging.properties</tt> config file
 	  * must match the names returned by this method.
 	  */
-	
 	public static Logger getLogger(Class<?> aClass) {
 		return Logger.getLogger(aClass.getPackage().getName());
 	}
@@ -36,8 +37,8 @@ public class Util {
 		System.exit(0);
 	}
 	
-	public static char getGender(String gender) {
-		char gen ='0';
+	public static String getGender(String gender) {
+		String gen ="";
 		if("Male".equalsIgnoreCase(gender)) {
 			gen = CSSAConstants.MALE;
 		} else if ("Female".equalsIgnoreCase(gender)) {
@@ -75,8 +76,11 @@ public class Util {
 			ClassLoader loader = this.getClass().getClassLoader();
 		    url = loader.getResource("sql" +"/"+ name.trim()); 
 			if(null != url) {
-				fileName = url.getPath().substring(1);
 				
+				int index = url.getPath().indexOf('/');
+				getLogger(Util.class).info(index);
+				fileName = url.getPath().substring(index+1);
+				getLogger(Util.class).info(fileName);
 			}
 		} catch (Exception e) {
 			

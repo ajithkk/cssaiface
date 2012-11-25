@@ -13,6 +13,8 @@ import org.cssa.iface.bo.Events;
 import org.cssa.iface.bo.InsertResult;
 import org.cssa.iface.bo.InsertResultsTableBo;
 import org.cssa.iface.bo.Results;
+import org.cssa.iface.bo.Table;
+import org.cssa.iface.bo.TableStore;
 import org.cssa.iface.dao.dbengine.DBEngineImpl;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.infrastructure.CSSAConstants;
@@ -375,8 +377,28 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 		return new DBEngineImpl().getAllTableNames();
 	}
 	
-	public void runScript(String fileName) throws IfaceException {
-		new DBEngineImpl().executeScript(fileName);
+	public boolean runScript(String fileName) throws IfaceException {
+	 return	new DBEngineImpl().execute(fileName);
+	}
+	
+	public boolean runScript(Map<String, String> tableMap, List<String> tableNames) throws IfaceException {
+		boolean result = false;
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		Set<Map.Entry<String, String>> entrySet = tableMap.entrySet();
+		for(Map.Entry<String, String> set: entrySet) {
+			for(String tableName: tableNames) {
+				if(tableName.equals(set.getKey())){
+					result = dbEngineImpl.execute(set.getValue());
+					if(!result) {
+						return result;
+					}
+					break;
+				}
+			}
+		}
+		
+		return result;
+				
 	}
 	
 	public int deleteTable(String tableName) throws IfaceException {
@@ -409,6 +431,15 @@ public List<InsertResult> getWinnersParticipantsList(InsertResult insertResult) 
 		
 		return result;
 	
+	}
+	public boolean runScript(TableStore tableStore) throws IfaceException {
+		boolean result = false;
+		DBEngineImpl dbEngineImpl = new DBEngineImpl();
+		List<Table> tables = tableStore.getTableDetailsList();
+		for(Table table : tables) {
+			result = dbEngineImpl.execute(table.getScriptFile());
+		}
+		return result;
 	}
 	
 

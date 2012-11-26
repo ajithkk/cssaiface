@@ -77,7 +77,7 @@ public class CollegeInitialViewController extends AbstractAction {
 	
 	private void performPrintAction() {
 		if(null != tableModel.getStudentRegisterNumbers()) {
-			String FILE = Util.getReportHome()+"\\"+collegeInitialView.getCollegeId()+"_"+collegeInitialView.getCollegeName()+".pdf";
+			String FILE = Util.getReportHome()+"\\"+collegeInitialView.getCollegeId()+"_"+collegeInitialView.getCollegeName().trim()+".pdf";
 			StudentRegisterDocument document = new StudentRegisterDocument();
 			document.setCollegeName(collegeInitialView.getCollegeName());
 			document.setCollegeId(collegeInitialView.getCollegeId());

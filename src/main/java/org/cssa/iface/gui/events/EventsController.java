@@ -123,7 +123,6 @@ public class EventsController implements ActionListener  {
 			events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
 			events.setPoints(Integer.valueOf(eventsView.getPoints()));
 			try {
-				//eventTableModel.addRow(events);
 				eventsTransaction.update(events);
 				eventTableModel.setEventList(eventsTransaction.loadAll());
 				clearEventView();
@@ -133,6 +132,9 @@ public class EventsController implements ActionListener  {
 		}
 		
 	}
+	/**
+	 * method to perform save action
+	 */
 	private void performEventSaveAction() {
 		if(validateForm()) {
 			Events events = new Events();
@@ -141,7 +143,6 @@ public class EventsController implements ActionListener  {
 			events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
 			events.setPoints(Integer.valueOf(eventsView.getPoints()));
 			try {
-				//eventTableModel.addRow(events);
 				eventsTransaction.save(events);
 				eventTableModel.setEventList(eventsTransaction.loadAll());
 				clearEventView();
@@ -162,7 +163,9 @@ public class EventsController implements ActionListener  {
 		eventsView.getTxtEventcode().setEditable(true);
 		
 	}
-
+	/**
+	 * method to ask eventView form
+	 */
 	public  void askEventView() {
 		eventsView = new EventsView(this,eventTableModel,mdiForm);
 		eventsView.showEventscreen();

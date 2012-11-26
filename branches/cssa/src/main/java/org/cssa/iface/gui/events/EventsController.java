@@ -141,8 +141,9 @@ public class EventsController implements ActionListener  {
 			events.setMaxNoOfParticipants(Integer.valueOf(eventsView.getMaxParticipants()));
 			events.setPoints(Integer.valueOf(eventsView.getPoints()));
 			try {
-				eventTableModel.addRow(events);
+				//eventTableModel.addRow(events);
 				eventsTransaction.save(events);
+				eventTableModel.setEventList(eventsTransaction.loadAll());
 				clearEventView();
 			} catch (Exception e) {
 				new ErrorDialog(e).setVisible(true);

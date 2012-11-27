@@ -123,8 +123,9 @@ public class TimeSheetReport {
 		cell1 = new PdfPCell( new Phrase("Venu"));
 		cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		dataTable.addCell(cell1);
+		int i = 1;
 		for(TimeSheet time: timeSheets) {
-			dataTable.addCell(""+time.getSno());
+			dataTable.addCell(""+(i++));
 			dataTable.addCell(time.getDate().toString());
 			dataTable.addCell(time.getStartTime());
 			dataTable.addCell(time.getEndTime());

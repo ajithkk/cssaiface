@@ -126,9 +126,9 @@ public class StudentRegistrationReport {
 		cell1 = new PdfPCell( new Phrase("Events"));
 		cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		dataTable.addCell(cell1);
-		
+		int i = 1;
 		for(StudentDetails studentDetails: student.getStudentDetails()) {
-			dataTable.addCell(""+(studentDetails.getSno()+1));
+			dataTable.addCell(""+(i++));
 			dataTable.addCell(student.getCollegeId());
 			dataTable.addCell(studentDetails.getStudentId());
 			dataTable.addCell("");

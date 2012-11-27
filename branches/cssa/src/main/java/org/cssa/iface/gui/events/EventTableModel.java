@@ -70,7 +70,7 @@ public class EventTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Events event = eventList.get(rowIndex);
 		if(columnIndex == 0) {
-			return event.getSno();
+			return rowIndex+1;
 		} else if (columnIndex == 1) { 
 			return event.getEventId();
 		} else if (columnIndex == 2) {

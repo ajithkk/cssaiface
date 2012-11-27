@@ -119,9 +119,9 @@ public class CollegeLookupReport {
 		cell1 = new PdfPCell( new Phrase("#Points"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
-		
+		int i = 1;
 		for(CollegeDetails college : colleges) {
-			dataTable.addCell(""+college.getSno());
+			dataTable.addCell(""+(i++));
 			dataTable.addCell(college.getCollegeId());
 			dataTable.addCell(college.getCollegeName());
 			dataTable.addCell(""+college.getCollegePhone());

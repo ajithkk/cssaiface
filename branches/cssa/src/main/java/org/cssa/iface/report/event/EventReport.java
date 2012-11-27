@@ -115,9 +115,9 @@ public class EventReport {
 		cell1 = new PdfPCell( new Phrase("Points"));
 		cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 		dataTable.addCell(cell1);
-		
+		int i = 1;
 		for(Events event: events) {
-			dataTable.addCell(""+event.getSno());
+			dataTable.addCell(""+(i++));
 			dataTable.addCell(event.getEventName());
 			dataTable.addCell(event.getEventId());
 			dataTable.addCell(""+event.getMaxNoOfParticipants());

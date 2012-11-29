@@ -300,16 +300,17 @@ public class GroupEventView {
 		constraints.gridy = 0;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		panel.add(btnPrint, constraints);
+		btnPrint.setActionCommand(PRINT);
 		btnPrint.addActionListener(groupEventController);
 		
-		btnDelete = new CButton("Delete");
+		/*btnDelete = new CButton("Delete");
 		constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		panel.add(btnDelete, constraints);
-		btnDelete.addActionListener(groupEventController);
+		btnDelete.addActionListener(groupEventController);*/
 		
 		return panel;
 	}
@@ -319,9 +320,9 @@ public class GroupEventView {
 		tblEventDetails.setRowHeight(20);
 		tblEventDetails.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblEventDetails);
-		scrollPane.setMinimumSize(new Dimension(600, 200));
-		scrollPane.setMaximumSize(new Dimension(600, 200));
-		scrollPane.setPreferredSize(new Dimension(600, 200));
+		scrollPane.setMinimumSize(new Dimension(900, 200));
+		scrollPane.setMaximumSize(new Dimension(900, 200));
+		scrollPane.setPreferredSize(new Dimension(900, 200));
 		panel.add(scrollPane, BorderLayout.CENTER);
 
 		return panel;
@@ -409,7 +410,7 @@ public class GroupEventView {
 			panel.add(getCollegeSearchPanel(), constraints);
 		}
 		constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
+		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		panel.add(getMiddlePanel(), constraints);

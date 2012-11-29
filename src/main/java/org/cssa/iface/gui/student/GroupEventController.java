@@ -5,6 +5,7 @@ package org.cssa.iface.gui.student;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -19,9 +20,13 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.GroupEventViewValidator;
 import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.gui.util.MessageUtil;
+import org.cssa.iface.report.student.StudentDetailsReport;
 import org.cssa.iface.transaction.EventsDetailsTransaction;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.transaction.StudentTransaction;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author ajith
@@ -101,10 +106,31 @@ public class GroupEventController implements ActionListener{
 		} else if (GroupEventView.GROUP_SELECTED.equals(actionCommand)) {
 			performGroupSelectionAction();
 			
+		} else if (GroupEventView.PRINT.equals(actionCommand)) {
+			performPrintAction();
 		}
 		
 	}
 	
+	private void performPrintAction() {
+		List<StudentDetails> studentDetails = tableModel.getStudentDetails();
+		if(studentDetails.size() > 0) {
+		String FILE = Util.getReportHome()+"\\StudentDetailsReport"+studentDetails.get(0).getCollegeId().trim()+".pdf";
+		if(null != studentDetails) {
+			StudentDetailsReport report = new StudentDetailsReport(FILE, studentDetails);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			}
+		}
+		}
+	}
+
 	private void performGroupSelectionAction() {
 		String groupName = groupEventView.getCmbGroupNames().getSelectedItem().toString();
 		if(!"".equals(groupName)) {

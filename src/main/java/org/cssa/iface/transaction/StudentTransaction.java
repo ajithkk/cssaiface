@@ -232,6 +232,7 @@ public class StudentTransaction implements Transaction<StudentDetails>  {
 				student.setStudentPoint(res.getFloat(CSSAConstants.STUDENTS_DETAILS_STUDENT_POINT));
 				student.setAccommodation(res.getBoolean(CSSAConstants.STUDENT_DETAILS_ACCOMMODATION));
 				student.setStatus(res.getBoolean(CSSAConstants.STUDENTS_DETAILS_STATUS));
+				student.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
 				studentDetails.add(student);
 			}
 			dbEngineImpl.closeResultSet(res);

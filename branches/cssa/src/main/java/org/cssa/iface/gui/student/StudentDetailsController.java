@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -16,7 +17,11 @@ import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.util.ErrorDialog;
+import org.cssa.iface.report.student.StudentDetailsReport;
 import org.cssa.iface.transaction.StudentTransaction;
+import org.cssa.iface.util.Util;
+
+import com.itextpdf.text.DocumentException;
 
 /**
  * @author ajith
@@ -80,7 +85,22 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 	}
 
 	private void performPrintAction() {
-		// TODO Auto-generated method stub
+		List<StudentDetails> studentDetails = tableModel.getStudentDetails();
+		if(studentDetails.size() > 0) {
+		String FILE = Util.getReportHome()+"\\StudentDetailsReport"+studentDetails.get(0).getCollegeId().trim()+".pdf";
+		if(null != studentDetails) {
+			StudentDetailsReport report = new StudentDetailsReport(FILE, studentDetails);
+			try {
+				report.createReport();
+			} catch (FileNotFoundException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				new ErrorDialog(e).setVisible(true);
+				e.printStackTrace();
+			}
+		}
+		}
 		
 	}
 

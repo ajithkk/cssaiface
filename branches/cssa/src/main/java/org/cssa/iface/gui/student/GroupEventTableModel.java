@@ -3,7 +3,7 @@
  */
 package org.cssa.iface.gui.student;
 
-import static org.cssa.iface.infrastructure.CSSAConstants.STUDENT_LOOKUP_COLUMN_NAMES;
+import static org.cssa.iface.infrastructure.CSSAConstants.GROUP_COLUMN_NAMES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +60,12 @@ private List<EventDetails> studentDetails;
 
 	@Override
 	public int getColumnCount() {
-		return STUDENT_LOOKUP_COLUMN_NAMES.length;
+		return GROUP_COLUMN_NAMES.length;
 	}
 
 	@Override
 	public String getColumnName(int columnIndex) {
-		return  STUDENT_LOOKUP_COLUMN_NAMES.length >= columnIndex ? STUDENT_LOOKUP_COLUMN_NAMES[columnIndex]: "COLUMN"+columnIndex;
+		return  GROUP_COLUMN_NAMES.length >= columnIndex ? GROUP_COLUMN_NAMES[columnIndex]: "COLUMN"+columnIndex;
 	}
 	
 	@Override

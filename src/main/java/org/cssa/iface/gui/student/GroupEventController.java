@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -23,6 +24,7 @@ import org.cssa.iface.gui.formvalidator.GroupEventViewValidator;
 import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.gui.util.MessageUtil;
 import org.cssa.iface.infrastructure.CSSAConstants;
+import org.cssa.iface.report.student.GroupEventStudentDetailsReport;
 import org.cssa.iface.transaction.EventsDetailsTransaction;
 import org.cssa.iface.transaction.EventsTransaction;
 import org.cssa.iface.util.Util;
@@ -144,9 +146,9 @@ public class GroupEventController implements ActionListener, MouseListener{
 	private void performPrintAction() {
 		List<EventDetails> studentDetails = tableModel.getStudentDetails();
 		if(studentDetails.size() > 0) {
-		/*String FILE = Util.getReportHome()+"\\StudentDetailsReport"+studentDetails.get(0).getCollegeId().trim()+".pdf";
+		String FILE = Util.getReportHome()+"\\StudentDetailsReport"+studentDetails.get(0).getCollegeId().trim()+".pdf";
 		if(null != studentDetails) {
-			StudentDetailsReport report = new StudentDetailsReport(FILE, studentDetails);
+			GroupEventStudentDetailsReport report = new GroupEventStudentDetailsReport(FILE, studentDetails);
 			try {
 				report.createReport();
 			} catch (FileNotFoundException e) {
@@ -156,7 +158,7 @@ public class GroupEventController implements ActionListener, MouseListener{
 				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			}
-		}*/
+		}
 		}
 	}
 
@@ -351,7 +353,6 @@ public class GroupEventController implements ActionListener, MouseListener{
 	private boolean maxEventParticipationCheck(String studentId) throws IfaceException {
 		
 		int count = eventsDetailsTransaction.countParticipation(studentId);
-		System.out.println(count);
 		if(count < CSSAConstants.MAX_EVENT_PARTICIPATION) {
 			return true;
 		} else {

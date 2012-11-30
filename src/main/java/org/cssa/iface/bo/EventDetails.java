@@ -7,7 +7,7 @@ package org.cssa.iface.bo;
  * @author Ajith
  * @since 12/12/2011
  */
-public class EventDetails {
+public class EventDetails  extends StudentDetails{
 	
 	
 	private int sno;

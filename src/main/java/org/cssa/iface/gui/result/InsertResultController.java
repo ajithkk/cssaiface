@@ -64,12 +64,6 @@ public class InsertResultController implements ActionListener, LookupService<Ins
 		
 		if(actionCommand.equals(InsertResultView.INSERT)) {
 			if(null != tableModel.getResultsTableBos()) {
-				
-			}
-		}
-		
-		if(actionCommand.equals(InsertResultView.INSERT)) {
-			if(null != tableModel.getResultsTableBos()) {
 				performSaveAction();
 			}
 		}

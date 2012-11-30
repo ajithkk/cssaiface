@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.cssa.iface.bo.CollegeDetails;
@@ -17,6 +18,7 @@ import org.cssa.iface.bo.StudentDetails;
 import org.cssa.iface.exception.IfaceException;
 import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.util.ErrorDialog;
+import org.cssa.iface.gui.util.MessageUtil;
 import org.cssa.iface.report.student.StudentDetailsReport;
 import org.cssa.iface.transaction.StudentTransaction;
 import org.cssa.iface.util.Util;
@@ -133,14 +135,22 @@ public class StudentDetailsController implements ActionListener, MouseListener {
 	}
 
 	private void performDeleteAction() {
-	
-		int selectedRow = studentDetailsView.getStudentTable().getSelectedRow();
-		StudentDetails details = tableModel.getStudentDetails().get(selectedRow);
-		try {
-			transaction.delete(tableModel.getStudentDetails().get(selectedRow));
-			tableModel.setStudentDetails(transaction.loadAll(details.getCollegeId()));
-		} catch (IfaceException e) {
-			new ErrorDialog(e).setVisible(true);
+		int selectedRow = -1;
+		int response = JOptionPane.showConfirmDialog(null, "Do you want to delete student ?", "Confirm",
+		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(response == JOptionPane.YES_OPTION) {
+			selectedRow = studentDetailsView.getStudentTable().getSelectedRow();
+			StudentDetails details = tableModel.getStudentDetails().get(selectedRow);
+			if(null != details) {
+				try {
+					transaction.delete(tableModel.getStudentDetails().get(selectedRow));
+					tableModel.setStudentDetails(transaction.loadAll(details.getCollegeId()));
+				} catch (IfaceException e) {
+					new ErrorDialog(e).setVisible(true);
+				}
+			} else {
+				new MessageUtil(mdiForm).showErrorMessage("Error ", "Please select any roe from table");
+			}
 		}
 		
 	}

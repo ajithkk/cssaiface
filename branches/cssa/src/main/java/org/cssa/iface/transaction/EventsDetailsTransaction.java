@@ -4,6 +4,7 @@
 package org.cssa.iface.transaction;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,9 +74,16 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 	}
 
 	@Override
-	public int delete(EventDetails object) throws IfaceException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(EventDetails event) throws IfaceException {
+		dbEngineImpl = new DBEngineImpl();
+		Map<Integer, Object> parameter = new HashMap<Integer, Object>();
+		parameter.put(1, event.getCollegeId());
+		parameter.put(2, event.getEventId());
+		parameter.put(3, event.getGroupId());
+		parameter.put(4, event.getStudentId());
+		
+		int result = dbEngineImpl.executeUpdate(parameter, CSSAQuery.DELETE_GROUP_EVENT_DETAILS);
+		return result;
 	}
 	
 	public int[] saveAll(List<EventDetails> eventDetails) throws IfaceException {
@@ -169,6 +177,9 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 				eDetails.setEventId(res.getString(CSSAConstants.EVENT_DETAILS_EVENT_ID));
 				eDetails.setGroupId(res.getString(CSSAConstants.EVENT_DETAILS_GROUP_ID));
 				eDetails.setStudentId(res.getString(CSSAConstants.EVENT_DETAILS_STUDENT_ID));
+				eDetails.setStudentName(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_NAME));
+				eDetails.setStudentPhone(res.getString(CSSAConstants.STUDENTS_DETAILS_STUDENT_PHONE));
+				eDetails.setCollegeName(res.getString(CSSAConstants.COLLEGE_DETAILS_COLLEGE_NAME));
 				eventDetails.add(eDetails);
 			}
 		}catch (Exception e) {
@@ -178,5 +189,23 @@ public class EventsDetailsTransaction  implements Transaction<EventDetails>{
 		}
 		return eventDetails;
 	}
+	
+	public int countParticipation(String studentId)  throws IfaceException {
+		int resultId = 0;
+		dbEngineImpl = new DBEngineImpl();
+		Map<Integer, Object> parameter = new HashMap<Integer, Object>();
+		parameter.put(1, studentId);
+		res = dbEngineImpl.executeQuery(parameter, CSSAQuery.CHECK_PARTICIPATION_COUNT);
+		try {
+			while(res.next()) {
+				resultId = res.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new IfaceException(e);
+		} finally {
+			dbEngineImpl.closeResultSet(res);
+		}
+		return resultId;
+		}
 
 }

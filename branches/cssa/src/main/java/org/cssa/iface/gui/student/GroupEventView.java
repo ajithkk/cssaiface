@@ -303,14 +303,15 @@ public class GroupEventView {
 		btnPrint.setActionCommand(PRINT);
 		btnPrint.addActionListener(groupEventController);
 		
-		/*btnDelete = new CButton("Delete");
+		btnDelete = new CButton("Delete");
 		constraints = new GridBagConstraints();
+		btnDelete.setActionCommand(DELETE);
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		panel.add(btnDelete, constraints);
-		btnDelete.addActionListener(groupEventController);*/
+		btnDelete.addActionListener(groupEventController);
 		
 		return panel;
 	}
@@ -318,6 +319,7 @@ public class GroupEventView {
 		JPanel panel = new JPanel();
 		tblEventDetails = new JTable(tableModel);
 		tblEventDetails.setRowHeight(20);
+		tblEventDetails.addMouseListener(groupEventController);
 		tblEventDetails.setAutoCreateRowSorter(true);
 		JScrollPane scrollPane = new JScrollPane(tblEventDetails);
 		scrollPane.setMinimumSize(new Dimension(900, 200));

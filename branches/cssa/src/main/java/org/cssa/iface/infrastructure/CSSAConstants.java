@@ -23,6 +23,7 @@ public class CSSAConstants {
 	public static final String PATH_SEPARATOR = System.getProperty("path.separator");
 	
 	public static final String MAX_TEAM_MEMBERS = "MAX_TEAM_MEMBERS";
+	public static final int MAX_EVENT_PARTICIPATION = 4; 
 	
 	public static final int FAIL = -1;
 	public static final String MALE = "M";
@@ -119,6 +120,7 @@ public class CSSAConstants {
 	public static final String[] WINNERS_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","STUDENT NAME","EVENT ID","GROUP NAME", "POSITION"};
 	public static final String[] EVENT_DETAILS_TABLE_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","EVENT ID","GROUP NAME"};
 	public static final String[] RESULT_COLUMN_NAMES = {"SNO","COLLEGE ID","STUDENT ID","EVENT ID","RESULT STATUS","GROUP NAME","MARK"};
+	public static final String[] GROUP_COLUMN_NAMES = {"SNO","COLLEGE ID","COLLEGE NAME","STUDENT ID","STUDENT NAME","EVENT ID","GROUP ID","PHONE","ACTIVE"};
 	
 	public static final String SPLASH_IMAGE = "crazy-turtle-cartoon-comic.png";
 

@@ -5,11 +5,13 @@ package org.cssa.iface.gui.student;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.cssa.iface.bo.EventDetails;
@@ -20,10 +22,9 @@ import org.cssa.iface.gui.CssaMDIForm;
 import org.cssa.iface.gui.formvalidator.GroupEventViewValidator;
 import org.cssa.iface.gui.util.ErrorDialog;
 import org.cssa.iface.gui.util.MessageUtil;
-import org.cssa.iface.report.student.StudentDetailsReport;
+import org.cssa.iface.infrastructure.CSSAConstants;
 import org.cssa.iface.transaction.EventsDetailsTransaction;
 import org.cssa.iface.transaction.EventsTransaction;
-import org.cssa.iface.transaction.StudentTransaction;
 import org.cssa.iface.util.Util;
 
 import com.itextpdf.text.DocumentException;
@@ -32,7 +33,7 @@ import com.itextpdf.text.DocumentException;
  * @author ajith
  *
  */
-public class GroupEventController implements ActionListener{
+public class GroupEventController implements ActionListener, MouseListener{
 	
 	private List<StudentDetails> studentDetails;
 	private List<EventDetails> eventDetails;
@@ -108,14 +109,42 @@ public class GroupEventController implements ActionListener{
 			
 		} else if (GroupEventView.PRINT.equals(actionCommand)) {
 			performPrintAction();
+		} else if (GroupEventView.DELETE.equals(actionCommand)) {
+			performRemoveFromTableAction();
+			
 		}
 		
 	}
 	
+	private void performRemoveFromTableAction() {
+		int response = JOptionPane.showConfirmDialog(null, "Do you want to delete student from this event paticipation ?", "Confirm",
+		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(response == JOptionPane.YES_OPTION) {
+			try {
+				int selectedIndex = groupEventView.getTblEventDetails().getSelectedRow();
+				EventDetails selectedEventDetails = tableModel.getStudentDetails().get(selectedIndex);
+				if(null != selectedEventDetails) {
+					eventsDetailsTransaction.delete(selectedEventDetails);
+					String collegeId = studentDetails.get(0).getCollegeId();
+					String eventId = selectedEventDetails.getEventId();
+					EventDetails eventDetails = new EventDetails();
+					eventDetails.setCollegeId(collegeId);
+					eventDetails.setEventId(eventId);
+					List<EventDetails> lstEventDetails = eventsDetailsTransaction.selectEventParticipants(eventDetails);
+					tableModel.setStudentDetails(lstEventDetails);
+				} else {
+					new MessageUtil(mdiForm).showErrorMessage("Error ", "Please select any roe from table");
+				}
+			}catch (Exception e) {
+				new ErrorDialog(e).setVisible(true);
+			}
+		}
+	}
+
 	private void performPrintAction() {
-		List<StudentDetails> studentDetails = tableModel.getStudentDetails();
+		List<EventDetails> studentDetails = tableModel.getStudentDetails();
 		if(studentDetails.size() > 0) {
-		String FILE = Util.getReportHome()+"\\StudentDetailsReport"+studentDetails.get(0).getCollegeId().trim()+".pdf";
+		/*String FILE = Util.getReportHome()+"\\StudentDetailsReport"+studentDetails.get(0).getCollegeId().trim()+".pdf";
 		if(null != studentDetails) {
 			StudentDetailsReport report = new StudentDetailsReport(FILE, studentDetails);
 			try {
@@ -127,7 +156,7 @@ public class GroupEventController implements ActionListener{
 				new ErrorDialog(e).setVisible(true);
 				e.printStackTrace();
 			}
-		}
+		}*/
 		}
 	}
 
@@ -171,6 +200,7 @@ public class GroupEventController implements ActionListener{
 			eventDetails.setEventId(selectedEvent);
 			try {
 				List<EventDetails> lstEventDetails = eventsDetailsTransaction.selectEventParticipants(eventDetails);
+				tableModel.setStudentDetails(lstEventDetails);
 				allStudent = new Vector<String>();
 				addStudent = new Vector<String>();
 				Vector<String> allStudent = validator.getAllStudentRegisterNumber(studentDetails);// setAllStudentRegisterNumber();
@@ -225,9 +255,18 @@ public class GroupEventController implements ActionListener{
 				groupEventView.getLstAllStudentIds().setListData(allStudent);
 				validator.setAllStudent(allStudent);
 				validator.setAddedStudent(addStudent);
+				String collegeId = studentDetails.get(0).getCollegeId();
+				EventDetails eventDetails = new EventDetails();
+				eventDetails.setCollegeId(collegeId);
+				eventDetails.setGroupId(groupName);
+				eventDetails.setEventId(eventId);
+				List<EventDetails> lstEventDetails = eventsDetailsTransaction.selectEventParticipants(eventDetails);
+				tableModel.setStudentDetails(lstEventDetails);
 			} catch (IfaceException e) {
 				new ErrorDialog(e).setVisible(true);
 			}
+		} else {
+			new MessageUtil(mdiForm).showErrorMessage("Error ", "Please select any group and event");
 		}
 	}
 
@@ -243,15 +282,22 @@ public class GroupEventController implements ActionListener{
 			
 			if(setGroup(selecterRegsterNumbers.length)) {
 				for(Object object: selecterRegsterNumbers) {
-					if(!addStudent.contains(object.toString())) {
-						addStudent.addElement(object.toString());
-						EventDetails studentParticipation = new EventDetails();
-						studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
-						studentParticipation.setStudentId(object.toString());
-						studentParticipation.setEventId(eventId);
-						studentParticipation.setGroupId(groupName);
-						eventDetails.add(studentParticipation);
-						allStudent.removeElement(object.toString());
+					try {
+						if(maxEventParticipationCheck(object.toString()))  {
+							if(!addStudent.contains(object.toString())) {
+								addStudent.addElement(object.toString());
+								EventDetails studentParticipation = new EventDetails();
+								studentParticipation.setCollegeId(studentDetails.get(0).getCollegeId());
+								studentParticipation.setStudentId(object.toString());
+								studentParticipation.setEventId(eventId);
+								studentParticipation.setGroupId(groupName);
+								eventDetails.add(studentParticipation);
+								allStudent.removeElement(object.toString());
+							}
+						}
+					} catch (IfaceException e) {
+						new ErrorDialog(e).setVisible(true);
+						e.printStackTrace();
 					}
 				}
 				eventsDetailsTransaction = new EventsDetailsTransaction();
@@ -261,6 +307,13 @@ public class GroupEventController implements ActionListener{
 					groupEventView.getLstAddedStudentList().setListData(addStudent);
 					validator.setAllStudent(allStudent);
 					validator.setAddedStudent(addStudent);
+					String collegeId = studentDetails.get(0).getCollegeId();
+					EventDetails eventDetails = new EventDetails();
+					eventDetails.setCollegeId(collegeId);
+					eventDetails.setGroupId(groupName);
+					eventDetails.setEventId(eventId);
+					List<EventDetails> lstEventDetails = eventsDetailsTransaction.selectEventParticipants(eventDetails);
+					tableModel.setStudentDetails(lstEventDetails);
 				} catch (IfaceException e) {
 					new ErrorDialog(e).setVisible(true);
 				}
@@ -269,10 +322,12 @@ public class GroupEventController implements ActionListener{
 			} else {
 				new MessageUtil(mdiForm).showErrorMessage("Group count exceeds", "Number of participant is exceeds this group. Please select another group");
 			}
+		} else {
+			new MessageUtil(mdiForm).showErrorMessage("Error ", "Please select any group and event");
 		}
 		
 	}
-
+ 
 	public void setGroupNames() {
 		groupEventView.getCmbGroupNames().addItem("");
 		for(int i = 0; i < studentDetails.size(); i++) {
@@ -293,7 +348,23 @@ public class GroupEventController implements ActionListener{
 			new ErrorDialog(e).setVisible(true);
 		}
 	}
-	
+	private boolean maxEventParticipationCheck(String studentId) throws IfaceException {
+		
+		int count = eventsDetailsTransaction.countParticipation(studentId);
+		System.out.println(count);
+		if(count < CSSAConstants.MAX_EVENT_PARTICIPATION) {
+			return true;
+		} else {
+			int response = JOptionPane.showConfirmDialog(null, "Participant "+studentId+" is exceeds limt of participating events. Do you want to add this participant in this event ?  ", "Confirm",
+			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if(response == JOptionPane.YES_OPTION) {
+				return true;
+			}
+		}
+		return false;
+		
+		
+	}
 	private boolean setGroup(int count) {
 		int maxCount = 0;
 		String eventId = groupEventView.getCmbEventNames().getSelectedItem().toString();
@@ -348,9 +419,40 @@ public class GroupEventController implements ActionListener{
 		groupEventView = new GroupEventView(mdiForm, this, tableModel);
 		groupEventView.setCollegeVisible(false);
 		JPanel panel = groupEventView.getBody();
-		tableModel.setStudentDetails(studentDetails);
+		//tableModel.setStudentDetails(studentDetails);
 		setAllEventName();
 		setGroupNames();
 		return panel;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int selectedIndex = groupEventView.getTblEventDetails().getSelectedRow();
+		
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

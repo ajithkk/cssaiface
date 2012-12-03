@@ -146,7 +146,7 @@ public class CollegeDetilsView {
 		panel.add(scrollPane,constraints);
 		
 		constraints = new GridBagConstraints();
-		lblCollegePhone = new CLabel("Condact Number:");
+		lblCollegePhone = new CLabel("contact Number:");
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.insets = new Insets(5, 5, 5, 5);
 		constraints.gridx = 0;

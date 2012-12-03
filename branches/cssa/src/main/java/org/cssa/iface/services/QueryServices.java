@@ -224,7 +224,7 @@ public class QueryServices {
 				+" WHERE STUDENTS_DETAILS.STUDENT_ID = EVENT_DETAILS.STUDENT_ID ");
 		participationSearch.append(" AND ");
 		participationSearch.append(CSSAConstants.EVENT_DETAILS_TABLE+"."+CSSAConstants.EVENT_DETAILS_GROUP_ID + " = ");
-		participationSearch.append("( SELECT ");
+		participationSearch.append("( SELECT DISTINCT ");
 		participationSearch.append(CSSAConstants.EVENT_DETAILS_GROUP_ID +" FROM "+ CSSAConstants.EVENT_DETAILS_TABLE);
 		participationSearch.append(" WHERE ");
 		
@@ -293,7 +293,7 @@ public class QueryServices {
 				+" WHERE STUDENTS_DETAILS.STUDENT_ID = RESULTS.STUDENT_ID ");
 		participationSearch.append(" AND ");
 		participationSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.EVENT_DETAILS_GROUP_ID + " = ");
-		participationSearch.append("( SELECT ");
+		participationSearch.append("( SELECT DISTINCT ");
 		participationSearch.append(CSSAConstants.EVENT_DETAILS_GROUP_ID +" FROM "+ CSSAConstants.RESULTS_TABLE);
 		participationSearch.append(" WHERE ");
 		
@@ -367,7 +367,7 @@ public class QueryServices {
 				+" WHERE STUDENTS_DETAILS.STUDENT_ID = RESULTS.STUDENT_ID ");
 		winnersGroupSearch.append(" AND ");
 		winnersGroupSearch.append(CSSAConstants.RESULTS_TABLE+"."+CSSAConstants.RESULTS_EVENT_GROUP_ID + " = ");
-		winnersGroupSearch.append("( SELECT ");
+		winnersGroupSearch.append("( SELECT DISTINCT ");
 		winnersGroupSearch.append(CSSAConstants.RESULTS_EVENT_GROUP_ID +" FROM "+ CSSAConstants.RESULTS_TABLE);
 		winnersGroupSearch.append(" WHERE ");
 		
@@ -492,17 +492,17 @@ public class QueryServices {
 		if(null != round) {
 			if(!round.isEmpty()) {
 				table = CSSAConstants.RESULTS_TABLE;
-				eventSearch.append( "SELECT "
+				eventSearch.append( "SELECT DISTINCT "
 				+table+"."+CSSAConstants.RESULTS_RESULT_STATUS +", ");
 				roundQuery = " AND "+table+".RESULT_STATUS = '"+round +"' ";
 			} else {
 				table = CSSAConstants.EVENT_DETAILS_TABLE;
-				eventSearch.append( "SELECT ");
+				eventSearch.append( "SELECT DISTINCT  ");
 
 			}
 		} else {
 			table = CSSAConstants.EVENT_DETAILS_TABLE;
-			eventSearch.append( "SELECT ");
+			eventSearch.append( "SELECT DISTINCT ");
 
 		}
 		if(null != searcKeys.get(4) ) {
@@ -615,7 +615,6 @@ public class QueryServices {
 	 */
 	public static Map<String, String> getCommonParticipants(String tableName,Map<Integer, String> searcKeys,List<String> eventList ) {
 		StringBuilder eventSearch = new StringBuilder();
-		System.out.println(tableName);
 		for(int i = 0; i < eventList.size(); i++) {
 			eventSearch.append("SELECT "+ tableName+"."+ CSSAConstants.STUDENTS_DETAILS_STUDENT_ID+ " , ");
 			eventSearch.append(tableName+"."+CSSAConstants.COLLEGE_DETAILS_COLLEGE_ID+" , ");

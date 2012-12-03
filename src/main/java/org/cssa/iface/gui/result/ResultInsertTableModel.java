@@ -71,7 +71,7 @@ public class ResultInsertTableModel  extends AbstractTableModel{
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		InsertResult insert = resultList.get(rowIndex);
 		switch (columnIndex) {
-		case 0: return insert.getSno();
+		case 0: return rowIndex + 1;
 		case 1: return insert.getCollegeId();
 		case 2: return insert.getStudentId();
 		case 3: return insert.getStudentName();

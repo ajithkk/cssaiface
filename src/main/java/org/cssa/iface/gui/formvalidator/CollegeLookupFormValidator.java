@@ -69,7 +69,7 @@ public class CollegeLookupFormValidator  extends ValidateUtil {
 	 * @return true all fields are empty otherwise false
 	 */
 	public boolean allFieldsEmpty() {
-		if(isEmpty(lookupView.getCollegeId())&isEmpty(lookupView.getCollegeName())) {
+		if(isEmpty(lookupView.getCollegeId()) && isEmpty(lookupView.getCollegeName())) {
 			return true;
 		}
 		return false;

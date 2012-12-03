@@ -79,28 +79,12 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		validator.setLookupView(lookupView);
+		
+		
 		String action = e.getActionCommand();
 		if(CollegeLookupView.SEARCH.equals(action)) {
-			if(validator.allFieldsEmpty()) {
-				try {
-					collegeDetails = transaction.loadAll();
-					tableModel.setCollegeList(collegeDetails);
-				} catch (IfaceException e1) {
-					new ErrorDialog(e1).setVisible(true);
-				}
-			}
-			else {
-				CollegeDetails collegeDetail = new CollegeDetails();
-				collegeDetail.setCollegeId(lookupView.getCollegeId());
-				collegeDetail.setCollegeName(lookupView.getCollegeName());
-				try {
-					collegeDetails = transaction.loadAll(collegeDetail);
-					tableModel.setCollegeList(collegeDetails);
-				} catch (IfaceException e1) {
-					new ErrorDialog(e1).setVisible(true);
-				}
-			}
+			performSearchAction();
+			
 		}
 		if(CollegeLookupView.CANCEL.equals(action)) {
 			mdiForm.closeFrame();
@@ -114,6 +98,33 @@ public class CollegeLookupController implements ActionListener, MouseListener {
 		
 		
 	}
+	
+	
+
+	private void performSearchAction() {
+		validator.setLookupView(lookupView);
+		if(validator.allFieldsEmpty()) {
+			try {
+				collegeDetails = transaction.loadAll();
+				tableModel.setCollegeList(collegeDetails);
+			} catch (IfaceException e1) {
+				new ErrorDialog(e1).setVisible(true);
+			}
+		}
+		else {
+			CollegeDetails collegeDetail = new CollegeDetails();
+			collegeDetail.setCollegeId(lookupView.getCollegeId());
+			collegeDetail.setCollegeName(lookupView.getCollegeName());
+			try {
+				collegeDetails = transaction.loadAll(collegeDetail);
+				tableModel.setCollegeList(collegeDetails);
+			} catch (IfaceException e1) {
+				new ErrorDialog(e1).setVisible(true);
+			}
+		}
+		
+	}
+
 
 	private void performPrintAction() {
 		String FILE = Util.getReportHome()+"\\CollegeDetailsReport.pdf";

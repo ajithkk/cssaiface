@@ -73,7 +73,6 @@ public class CollegeLookupView {
 	public void showCollegeLookupScreen() {
 		JPanel panel = new JPanel();
 		panel.add(getEventDetailsBody(),BorderLayout.CENTER);
-		Dimension h = getCollegeDetailsPanel().getSize();
 		mdiForm.addChild(panel, "College Lookup Form");
 	}
 	
@@ -289,6 +288,30 @@ public class CollegeLookupView {
 	 */
 	public void setBtnPrint(CButton btnPrint) {
 		this.btnPrint = btnPrint;
+	}
+	/**
+	 * @return the txtCollegeName
+	 */
+	public CTextField getTxtCollegeName() {
+		return txtCollegeName;
+	}
+	/**
+	 * @param txtCollegeName the txtCollegeName to set
+	 */
+	public void setTxtCollegeName(CTextField txtCollegeName) {
+		this.txtCollegeName = txtCollegeName;
+	}
+	/**
+	 * @return the txtCollegeId
+	 */
+	public CTextField getTxtCollegeId() {
+		return txtCollegeId;
+	}
+	/**
+	 * @param txtCollegeId the txtCollegeId to set
+	 */
+	public void setTxtCollegeId(CTextField txtCollegeId) {
+		this.txtCollegeId = txtCollegeId;
 	}
 	
 	

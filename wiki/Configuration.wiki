@@ -16,6 +16,10 @@ Set the JAVA_HOME Variable
   * Enter the *Variable name* as JAVA_HOME.
   * Enter the *Variable value* as java installed location path Eg:_ C:\Program      Files\Java\jdk1.6.0_45_
 
+==Install and configure Apache Maven==
+ Download Apache Maven 3.1.1 (Binary zip) from this link *
+http://mirror.metrocast.net/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.zip
+
 
 
 = =

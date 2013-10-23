@@ -6,6 +6,15 @@
     Use following link 
     * http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html
    select version Java SE Development Kit 6u45 download and install
+Once you have the JDK installed 
+Set the JAVA_HOME Variable
+
+  * Right-click the My Computer icon onyour desktop and select Properties.
+  * Click the Advanced tab. 
+  * Click the Environment Variables button. 
+  * Under System Variables, click New.
+  * Enter the *Variable name* as JAVA_HOME.
+  * Enter the *Variable value* as java installed location path Eg:_ C:\Program      Files\Java\jdk1.6.0_45_
 
 
 

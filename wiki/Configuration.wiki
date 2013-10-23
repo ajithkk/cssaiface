@@ -4,7 +4,7 @@
 =Configure cssa iface registration in local machine= 
  = download and install java version 6=
     Use following link 
-    * http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-  archive-downloads-javase6-419409.html
+    * http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html
    select version Java SE Development Kit 6u45 download and install
 
 

@@ -7,7 +7,7 @@
     * http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html
    select version Java SE Development Kit 6u45 download and install
 Once you have the JDK installed 
-Set the JAVA_HOME Variable
+Set the JAVA_HOME System Variable
 
   * Right-click the My Computer icon onyour desktop and select Properties.
   * Click the Advanced tab. 
@@ -15,10 +15,30 @@ Set the JAVA_HOME Variable
   * Under System Variables, click New.
   * Enter the *Variable name* as JAVA_HOME.
   * Enter the *Variable value* as java installed location path Eg:_ C:\Program      Files\Java\jdk1.6.0_45_
+  * Click ok
+  * Click ok 
+  * Click ok 
 
 ==Install and configure Apache Maven==
  Download Apache Maven 3.1.1 (Binary zip) from this link *
-http://mirror.metrocast.net/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.zip
+http://mirror.metrocast.net/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.zip *
+
+  Copy the zip file into any location unzip it (Create a folder in D:\maven and move apache-maven-3.1.1-bin.zip into that folder and unzip it)
+
+* Set M2_HOME and M2 User Variable
+
+  * Right-click the My Computer icon onyour desktop and select Properties.
+  * Click the Advanced tab. 
+  * Click the Environment Variables button. 
+  * Under user Variables, click New.
+  * Enter the *Variable name* as M2_HOME.
+  * Enter the *Variable value* as apache-maven-3.1.1-bin location path Eg:_ D:\maven\apache-maven-3.1.1_
+  * Click ok 
+  * Enter the *Variable name* as M2.
+  * Enter the *Variable value* as apache-maven-3.1.1-bin\bin location path Eg:_ D:\maven\apache-maven-3.1.1\bin_
+  * Click ok 
+  * Click ok 
+  * Click ok 
 
 
 

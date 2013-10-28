@@ -23,7 +23,7 @@ Set the JAVA_HOME System Variable
  Download Apache Maven 3.1.1 (Binary zip) from this link *
 http://mirror.metrocast.net/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.zip *
 
-  Copy the zip file into any location unzip it (Create a folder in D:\maven and move apache-maven-3.1.1-bin.zip into that folder and unzip it)
+  Copy the zip file into any location and unzip it (Create a folder in D:\maven and move apache-maven-3.1.1-bin.zip into that folder and unzip it)
 
 * Set M2_HOME and M2 User Variable
 
@@ -40,7 +40,48 @@ http://mirror.metrocast.net/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1
   * Click ok 
   * Click ok 
 
+==Install Eclipse==
+  Download eclipse from this link select appropriate edition 32 bit or 64 bit *
+http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr2 *
+ Copy the zip file into any location and unzip it (Create a folder in D:\eclipse_ide and move eclipse-jee-juno-SR2-win.zip into that folder and unzip it you will get an eclipse folder)
+  * Open eclipse folder and double click eclipse.exe file 
+  * Set the workspace in to D:\administration
+  * Click Ok 
+  * You'll then see the welcome screen
 
+==Configure Eclipse==
+*Update the Installed JDK
+ * * Start Eclipse and do the following 
+ * Choose Windows > Preferences from the Eclipse menu bar.
+ * The system displays the preferences dialog.
+ * Filter for or navigate to the Installed JREs page (For navigation     expanding java then click Installed JRE)
+ * Select JRE in that list and remove it 
+ * Click the Add button.
+ * The Add JRE wizard displays.
+ * Make sure Standard VM is selected and press Next.
+ * Press Directory.
+ * The Browse For Folder dialog appears.
+ * Navigate to your JDK installation. (probably in C:\Program Files\Java\jdk1.6.0_45)
+ * Press OK.
+
+*Install the Maven Eclipse Plugin
+ * *Start Eclipse and do the following:
+ * Choose Help > Install New Software.
+ * The Available Software dialog appears. 
+ * Click the Add button.
+ * The Add Repository dialog appears. 
+ * Enter Sonatype M2Eclipse in the Name field.
+ * Enter http://download.eclipse.org/technology/m2e/releases in the Location field.
+ * Press OK to close the dialog.
+ * Check the box and press Next.
+ * Select Maven Integration for Eclipse.
+ * Press Next and Next again.
+ * Accept the terms of the license agreement and press Finish.
+ * Eclipse calculates the dependencies and space. 
+ * Press Next.
+ * Accept the License agreement and press Next.
+   The installation procedure runs.
+ * Restart Eclipse when prompted.
 
 = =
 

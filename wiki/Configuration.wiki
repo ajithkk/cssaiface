@@ -109,7 +109,12 @@ http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr2
  * Add Url field to https://cssaiface.googlecode.com/svn/branches/cssa/
  * Click Finish
  * Right Click URL added in the VN Repositories select Check Out
- Source downloaded to your local machine  
+ Source downloaded to your local machine 
+
+== Build and Run cssaiface==
+*Build project 
+ * * Right Click pom.xml file in project folder
+ * 
 
 = =
 

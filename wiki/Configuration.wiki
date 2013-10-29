@@ -100,6 +100,17 @@ http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/junosr2
  * Accept the License agreement and press Next. The installation procedure runs.
  * Restart Eclipse when prompted.
 
+=Checkout instructions=
+ * Open eclipse 
+ * Navigate to the "SVN Repository Exploring" perspective Window > Open perspective > Other  select SVN Repository Exploring
+ * Click Ok
+ * Navigate to the "SVN Repositories" view (Left Side of the IDE)
+ * Right Click SVN Repositories Select New > Repository Location
+ * Add Url field to https://cssaiface.googlecode.com/svn/branches/cssa/
+ * Click Finish
+ * Right Click URL added in the VN Repositories select Check Out
+ Source downloaded to your local machine  
+
 = =
 
 Add your content here.  Format your content with:

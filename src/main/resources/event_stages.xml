@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:cssa xmlns:ns2=" org.cssa.iface.bo">
+    <eventStage>
+        <stage>Final</stage>
+        <notation>F</notation>
+    </eventStage>
+    <eventStage>
+        <stage>Prelims</stage>
+        <notation>P</notation>
+    </eventStage>
+</ns2:cssa>
